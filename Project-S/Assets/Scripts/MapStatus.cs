@@ -8,11 +8,11 @@ public enum Map_type {
     MAP_WALL,
 }
 
-public class MapStatus : MonoBehaviour
+public class MapStatus
 {
-
-    public const int MAP_WIDTH = 100;
-    public const int MAP_HEIGHT = 100;
+    public static Map_type[] field_map;
+    public const int MAP_WIDTH = 20;
+    public const int MAP_HEIGHT = 20;
     public const float MAPCHIP_SIZE = 10f;
     public const string MAP_FILE_LOCATION = "/Resources/Map/";
 

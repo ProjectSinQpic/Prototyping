@@ -11,8 +11,8 @@ public class MapBuilder : MonoBehaviour
     GameObject[] MapChip_set;
 
     void Start() {
-        var map = MapFileDecoder.DecodeMap("test.txt");
-        BuildMap(map);
+        MapStatus.field_map = MapFileDecoder.DecodeMap("test3.txt");
+        BuildMap(MapStatus.field_map);
     }
 
     void BuildMap(Map_type[] mapdata) {
