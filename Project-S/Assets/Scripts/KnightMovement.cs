@@ -6,7 +6,7 @@ using System.Linq;
 
 public class KnightMovement : KnightParts
 {
-    readonly int moveFrame = 10;
+    readonly int moveFrame = 5;
     bool isMoving = false;
 
     void Start() {
@@ -19,27 +19,27 @@ public class KnightMovement : KnightParts
         if (isMoving) return;
         core.isSelected.Value = false;
         if (!CheckMovable(goal)) return;
-        StartCoroutine(MoveToPointCoroutine(goal));
+        StartCoroutine(MoveToPointCoroutine(core.movableArea.Find(m => m.pos == goal)));
     }
 
 
-    IEnumerator MoveToPointCoroutine(Vector2 goal) {
+    IEnumerator MoveToPointCoroutine(MovableArea area) {
         isMoving = true;
-        Vector2 diff = goal - core.status.pos;
-        for(int i = 0; i < moveFrame * Mathf.Abs(diff.x); i++) {
-            transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE / moveFrame * (diff.x > 0 ? 1 : -1);
-            yield return null;
+        foreach(var d in area.root) {
+            Vector3 dir = d == 'r' ? Vector3.right :
+                          d == 'l' ? Vector3.left :
+                          d == 'u' ? Vector3.back : Vector3.forward;
+            for (int i = 0; i < moveFrame; i++) {
+                transform.position += dir * MapStatus.MAPCHIP_SIZE / moveFrame;
+                yield return null;
+            }
         }
-        for (int i = 0; i < moveFrame * Mathf.Abs(diff.y); i++) {
-            transform.position += Vector3.forward * MapStatus.MAPCHIP_SIZE / moveFrame * (diff.y > 0 ? -1 : 1);
-            yield return null;
-        }
-        core.status.pos = goal;
+        core.status.pos = area.pos;
         isMoving = false;
     }
 
     bool CheckMovable(Vector2 point) {
-        return core.movableArea.Contains(point);
+        return core.movableArea.Select(m => m.pos).Contains(point);
     }
 
 }

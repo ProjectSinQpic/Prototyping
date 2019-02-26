@@ -39,7 +39,7 @@ public class MapPointer : MonoBehaviour
     }
 
     void Start() {
-        detecter.OnPointedObject.Where(o => o.collider.tag == "Map")
+        detecter.OnPointedObject.Where(o => o.collider.tag == "MapDetect")
                                 .Subscribe(o => {
                                     UpdateCursorPos(o.point);
                                     pointedKnight = null;
@@ -59,7 +59,7 @@ public class MapPointer : MonoBehaviour
     void UpdateCursorPos(Vector3 point) {
         float ms = MapStatus.MAPCHIP_SIZE;
         Vector3 v = new Vector3(Mathf.Floor(point.x / ms), 0, Mathf.Floor(point.z / ms)) * ms;
-        cursor.transform.position = v;
+        cursor.transform.position = v + Vector3.up;
         cursorPos = MapStatus.ToMapPos(v);
     }
 
