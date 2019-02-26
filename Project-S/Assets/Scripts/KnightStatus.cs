@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class KnightStatus : MonoBehaviour
 {
-    public Vector3 pos;
+    public Vector2 pos;
 
 }

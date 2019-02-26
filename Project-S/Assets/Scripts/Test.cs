@@ -7,10 +7,12 @@ public class Test : MonoBehaviour
 {
     public MapPointer pointer;
     public KnightMovement km;
+    public KnightDisplayArea kd;
     // Start is called before the first frame update
     void Start()
     {
-        pointer.OnClick.Subscribe(x => km.MoveToPoint(x));
+        //pointer.OnClickedMap.Subscribe(x => km.MoveToPoint(x));
+        //pointer.OnClickedKnight.Subscribe(_ => kd.DisplayArea());
         
     }
 

@@ -7,36 +7,80 @@ using UniRx.Triggers;
 
 public class MapPointer : MonoBehaviour
 {
-    public IObservable<Vector3> OnClick;
-    [SerializeField]
-    GameObject cursor;
-    Vector3 cursorPos;
+
+    public static MapPointer instance;
+
+    public IObservable<Vector2> OnClickedMap;
+    public IObservable<GameObject> OnClickedKnight;
+
+    [SerializeField] RayDetecter detecter;
+    [SerializeField] GameObject cursor;
+    [SerializeField] Transform cameraPos;
+    [SerializeField] Transform ViewPos;
+
+    Vector2 cursorPos;
+    public GameObject pointedKnight;
+    Vector2 rotSpeed;
+
 
     void Awake() {
 
-        OnClick = this.UpdateAsObservable()
-                      .Where(_ => Input.GetMouseButtonDown(0))
-                      .Select(_ => cursorPos);
+        if (instance == null) instance = this;
+
+        OnClickedMap = this.UpdateAsObservable()
+                           .Where(_ => Input.GetMouseButtonDown(0) && pointedKnight == null)
+                           .Select(_ => cursorPos);
+
+        OnClickedKnight = this.UpdateAsObservable()
+                              .Where(_ => Input.GetMouseButtonDown(0) && pointedKnight != null)
+                              .Select(_ => pointedKnight);
+
+
+    }
+
+    void Start() {
+        detecter.OnPointedObject.Where(o => o.collider.tag == "Map")
+                                .Subscribe(o => {
+                                    UpdateCursorPos(o.point);
+                                    pointedKnight = null;
+                                });
+
+        detecter.OnPointedObject.Where(o => o.collider.tag == "Knight")
+                                .Subscribe(o => {
+                                    pointedKnight = o.collider.gameObject;
+                                });
     }
 
     void Update() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity)) {
-            if (hit.collider) {
-                UpdateCursorPos(hit.point);
-                SetCursor();
-            }
-        }
+        MoveView();
+        DragMap();
     }
 
     void UpdateCursorPos(Vector3 point) {
-        cursorPos = new Vector3(Mathf.Floor(point.x / 10), 0, Mathf.Floor(point.z / 10));
+        float ms = MapStatus.MAPCHIP_SIZE;
+        Vector3 v = new Vector3(Mathf.Floor(point.x / ms), 0, Mathf.Floor(point.z / ms)) * ms;
+        cursor.transform.position = v;
+        cursorPos = MapStatus.ToMapPos(v);
     }
 
-    void SetCursor() {
-        Debug.Log(cursorPos);
-        cursor.transform.position = cursorPos * 10;
+    void MoveView() {
+        ViewPos.transform.Rotate(Vector3.down * rotSpeed.x, Space.World);
+        ViewPos.transform.Rotate(Vector3.right * rotSpeed.y, Space.World);
+        rotSpeed *= 0.75f;
+    }
+
+    void DragMap() {
+        var wheel = Input.GetAxis("Mouse ScrollWheel");
+        if (wheel > 0) cameraPos.localPosition *= 0.8f;
+        else if (wheel < 0) cameraPos.localPosition *= 1.25f;
+
+        if (Input.GetMouseButtonDown(1)) rotSpeed = new Vector2(0, 0);
+        if (Input.GetMouseButton(1)) {
+            rotSpeed += new Vector2(-Input.GetAxis("Mouse X"), 0);
+        }
+        if (Input.GetMouseButton(2)) {
+            cameraPos.localPosition -= new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0) * 2f;
+        }
     }
 
 }
