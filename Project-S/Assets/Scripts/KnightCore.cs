@@ -13,13 +13,12 @@ public class KnightCore : MonoBehaviour
 {
     public KnightStatus status;
     public ReactiveProperty<bool> isSelected;
-    public List<MovableArea> movableArea;
+    
     public static List<KnightCore> all = new List<KnightCore>();
 
 
     void Awake() {
         isSelected = new ReactiveProperty<bool>();
-        movableArea = new List<MovableArea>();
     }
 
     void Start() {

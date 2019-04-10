@@ -8,6 +8,11 @@ public class KnightMovement : KnightParts
 {
     readonly int moveFrame = 5;
     bool isMoving = false;
+    KnightDisplayArea _disp;
+
+    void Awake() {
+        _disp = core.GetComponent<KnightDisplayArea>();
+    }
 
     void Start() {
         MapPointer.instance.OnClickedMap
@@ -17,9 +22,9 @@ public class KnightMovement : KnightParts
 
     public void MoveToPoint(Vector2 goal) {
         if (isMoving) return;
-        core.isSelected.Value = false;
+        core.isSelected.Value = false; //あとで変更する
         if (!CheckMovable(goal)) return;
-        StartCoroutine(MoveToPointCoroutine(core.movableArea.Find(m => m.pos == goal)));
+        StartCoroutine(MoveToPointCoroutine(_disp.movableArea.Find(m => m.pos == goal)));
     }
 
 
@@ -39,7 +44,7 @@ public class KnightMovement : KnightParts
     }
 
     bool CheckMovable(Vector2 point) {
-        return core.movableArea.Select(m => m.pos).Contains(point);
+        return _disp.movableArea.Select(m => m.pos).Contains(point);
     }
 
 }

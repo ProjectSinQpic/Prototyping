@@ -7,11 +7,13 @@ using UniRx;
 public class KnightDisplayArea : KnightParts
 {
 
+    public List<MovableArea> movableArea;
     public GameObject prefab_area;
     List<GameObject> objects_area;
     readonly int move_point = 5;
 
     void Awake() {
+        movableArea = new List<MovableArea>();
         objects_area = new List<GameObject>();
     }
 
@@ -26,10 +28,10 @@ public class KnightDisplayArea : KnightParts
     }
 
     public void DisplayArea() {
-        core.movableArea = new List<MovableArea>();
+        movableArea = new List<MovableArea>();
         objects_area = new List<GameObject>();
         FindMovable(new MovableArea() { pos = core.status.pos, root = ""}, move_point);
-        foreach (var m in core.movableArea) {
+        foreach (var m in movableArea) {
             var obj = Instantiate(prefab_area, MapStatus.ToWorldPos(m.pos) + Vector3.up, Quaternion.identity);
             objects_area.Add(obj);
             var r = obj.GetComponent<Renderer>();
@@ -51,12 +53,12 @@ public class KnightDisplayArea : KnightParts
         int next_mp = mp - MapStatus.MAP_MP[(int)MapStatus.MapTypeOf(p.pos)];
         if (KnightCore.all.Where(c => c != core).Select(c => c.status.pos).Contains(p.pos)) next_mp = -1;
         if (next_mp < 0) return;
-        if (!core.movableArea.Select(m => m.pos).Contains(p.pos)) core.movableArea.Add(p);
+        if (!movableArea.Select(m => m.pos).Contains(p.pos)) movableArea.Add(p);
         else {
-            var x = core.movableArea.Find(m => m.pos == p.pos);
+            var x = movableArea.Find(m => m.pos == p.pos);
             if(x.root.Length > p.root.Length) {
-                core.movableArea.Remove(x);
-                core.movableArea.Add(p);
+                movableArea.Remove(x);
+                movableArea.Add(p);
             }
         }
         FindMovable(new MovableArea() { pos = p.pos + Vector2.right, root = p.root + "r" }, next_mp);
