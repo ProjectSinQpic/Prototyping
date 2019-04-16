@@ -11,9 +11,11 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pointer.OnClickedMap.Subscribe(x => km.MoveToPoint(x));
-        //pointer.OnClickedKnight.Subscribe(_ => kd.DisplayArea());
-        
+        //MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
+        //    { "あああ", () => { Debug.Log("aaa"); } },
+        //    { "いいい", () => { MenuGenerator.Instance().Close(); } },
+        //    { "ううう", () => { } },
+        //});
     }
 
     // Update is called once per frame
