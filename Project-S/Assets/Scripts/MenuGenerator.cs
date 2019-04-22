@@ -8,52 +8,47 @@ using UnityEngine.UI;
 public class MenuGenerator : MonoBehaviour
 {
 
+    public GameObject prefab_menu;
     public GameObject prefab_bar;
-    public GameObject obj_menu;
+    public Stack<GameObject> menu_list;
 
     static MenuGenerator instance = null;
-    public Vector2 original_menusize;
 
-    void Start() {
+    void Awake() {
+        menu_list = new Stack<GameObject>();
         if (instance == null) {
             instance = this;
         }
-        original_menusize = obj_menu.GetComponent<RectTransform>().sizeDelta;
-        Close();
-    }
-
-    void Update() {
-        
     }
 
     public static MenuGenerator Instance() {
         return instance;
     }
 
-    public void Create(Dictionary<string, UnityAction> items) {
-        var menu = obj_menu.transform;
-        for (int i = 0; i < menu.childCount; i++) {
-            Destroy(menu.GetChild(i).gameObject);
-        }
-        foreach(var i in items) {
+    public void Create(Dictionary<string, UnityAction> items, Vector3 pos) {
+        var menu = Instantiate(prefab_menu);
+        var menu_t = menu.transform;
+        menu_t.SetParent(GameObject.Find("Canvas").transform);
+        menu.GetComponent<RectTransform>().localPosition = pos;
+        foreach (var i in items) {
             var obj = Instantiate(prefab_bar);
-            obj.transform.SetParent(menu);
+            obj.transform.SetParent(menu_t);
             obj.transform.GetChild(0).GetComponent<Text>().text = i.Key;
             obj.GetComponent<Button>().onClick.AddListener(i.Value);
         }
-    }
-
-    public void Open() {
-        obj_menu.GetComponent<RectTransform>().sizeDelta = original_menusize;
-        for (int i = 0; i < obj_menu.transform.childCount; i++) {
-            obj_menu.transform.GetChild(i).gameObject.SetActive(true);
+        if(menu_list.Count >= 1) {
+            var old_top = menu_list.Peek();
+            foreach (var i in old_top.transform.GetComponentsInChildren<Button>()) i.interactable = false;
         }
+        menu_list.Push(menu);
     }
 
     public void Close() {
-        obj_menu.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
-        for (int i = 0; i < obj_menu.transform.childCount; i++) {
-            obj_menu.transform.GetChild(i).gameObject.SetActive(false);
+        var old_menu = menu_list.Pop();
+        Destroy(old_menu);
+        if (menu_list.Count >= 1) {
+            var new_top = menu_list.Peek();
+            foreach (var i in new_top.transform.GetComponentsInChildren<Button>()) i.interactable = true;
         }
     }
 }

@@ -43,8 +43,7 @@ public class KnightMovement : KnightParts
         MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
             { "攻撃", () => { Debug.Log("こうげき！"); MenuGenerator.Instance().Close(); } },
             { "待機", () => { MenuGenerator.Instance().Close(); } },
-        });
-        MenuGenerator.Instance().Open();
+        }, new Vector3(Screen.width / 2 - 180, Screen.height / 2 - 150, 0));
         isMoving = false;
     }
 

@@ -31,6 +31,10 @@ public class KnightCore : MonoBehaviour
         MapPointer.instance.OnClickedKnight
                            .Where(o => o != gameObject)
                            .Subscribe(_ => isSelected.Value = false);
+
+        isSelected
+            .Where(b => b == true)
+            .Subscribe(_ => StatusUI.Instance().UpdateUI(status));
     }
     
 }
