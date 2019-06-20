@@ -37,6 +37,10 @@ public class MapPointer : MonoBehaviour
                               .Where(_ => !MenuGenerator.Instance().isLocked)
                               .Select(_ => pointedKnight);
 
+        this.UpdateAsObservable()
+            .Select(_ => MenuGenerator.Instance().isLocked)
+            .DistinctUntilChanged()
+            .Subscribe(x => cursor.GetComponent<MeshRenderer>().enabled = !x);
 
     }
 

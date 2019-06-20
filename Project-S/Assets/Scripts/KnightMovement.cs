@@ -16,9 +16,9 @@ public class KnightMovement : KnightParts {
     }
 
     void Start() {
-        MapPointer.instance.OnClickedMap
-                           .Where(_ => core.isSelected.Value == true)
-                           .Subscribe(v => MoveToPoint(v));
+        core.Message
+            .Where(x => x == "move")
+            .Subscribe(_ => MoveToPoint(core.next_pos));
     }
 
     public void MoveToPoint(Vector2 goal) {
@@ -55,13 +55,11 @@ public class KnightMovement : KnightParts {
 
     void OnAttack() {
         prev_pos = core.status.pos;
-        core.Attack();
         MenuGenerator.Instance().Close();
     }
 
     void OnWait() {
         prev_pos = core.status.pos;
-        core.Wait();
         MenuGenerator.Instance().Close();
     }
 
