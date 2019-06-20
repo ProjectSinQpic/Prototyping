@@ -4,13 +4,14 @@ using UnityEngine;
 using UniRx;
 using System.Linq;
 
-public class KnightMovement : KnightParts
-{
+public class KnightMovement : KnightParts {
     readonly int moveFrame = 5;
     bool isMoving = false;
     KnightDisplayArea _disp;
+    Vector2 prev_pos;
 
     void Awake() {
+        prev_pos = core.status.pos;
         _disp = core.GetComponent<KnightDisplayArea>();
     }
 
@@ -30,7 +31,7 @@ public class KnightMovement : KnightParts
 
     IEnumerator MoveToPointCoroutine(MovableArea area) {
         isMoving = true;
-        foreach(var d in area.root) {
+        foreach (var d in area.root) {
             Vector3 dir = d == 'r' ? Vector3.right :
                           d == 'l' ? Vector3.left :
                           d == 'u' ? Vector3.back : Vector3.forward;
@@ -41,9 +42,10 @@ public class KnightMovement : KnightParts
         }
         core.status.pos = area.pos;
         MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
-            { "攻撃", () => { Debug.Log("こうげき！"); MenuGenerator.Instance().Close(); } },
-            { "待機", () => { MenuGenerator.Instance().Close(); } },
-        }, new Vector3(Screen.width / 2 - 180, Screen.height / 2 - 150, 0));
+            { "攻撃", () => OnAttack() },
+            { "待機", () => OnWait() },
+            { "キャンセル", () => OnCancel() },
+        }, new Vector3(Screen.width / 2 - 180, Screen.height / 2 - 150, 0), "knight_choice", true);
         isMoving = false;
     }
 
@@ -51,4 +53,23 @@ public class KnightMovement : KnightParts
         return _disp.movableArea.Select(m => m.pos).Contains(point);
     }
 
+    void OnAttack() {
+        prev_pos = core.status.pos;
+        core.Attack();
+        MenuGenerator.Instance().Close();
+    }
+
+    void OnWait() {
+        prev_pos = core.status.pos;
+        core.Wait();
+        MenuGenerator.Instance().Close();
+    }
+
+    void OnCancel() {
+        var diff = prev_pos - core.status.pos;
+        transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x
+            + Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
+        core.status.pos = prev_pos;
+        MenuGenerator.Instance().Close();
+    }
 }

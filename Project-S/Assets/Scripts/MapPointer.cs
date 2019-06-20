@@ -29,10 +29,12 @@ public class MapPointer : MonoBehaviour
 
         OnClickedMap = this.UpdateAsObservable()
                            .Where(_ => Input.GetMouseButtonDown(0) && pointedKnight == null)
+                           .Where(_ => !MenuGenerator.Instance().isLocked)
                            .Select(_ => cursorPos);
 
         OnClickedKnight = this.UpdateAsObservable()
                               .Where(_ => Input.GetMouseButtonDown(0) && pointedKnight != null)
+                              .Where(_ => !MenuGenerator.Instance().isLocked)
                               .Select(_ => pointedKnight);
 
 

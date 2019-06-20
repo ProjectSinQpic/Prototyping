@@ -5,17 +5,22 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MenuGenerator : MonoBehaviour
-{
+public class MenuGenerator : MonoBehaviour {
 
     public GameObject prefab_menu;
     public GameObject prefab_bar;
     public Stack<GameObject> menu_list;
+    Stack<string> menu_id;
+
+    List<string> lockingMenues;
+    public bool isLocked { get { return lockingMenues.Count > 0; } }
 
     static MenuGenerator instance = null;
 
     void Awake() {
+        lockingMenues = new List<string>();
         menu_list = new Stack<GameObject>();
+        menu_id = new Stack<string>();
         if (instance == null) {
             instance = this;
         }
@@ -25,7 +30,7 @@ public class MenuGenerator : MonoBehaviour
         return instance;
     }
 
-    public void Create(Dictionary<string, UnityAction> items, Vector3 pos) {
+    public void Create(Dictionary<string, UnityAction> items, Vector3 pos, string id, bool locking) {
         var menu = Instantiate(prefab_menu);
         var menu_t = menu.transform;
         menu_t.SetParent(GameObject.Find("Canvas").transform);
@@ -41,6 +46,8 @@ public class MenuGenerator : MonoBehaviour
             foreach (var i in old_top.transform.GetComponentsInChildren<Button>()) i.interactable = false;
         }
         menu_list.Push(menu);
+        menu_id.Push(id);
+        if (locking) lockingMenues.Add(id);
     }
 
     public void Close() {
@@ -50,5 +57,8 @@ public class MenuGenerator : MonoBehaviour
             var new_top = menu_list.Peek();
             foreach (var i in new_top.transform.GetComponentsInChildren<Button>()) i.interactable = true;
         }
+        var c_id = menu_id.Pop();
+        if (lockingMenues.Exists(x => x == c_id)) lockingMenues.Remove(c_id);
     }
+
 }

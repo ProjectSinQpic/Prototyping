@@ -36,5 +36,13 @@ public class KnightCore : MonoBehaviour
             .Where(b => b == true)
             .Subscribe(_ => StatusUI.Instance().UpdateUI(status));
     }
+
+    public void Attack() {
+        Debug.Log("こうげき！");
+    }
     
+
+    public void Wait() {
+
+    }
 }

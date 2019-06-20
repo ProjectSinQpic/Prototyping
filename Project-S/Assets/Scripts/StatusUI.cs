@@ -11,7 +11,7 @@ public class StatusUI : MonoBehaviour
 
     static StatusUI instance = null;
 
-    void Start() {
+    void Awake() {
         if (instance == null) {
             instance = this;
         }
