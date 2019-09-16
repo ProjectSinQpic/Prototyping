@@ -51,7 +51,7 @@ public class MapPointer : MonoBehaviour
                                     pointedKnight = null;
                                 });
 
-        detecter.OnPointedObject.Where(o => o.collider.tag == "Knight")
+        detecter.OnPointedObject.Where(o => o.collider.tag.Contains("Knight"))
                                 .Subscribe(o => {
                                     pointedKnight = o.collider.gameObject;
                                 });

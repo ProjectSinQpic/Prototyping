@@ -8,4 +8,7 @@ public class KnightStatus : MonoBehaviour
     public int HP;
     public int attack;
 
+    public int moveRange;
+    public int attackRange;
+
 }

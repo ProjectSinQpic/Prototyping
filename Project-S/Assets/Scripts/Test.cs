@@ -11,13 +11,13 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
-            { "a", () => {
-                MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
-                    { "b", () => { MenuGenerator.Instance().Close(); } },
-                }, new Vector3(Screen.width / 2 - 400, -Screen.height / 2 + 150, 0), "test2", false);
-            } },
-        }, new Vector3(Screen.width / 2 - 180, -Screen.height / 2 + 150, 0), "test1", false);
+        //MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
+        //    { "a", () => {
+        //        MenuGenerator.Instance().Create(new Dictionary<string, UnityEngine.Events.UnityAction> {
+        //            { "b", () => { MenuGenerator.Instance().Close(); } },
+        //        }, new Vector3(Screen.width / 2 - 400, -Screen.height / 2 + 150, 0), "test2", false);
+        //    } },
+        //}, new Vector3(Screen.width / 2 - 180, -Screen.height / 2 + 150, 0), "test1", false);
     }
 
     // Update is called once per frame
