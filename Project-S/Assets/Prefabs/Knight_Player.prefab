@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2202928215577173249}
-  - component: {fileID: 2202928215577173278}
-  - component: {fileID: 2202928215577173279}
+  - component: {fileID: 3690433858338202014}
   - component: {fileID: 2202928215577173276}
   - component: {fileID: 401072885564762111}
   - component: {fileID: 2202928215577173248}
@@ -37,24 +36,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2202928215577173278
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2202928215577173277}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2202928215577173279
-MeshRenderer:
+--- !u!212 &3690433858338202014
+SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2202928215577173277}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -62,7 +53,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 093b1009bd4086c43aae48dd87687444, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,7 +65,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -82,6 +73,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5.12, y: 5.12}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!135 &2202928215577173276
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -109,6 +111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: {fileID: 2202928215577173248}
   next_pos: {x: 0, y: 0}
+  next_target: {fileID: 0}
+  isFinished: 0
+  isDead: 0
 --- !u!114 &2202928215577173248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +129,8 @@ MonoBehaviour:
   pos: {x: 10, y: 10}
   HP: 0
   attack: 0
+  moveRange: 0
+  attackRange: 0
 --- !u!114 &2202928215577173250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   core: {fileID: 401072885564762111}
+  isMoving: 0
 --- !u!114 &2202928215577173253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,5 +158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   core: {fileID: 401072885564762111}
+  attackableArea: []
   prefab_area: {fileID: 8953533423184074616, guid: faeb762054eeef54f9a93a680fc82b7b,
     type: 3}
+  moveColor: {r: 0, g: 0, b: 0, a: 0}
+  attackColor: {r: 0, g: 0, b: 0, a: 0}

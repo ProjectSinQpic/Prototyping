@@ -15,8 +15,8 @@ public class MapPointer : MonoBehaviour
 
     [SerializeField] RayDetecter detecter;
     [SerializeField] GameObject cursor;
-    [SerializeField] Transform cameraPos;
-    [SerializeField] Transform ViewPos;
+
+
 
     Vector2 cursorPos;
     public GameObject pointedKnight;
@@ -57,10 +57,6 @@ public class MapPointer : MonoBehaviour
                                 });
     }
 
-    void Update() {
-        MoveView();
-        DragMap();
-    }
 
     void UpdateCursorPos(Vector3 point) {
         float ms = MapStatus.MAPCHIP_SIZE;
@@ -69,24 +65,6 @@ public class MapPointer : MonoBehaviour
         cursorPos = MapStatus.ToMapPos(v);
     }
 
-    void MoveView() {
-        ViewPos.transform.Rotate(Vector3.down * rotSpeed.x, Space.World);
-        ViewPos.transform.Rotate(Vector3.right * rotSpeed.y, Space.World);
-        rotSpeed *= 0.75f;
-    }
 
-    void DragMap() {
-        var wheel = Input.GetAxis("Mouse ScrollWheel");
-        if (wheel > 0) cameraPos.localPosition *= 0.8f;
-        else if (wheel < 0) cameraPos.localPosition *= 1.25f;
-
-        if (Input.GetMouseButtonDown(1)) rotSpeed = new Vector2(0, 0);
-        if (Input.GetMouseButton(1)) {
-            rotSpeed += new Vector2(-Input.GetAxis("Mouse X"), 0);
-        }
-        if (Input.GetMouseButton(2)) {
-            cameraPos.localPosition -= new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0) * 2f;
-        }
-    }
 
 }
