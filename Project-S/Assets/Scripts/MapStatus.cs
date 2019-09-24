@@ -8,6 +8,13 @@ public enum Map_type {
     MAP_WALL,
 }
 
+public enum Direction {
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+}
+
 public class MapStatus
 {
     public static Map_type[] field_map;

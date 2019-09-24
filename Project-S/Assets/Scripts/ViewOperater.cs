@@ -10,6 +10,11 @@ public class ViewOperater : MonoBehaviour {
     [SerializeField] Transform cameraPos;
     Vector2 rotSpeed;
     bool isTurning;
+    public static ReactiveProperty<Direction> viewDir;
+
+    void Awake() {
+        viewDir = new ReactiveProperty<Direction>(Direction.NORTH);
+    }
 
     void Start() {
         isTurning = false;
@@ -33,6 +38,7 @@ public class ViewOperater : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(2) && !isTurning) {
             //rotSpeed = new Vector2(0, 0);
+            viewDir.Value = (Direction)(((int)viewDir.Value + 1) % 4);
             isTurning = true;
             var nextAngle = (transform.rotation.eulerAngles.y + 90) % 360;
             ViewPos.transform.DORotate(Vector3.up * nextAngle, 0.5f)

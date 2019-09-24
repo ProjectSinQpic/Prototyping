@@ -5,6 +5,7 @@ using UnityEngine;
 public class KnightStatus : MonoBehaviour
 {
     public Vector2 pos;
+    public Direction dir;
     public int HP;
     public int attack;
 

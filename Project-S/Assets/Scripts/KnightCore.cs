@@ -30,7 +30,7 @@ public class KnightCore : MonoBehaviour
         isFinished = false;
         isDead = false;
         all.Add(this);
-        transform.position = MapStatus.ToWorldPos(status.pos) + Vector3.up * 4f;
+        transform.position = MapStatus.ToWorldPos(status.pos)/* + Vector3.up * 4f*/;
     }
 
     void Start() {
