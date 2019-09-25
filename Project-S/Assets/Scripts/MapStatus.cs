@@ -13,6 +13,7 @@ public enum Direction {
     EAST,
     SOUTH,
     WEST,
+    NONE,
 }
 
 public class MapStatus
@@ -46,4 +47,11 @@ public class MapStatus
         return false;
     }
 
+    public static Direction VectorToDirection(Vector3 v) {
+        if (v == Vector3.right) return Direction.SOUTH;
+        if (v == Vector3.left) return Direction.NORTH;
+        if (v == Vector3.forward) return Direction.EAST;
+        if (v == Vector3.back) return Direction.WEST;
+        return Direction.NONE;
+    }
 }

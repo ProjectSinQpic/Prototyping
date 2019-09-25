@@ -6,6 +6,7 @@ using UniRx;
 
 public class KnightAttack : KnightParts {
 
+    public KnightView view;
     KnightDisplayArea _disp;
 
 
@@ -51,6 +52,8 @@ public class KnightAttack : KnightParts {
     void DealDamage(KnightCore target) {
         target.status.HP -= core.status.attack;
         core.status.HP -= target.status.attack;
+        view.ActionView("attack", core.status.dir);
+        target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
     }
 
     void EndAttack() {

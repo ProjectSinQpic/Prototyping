@@ -16,7 +16,7 @@ public class KnightDeath : KnightParts {
     void Die() {
         //Destroy(gameObject);
         core.isDead = true;
-        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
 }

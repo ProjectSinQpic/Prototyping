@@ -913,7 +913,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -923,7 +923,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -938,7 +938,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -974,6 +974,11 @@ PrefabInstance:
         type: 3}
       propertyPath: attackRange
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568686668975344919, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: dir
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4968879958990041667, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2257,7 +2262,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2267,7 +2272,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2282,7 +2287,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2318,6 +2323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: attackRange
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568686668975344919, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: dir
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4968879958990041667, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2452,7 +2462,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2462,7 +2472,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2477,7 +2487,7 @@ PrefabInstance:
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -2513,6 +2523,11 @@ PrefabInstance:
         type: 3}
       propertyPath: attackRange
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568686668975344919, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: dir
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4968879958990041667, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}

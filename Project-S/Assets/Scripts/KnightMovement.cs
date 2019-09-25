@@ -5,10 +5,13 @@ using UniRx;
 using System.Linq;
 
 public class KnightMovement : KnightParts {
-    readonly int moveFrame = 5;
     public bool isMoving = false;
+    public KnightView view;
+
     KnightDisplayArea _disp;
     Vector2 prev_pos;
+
+    readonly int moveFrame = 5;
 
     void Awake() {
         prev_pos = core.status.pos;
@@ -44,16 +47,23 @@ public class KnightMovement : KnightParts {
 
     public IEnumerator MoveToPointCoroutine(MovableArea area) {
         isMoving = true;
+        var nowDir = Direction.NONE;
         foreach (var d in area.root) {
             Vector3 dir = d == 'r' ? Vector3.right :
                           d == 'l' ? Vector3.left :
                           d == 'u' ? Vector3.back : Vector3.forward;
+            if (nowDir != MapStatus.VectorToDirection(dir)) {
+                nowDir = MapStatus.VectorToDirection(dir);
+                view.ActionView("move", nowDir);
+            }
             for (int i = 0; i < moveFrame; i++) {
                 transform.position += dir * MapStatus.MAPCHIP_SIZE / moveFrame;
                 yield return null;
             }
         }
         core.status.pos = area.pos;
+        view.ActionView("idle", nowDir);
+        core.status.dir = nowDir;
         isMoving = false;
     }
 
@@ -71,6 +81,8 @@ public class KnightMovement : KnightParts {
     }
 
     void OnAttack() {
+        Debug.Log("111");
+
         core.NextAction("attack_set");
         MenuGenerator.Instance().Close();
     }

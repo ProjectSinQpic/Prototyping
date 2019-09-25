@@ -46,7 +46,7 @@ public class KnightCore : MonoBehaviour
                            .Subscribe(_ => isSelected.Value = false);
         isSelected
             .Subscribe(b => {
-                GetComponent<SphereCollider>().enabled = !b;
+                GetComponent<BoxCollider>().enabled = !b;
             });
 
         isSelected

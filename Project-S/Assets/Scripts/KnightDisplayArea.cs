@@ -59,6 +59,7 @@ public class KnightDisplayArea : KnightParts
     }
 
     public void DisplayAttackArea() {
+        RemoveArea();
         attackableArea = new List<Vector2>();
         objects_area = new List<GameObject>();
         FindAttackable(core.status.pos + Vector2.right, core.status.attackRange);

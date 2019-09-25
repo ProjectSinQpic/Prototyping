@@ -5,41 +5,57 @@ using UniRx;
 
 public class KnightView : KnightParts {
 
-    public Sprite front, back; // 後で変更
+    public AnimationPlayer anim;
+    public List<Sprite> idle_front, idle_back;      //後にKnightStatusから取得する予定
+    public List<Sprite> move_front, move_back;
+    public List<Sprite> attack_front, attack_back;
     SpriteRenderer sp;
-    
-    void Start() {
+    Dictionary<string, float> animSpeed = new Dictionary<string, float>() {
+        {"idle", 1f },
+        {"move", 0.25f },
+        {"attack", 0.25f },
+    };
+
+    void Awake() {
         sp = GetComponent<SpriteRenderer>();
+        InitAnimation();
+    }
+
+    void Start() {
         ViewOperater.viewDir
             .Subscribe(d => ChangeDir(d));
+        anim.isPlaying
+            .Where(x => !x)
+            .Subscribe(_ => ActionView("idle", core.status.dir));
+    }
+
+    void InitAnimation() {
+        anim.AddAnimation("idle_front", idle_front);
+        anim.AddAnimation("idle_back", idle_back);
+        anim.AddAnimation("move_front", move_front);
+        anim.AddAnimation("move_back", move_back);
+        anim.AddAnimation("attack_front", attack_front);
+        anim.AddAnimation("attack_back", attack_back);
     }
 
     void ChangeDir(Direction dir) {
         var rot = new Vector3(0, (int)ViewOperater.viewDir.Value * 90 + 45, 0);
         transform.rotation = Quaternion.Euler(rot);
 
-        Direction spriteDir = (Direction)Mathf.Repeat((int)core.status.dir - (int)ViewOperater.viewDir.Value, 4);
-        Debug.Log(spriteDir);
-        //後で変更↓
-        var s = transform.localScale; 
-        switch (spriteDir) { 
-            case Direction.NORTH:
-                sp.sprite = front;
-                transform.localScale = new Vector3(Mathf.Abs(s.x), s.y, s.z);
-                    break;
-            case Direction.EAST:
-                sp.sprite = back;
-                transform.localScale = new Vector3(Mathf.Abs(s.x), s.y, s.z);
-                break;
-            case Direction.SOUTH:
-                sp.sprite = back;
-                transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
-                break;
-            case Direction.WEST:
-                sp.sprite = front;
-                transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
-                break;
-        }
-        //後で変更↑
+        ActionView("idle", core.status.dir);
+    }
+
+    public void ActionView(string action, Direction dir) {
+        var spriteDir = (Direction)Mathf.Repeat((int)dir - (int)ViewOperater.viewDir.Value, 4);
+
+        var d = spriteDir == Direction.NORTH || spriteDir == Direction.WEST ? "front" : "back";
+        var f = spriteDir == Direction.NORTH || spriteDir == Direction.EAST ? 1 : -1;
+        var isLoop = action == "idle" || action == "move";
+        var speed = animSpeed[action];
+
+        var s = transform.localScale;
+        transform.localScale = new Vector3(f * Mathf.Abs(s.x), s.y, s.z);
+        var key = action + "_" + d;
+        anim.Play(key, speed, isLoop);
     }
 }

@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+
 
 public class AnimationPlayer : MonoBehaviour {
 
-    Dictionary<string, List<Sprite>> animationList;
-    SpriteRenderer sp;
+    public ReactiveProperty<bool> isPlaying;
 
-    void Start() {
-        animationList = new Dictionary<string, List<Sprite>>();
+    Dictionary<string, List<Sprite>> animationList = new Dictionary<string, List<Sprite>>();
+    SpriteRenderer sp;
+    Coroutine nowAnim;
+
+
+    void Awake() {
+        isPlaying = new ReactiveProperty<bool>(false);
         sp = GetComponent<SpriteRenderer>();
     }
 
@@ -17,20 +23,24 @@ public class AnimationPlayer : MonoBehaviour {
     }
 
     public void Play(string key, float duration, bool isLoop) {
-        if (isLoop) StartCoroutine(PlayLoopCoroutine(animationList[key], duration));
-        else StartCoroutine(PlaySingleCoroutine(animationList[key], duration));
+        if (nowAnim != null) StopCoroutine(nowAnim);
+        if (isLoop) nowAnim = StartCoroutine(PlayLoopCoroutine(animationList[key], duration));
+        else nowAnim = StartCoroutine(PlaySingleCoroutine(animationList[key], duration));
     }
 
     IEnumerator PlaySingleCoroutine(List<Sprite> sprites, float duration) {
         var interval = duration / sprites.Count;
+        isPlaying.Value = true;
         for(int i = 0; i < sprites.Count; i++) {
             sp.sprite = sprites[i];
             yield return new WaitForSeconds(interval);
         }
+        isPlaying.Value = false;
     }
 
     IEnumerator PlayLoopCoroutine(List<Sprite> sprites, float duration) {
         var interval = duration / sprites.Count;
+        isPlaying.Value = true;
         while (true) {
             for (int i = 0; i < sprites.Count; i++) {
                 sp.sprite = sprites[i];
