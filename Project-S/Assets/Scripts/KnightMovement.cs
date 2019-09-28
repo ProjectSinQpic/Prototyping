@@ -82,7 +82,6 @@ public class KnightMovement : KnightParts {
 
     void OnAttack() {
         Debug.Log("111");
-
         core.NextAction("attack_set");
         MenuGenerator.Instance().Close();
     }

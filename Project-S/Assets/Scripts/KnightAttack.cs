@@ -43,7 +43,9 @@ public class KnightAttack : KnightParts {
         }
         DealDamage(target);
         if (core.status.HP <= 0) core.NextAction("die");
+        else view.ActionView("attack", core.status.dir);
         if (target.status.HP <= 0) target.NextAction("die");
+        else target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
         StatusUI.Instance().UpdateUI(core.status);
         EndAttack();
         core.NextAction("finish");
@@ -52,8 +54,8 @@ public class KnightAttack : KnightParts {
     void DealDamage(KnightCore target) {
         target.status.HP -= core.status.attack;
         core.status.HP -= target.status.attack;
-        view.ActionView("attack", core.status.dir);
-        target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
+        
+        
     }
 
     void EndAttack() {

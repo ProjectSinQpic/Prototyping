@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 public class KnightView : KnightParts {
 
@@ -40,7 +41,7 @@ public class KnightView : KnightParts {
 
     void ChangeDir(Direction dir) {
         var rot = new Vector3(0, (int)ViewOperater.viewDir.Value * 90 + 45, 0);
-        transform.rotation = Quaternion.Euler(rot);
+        transform.DORotate(rot, 0.5f).SetEase(Ease.OutCirc);
 
         ActionView("idle", core.status.dir);
     }

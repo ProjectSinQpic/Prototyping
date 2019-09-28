@@ -6,22 +6,31 @@ using DG.Tweening;
 
 public class ViewOperater : MonoBehaviour {
 
+    public MapPointer pointer;
     [SerializeField] Transform ViewPos;
     [SerializeField] Transform cameraPos;
-    Vector2 rotSpeed;
-    bool isTurning;
     public static ReactiveProperty<Direction> viewDir;
 
+    Transform target;
+    Vector2 rotSpeed;
+    bool isTurning;
+
+
+
     void Awake() {
+        target = null;
         viewDir = new ReactiveProperty<Direction>(Direction.NORTH);
     }
 
     void Start() {
         isTurning = false;
+        pointer.OnClickedKnight
+            .Subscribe(k => target = k.transform);
     }
 
     void Update() {
         MoveView();
+        FollowTarget();
         DragMap();
     }
 
@@ -29,6 +38,11 @@ public class ViewOperater : MonoBehaviour {
         ViewPos.transform.Rotate(Vector3.down * rotSpeed.x, Space.World);
         ViewPos.transform.Rotate(Vector3.right * rotSpeed.y, Space.World);
         rotSpeed *= 0.75f;
+    }
+
+    void FollowTarget() {
+        if (target == null) return;
+        ViewPos.position += (target.position - ViewPos.position) * 0.15f;
     }
 
     void DragMap() {
@@ -49,6 +63,7 @@ public class ViewOperater : MonoBehaviour {
         //    rotSpeed += new Vector2(-Input.GetAxis("Mouse X"), 0);
         //}
         if (Input.GetMouseButton(1)) {
+            target = null;
             var vx = Input.GetAxis("Mouse X") * transform.right;
             var vy = Input.GetAxis("Mouse Y") * transform.forward;
             ViewPos.position -= (vx + vy) * 4f;
