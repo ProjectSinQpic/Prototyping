@@ -8,10 +8,12 @@ public class KnightAttack : KnightParts {
 
     public KnightView view;
     KnightDisplayArea _disp;
+    bool iscanceled;
 
 
     void Awake() {
         _disp = core.GetComponent<KnightDisplayArea>();
+        iscanceled = false;
     }
 
 
@@ -26,40 +28,48 @@ public class KnightAttack : KnightParts {
 
         core.Message
             .Where(x => x == "attack_cancel")
-            .Subscribe(_ => EndAttack());
+            .Where(_ => !iscanceled)
+            .Subscribe(_ => CancelAttack());
 
     }
 
     void SelectOpponent() {
-        GameState.knight_state = Knight_State.attack;
         _disp.DisplayAttackArea();
+
     }
 
     void Attack(KnightCore target) {
         if (!CheckAttackable(target)) {
             core.NextAction("attack_cancel");
-            EndAttack();
             return;
         }
-        DealDamage(target);
-        if (core.status.HP <= 0) core.NextAction("die");
-        else view.ActionView("attack", core.status.dir);
+        StartCoroutine(AttackCoroutine(target));
+    }
+
+    IEnumerator AttackCoroutine(KnightCore target) {
+        view.ActionView("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
+        DealDamage(core, target);
         if (target.status.HP <= 0) target.NextAction("die");
-        else target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
-        StatusUI.Instance().UpdateUI(core.status);
-        EndAttack();
+        else {
+            yield return new WaitForSeconds(0.5f);
+            target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
+            DealDamage(target, core);
+            if (core.status.HP <= 0) core.NextAction("die");
+            yield return new WaitForSeconds(0.5f);
+        }
+        StatusUI.Instance().UpdateUI(core.status); //TODO 後にpull型にしたい
+        _disp.RemoveArea();
         core.NextAction("finish");
     }
 
-    void DealDamage(KnightCore target) {
-        target.status.HP -= core.status.attack;
-        core.status.HP -= target.status.attack;
-        
-        
+    void DealDamage(KnightCore off, KnightCore def) {
+        //TODO ダメージ計算のシステム考える
+        def.status.HP -= off.status.attack;
     }
 
-    void EndAttack() {
+    void CancelAttack() {
         _disp.RemoveArea();
+        core.NextAction("select");
     }
 
     bool CheckAttackable(KnightCore target) {

@@ -21,12 +21,13 @@ public class KnightDisplayArea : KnightParts
     }
 
     void Start() {
-        core.isSelected
-            .Where(b => b == true)
+
+        core.Message
+            .Where(x => x == "look")
             .Subscribe(_ => DisplayMoveArea());
 
-        core.isSelected
-            .Where(b => b == false)
+        core.Message
+            .Where(x => x == "look_cancel")
             .Subscribe(_ => RemoveArea());
 
     }
@@ -76,12 +77,12 @@ public class KnightDisplayArea : KnightParts
         }
     }
 
-    public List<MovableArea> CalcMovableArea() {
-        movableArea = new List<MovableArea>();
-        objects_area = new List<GameObject>();
-        FindMovable(new MovableArea() { pos = core.status.pos, root = "" }, core.status.moveRange);
-        return movableArea;
-    }
+    //public List<MovableArea> CalcMovableArea() {
+    //    movableArea = new List<MovableArea>();
+    //    objects_area = new List<GameObject>();
+    //    FindMovable(new MovableArea() { pos = core.status.pos, root = "" }, core.status.moveRange);
+    //    return movableArea;
+    //}
 
     public void RemoveArea() {
         foreach (var o in objects_area) {

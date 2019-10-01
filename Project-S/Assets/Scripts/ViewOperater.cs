@@ -24,8 +24,8 @@ public class ViewOperater : MonoBehaviour {
 
     void Start() {
         isTurning = false;
-        pointer.OnClickedKnight
-            .Subscribe(k => target = k.transform);
+        GameState.selected
+            .Subscribe(k => target = k ? k.transform : null);
     }
 
     void Update() {

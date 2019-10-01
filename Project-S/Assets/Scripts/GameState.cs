@@ -16,13 +16,14 @@ public class GameState : MonoBehaviour {
 
     public static ReactiveProperty<bool> isMyTurn;
 
-    public static KnightCore operating;
+    public static ReactiveProperty<KnightCore> selected;
 
-    public static Knight_State knight_state;
+    public static ReactiveProperty<Knight_State> knight_state;
 
     void Awake() {
-        knight_state = Knight_State.move;
+        knight_state = new ReactiveProperty<Knight_State>(Knight_State.move);
         isMyTurn = new ReactiveProperty<bool>(true);
+        selected = new ReactiveProperty<KnightCore>(null);
     }
 
     void Start() {
@@ -35,9 +36,11 @@ public class GameState : MonoBehaviour {
             .Where(_ => KnightCore_Enemy.enemy_all.Any(x => x.isFinished))
             .Subscribe(_ => isMyTurn.Value = true);
 
-        isMyTurn
-            .Subscribe(_ => knight_state = Knight_State.move);
+        MapPointer.instance.OnClickedKnight
+           .Where(_ => knight_state.Value == Knight_State.move)
+           .Subscribe(o => selected.Value = o.GetComponent<KnightCore>());
 
+        isMyTurn.Subscribe(_ => knight_state.Value = Knight_State.move);
     }
 
 }

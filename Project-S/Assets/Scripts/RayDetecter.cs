@@ -16,11 +16,10 @@ public class RayDetecter : MonoBehaviour
 
     void Update() {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity)) {
-            if (hit.collider) {
-                _onPointedObject.OnNext(hit);
-            }
+        var hit = Physics.RaycastAll(ray.origin, ray.direction, Mathf.Infinity);
+        foreach(var i in hit) {
+            if (i.collider.gameObject.layer != LayerMask.NameToLayer("Detectable")) continue;
+            _onPointedObject.OnNext(i);
         }
     }
 

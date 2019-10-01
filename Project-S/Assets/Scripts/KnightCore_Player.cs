@@ -9,32 +9,34 @@ public class KnightCore_Player : KnightCore {
 
     protected override void Init() {
         player_all.Add(this);
+
         MapPointer.instance.OnClickedMap
-                   .Where(_ => isDead == false)
-                   .Where(_ => isFinished == false)
-                   .Where(_ => GameState.operating == this)
-                   .Where(_ => GameState.isMyTurn.Value == true)
-                   .Where(_ => GameState.knight_state == Knight_State.move)
+                   .Where(_ => isOperable())
+                   .Where(_ => GameState.knight_state.Value == Knight_State.move)
                    .Subscribe(v => { next_pos = v; NextAction("move"); });
 
         MapPointer.instance.OnClickedKnight
-                   .Where(o => o.GetComponent<KnightCore>().isDead == false)
-                   .Where(_ => isFinished == false)
-                   .Where(_ => GameState.operating == this)
-                   .Where(_ => GameState.isMyTurn.Value == true)
-                   .Where(_ => GameState.knight_state == Knight_State.attack)
+                   .Where(_ => isOperable())
+                   .Where(_ => GameState.knight_state.Value == Knight_State.attack)
                    .Subscribe(n => { next_target = n.GetComponent<KnightCore>(); NextAction("attack"); });
 
         MapPointer.instance.OnClickedMap
-                   .Where(_ => isFinished == false)
-                   .Where(_ => GameState.operating == this)
-                   .Where(_ => GameState.isMyTurn.Value == true)
-                   .Where(_ => GameState.knight_state == Knight_State.attack)
-                   .Subscribe(n => { NextAction("attack_cancel"); });
+                   .Where(_ => isOperable())
+                   .Where(_ => GameState.knight_state.Value == Knight_State.attack)
+                   .Subscribe(n => NextAction("attack_cancel"));
 
+        Message.Where(x => x == "select")
+            .Subscribe(_ => KnightActionMenu.instance.DisplayMenu(this));
+
+        Message.Where(x => x == "finish")
+            .Subscribe(_ => GameState.selected.Value = null);
 
         GameState.isMyTurn
             .Where(x => x)
             .Subscribe(_ => isFinished = false);
+    }
+
+    bool isOperable() {
+        return GameState.selected.Value == this && GameState.isMyTurn.Value;
     }
 }

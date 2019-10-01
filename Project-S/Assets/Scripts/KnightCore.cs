@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
 
 public struct MovableArea {
     public Vector2 pos;
@@ -12,8 +13,7 @@ public struct MovableArea {
 public class KnightCore : MonoBehaviour
 {
     public KnightStatus status;
-    public ReactiveProperty<bool> isSelected;
-    public Vector2 next_pos;
+    public Vector2 next_pos, prev_pos;
     public KnightCore next_target;
     public bool isFinished, isDead;
 
@@ -25,42 +25,50 @@ public class KnightCore : MonoBehaviour
 
     void Awake() {
         message = new Subject<string>();
-        isSelected = new ReactiveProperty<bool>();
-        isSelected.Value = false;
         isFinished = false;
         isDead = false;
         all.Add(this);
         transform.position = MapStatus.ToWorldPos(status.pos)/* + Vector3.up * 4f*/;
+
+        prev_pos = status.pos;
     }
 
     void Start() {
-        MapPointer.instance.OnClickedKnight
-                   .Where(o => !o.GetComponent<KnightCore>().isDead)
-                   .Where(o => GameState.knight_state == Knight_State.move)
-                   .Where(o => o == gameObject)
-                   .Subscribe(_ => isSelected.Value = !isSelected.Value);
-        MapPointer.instance.OnClickedKnight
-                           .Where(o => !o.GetComponent<KnightCore>().isDead)
-                           .Where(o => GameState.knight_state == Knight_State.move)
-                           .Where(o => o != gameObject)
-                           .Subscribe(_ => isSelected.Value = false);
-        isSelected
-            .Subscribe(b => {
-                GetComponent<BoxCollider>().enabled = !b;
-            });
 
-        isSelected
-            .Where(b => b == true)
-            .Subscribe(_ => { StatusUI.Instance().UpdateUI(status); GameState.operating = this; });
-        Init();
+        GameState.selected
+            .Where(b => b == this)
+            .Subscribe(_ => OnSelected());
+
+        GameState.selected
+            .Select(b => b == this)
+            .DistinctUntilChanged()
+            .Where(b => !b)
+            .Subscribe(_ => OnNotSelected());
+
 
         message.Where(x => x == "finish")
             .Subscribe(_ => isFinished = true);
+
+        Init();
     }
 
     protected virtual void Init() { }
 
     public void NextAction(string action) {
+        Debug.Log("Action : " + action);
         message.OnNext(action);
     }
+
+    void OnSelected() {
+        StatusUI.Instance().UpdateUI(status);
+        GetComponent<BoxCollider>().enabled = false;
+        NextAction("look");
+    }
+
+    void OnNotSelected() {
+        //TODO UI消去処理作っておく
+        GetComponent<BoxCollider>().enabled = true;
+        NextAction("look_cancel");
+    }
+
 }
