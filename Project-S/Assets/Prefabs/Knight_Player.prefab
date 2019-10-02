@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 2331229448196191695}
   - component: {fileID: 6276705537405091504}
   - component: {fileID: 2024080438562049742}
-  - component: {fileID: 255039486}
   - component: {fileID: 255039487}
+  - component: {fileID: 255039486}
   m_Layer: 9
   m_Name: Knight_Player
   m_TagString: Knight_Player
@@ -175,12 +175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 401072885564762111}
   anim: {fileID: 6276705537405091504}
-  idle_front: []
-  idle_back: []
-  move_front: []
-  move_back: []
-  attack_front: []
-  attack_back: []
 --- !u!114 &6276705537405091504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,19 +200,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 5.12, z: 0.2000003}
   m_Center: {x: 0, y: 2.56, z: 0}
---- !u!114 &255039486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2202928215577173277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf3beb78788a6c944897cc157e3693ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  core: {fileID: 401072885564762111}
 --- !u!114 &255039487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,3 +214,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 401072885564762111}
   view: {fileID: 2331229448196191695}
+--- !u!114 &255039486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202928215577173277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3beb78788a6c944897cc157e3693ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 401072885564762111}

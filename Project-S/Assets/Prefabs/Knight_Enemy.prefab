@@ -175,12 +175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 6263819318740472119}
   anim: {fileID: 412683581495583378}
-  idle_front: []
-  idle_back: []
-  move_front: []
-  move_back: []
-  attack_front: []
-  attack_back: []
 --- !u!114 &412683581495583378
 MonoBehaviour:
   m_ObjectHideFlags: 0
