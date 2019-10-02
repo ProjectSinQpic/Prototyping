@@ -36,7 +36,7 @@ public class KnightDisplayArea : KnightParts
         movableArea = new List<MovableArea>();
         attackableArea = new List<Vector2>();
         objects_area = new List<GameObject>();
-        FindMovable(new MovableArea() { pos = core.status.pos, root = ""}, core.status.moveRange);
+        CalcMovable();
 
         var m = movableArea.Select(x => x.pos);
 
@@ -63,10 +63,7 @@ public class KnightDisplayArea : KnightParts
         RemoveArea();
         attackableArea = new List<Vector2>();
         objects_area = new List<GameObject>();
-        FindAttackable(core.status.pos + Vector2.right, core.status.attackRange);
-        FindAttackable(core.status.pos + Vector2.left, core.status.attackRange);
-        FindAttackable(core.status.pos + Vector2.up, core.status.attackRange);
-        FindAttackable(core.status.pos + Vector2.down, core.status.attackRange);
+        CalcAttackable();
 
         foreach (var i in attackableArea) {
             var obj = Instantiate(prefab_area, MapStatus.ToWorldPos(i) + Vector3.up, Quaternion.identity);
@@ -91,6 +88,10 @@ public class KnightDisplayArea : KnightParts
         objects_area = new List<GameObject>();
     }
 
+    public void CalcMovable() {
+        FindMovable(new MovableArea() { pos = core.status.pos, root = "" }, core.status.moveRange);
+    }
+
     void FindMovable(MovableArea p, int mp) {
         if (MapStatus.IsOutOfMap(p.pos)) return;
         int next_mp = mp - MapStatus.MAP_MP[(int)MapStatus.MapTypeOf(p.pos)];
@@ -112,6 +113,13 @@ public class KnightDisplayArea : KnightParts
         FindMovable(new MovableArea() { pos = p.pos + Vector2.up, root = p.root + "u" }, next_mp);
         FindMovable(new MovableArea() { pos = p.pos + Vector2.down, root = p.root + "d" }, next_mp);
     }
+
+    public void CalcAttackable() {
+        FindAttackable(core.status.pos + Vector2.right, core.status.attackRange);
+        FindAttackable(core.status.pos + Vector2.left, core.status.attackRange);
+        FindAttackable(core.status.pos + Vector2.up, core.status.attackRange);
+        FindAttackable(core.status.pos + Vector2.down, core.status.attackRange);
+    } 
 
     void FindAttackable(Vector2 pos, int ap) {
         if (MapStatus.IsOutOfMap(pos) || MapStatus.MapTypeOf(pos) == Map_type.MAP_NONE) return;

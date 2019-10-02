@@ -4,12 +4,27 @@ using UnityEngine;
 
 public class KnightStatus : MonoBehaviour
 {
+    public KnightDatabase data;
+
     public Vector2 pos;
     public Direction dir;
-    public int HP;
-    public int attack;
 
-    public int moveRange;
-    public int attackRange;
+
+
+    [HideInInspector] public int HP;
+    [HideInInspector] public int MP;
+    [HideInInspector] public int attack;
+    [HideInInspector] public int defense;
+    [HideInInspector] public int moveRange;
+    [HideInInspector] public int attackRange;
+
+    void Awake() {
+        HP = data.maxHP;
+        MP = data.maxMP;
+        attack = data.attack;
+        defense = data.defense;
+        moveRange = data.moveRange;
+        attackRange = data.attackRange;
+    }
 
 }

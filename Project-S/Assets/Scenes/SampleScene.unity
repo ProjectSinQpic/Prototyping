@@ -294,6 +294,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Knight_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2202928215577173277, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2202928215577173249, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -394,6 +399,12 @@ PrefabInstance:
       propertyPath: attackRange
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2202928215577173248, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef,
+        type: 2}
     - target: {fileID: 2202928215577173253, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
         type: 3}
       propertyPath: moveColor.r
@@ -433,6 +444,11 @@ PrefabInstance:
         type: 3}
       propertyPath: moveColor.a
       value: 0.29411766
+      objectReference: {fileID: 0}
+    - target: {fileID: 2331229448196191695, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: idle_front.Array.size
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba71abf5b7b8d0439ec5b3090627acc, type: 3}
@@ -625,6 +641,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Knight_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2202928215577173277, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2202928215577173249, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -730,6 +751,12 @@ PrefabInstance:
       propertyPath: dir
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2202928215577173248, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 48b76cc0944433144b618ecffa798fd5,
+        type: 2}
     - target: {fileID: 2202928215577173253, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
         type: 3}
       propertyPath: moveColor.r
@@ -788,6 +815,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Knight_Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2604501437493317500, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
@@ -879,6 +911,12 @@ PrefabInstance:
       propertyPath: dir
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8568686668975344919, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef,
+        type: 2}
     - target: {fileID: 4968879958990041667, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: moveColor.r
@@ -1554,6 +1592,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Knight_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2202928215577173277, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2202928215577173249, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1659,6 +1702,12 @@ PrefabInstance:
       propertyPath: dir
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2202928215577173248, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef,
+        type: 2}
     - target: {fileID: 2202928215577173253, guid: 4ba71abf5b7b8d0439ec5b3090627acc,
         type: 3}
       propertyPath: moveColor.r
@@ -2014,6 +2063,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Knight_Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2604501437493317500, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2104,6 +2158,12 @@ PrefabInstance:
       propertyPath: dir
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8568686668975344919, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 48b76cc0944433144b618ecffa798fd5,
+        type: 2}
     - target: {fileID: 4968879958990041667, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: moveColor.r
@@ -2215,6 +2275,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Knight_Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2604501437493317500, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5390452947785909430, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2305,6 +2370,12 @@ PrefabInstance:
       propertyPath: dir
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8568686668975344919, guid: 5cee952e8708f5143a0f1e14976d36e0,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef,
+        type: 2}
     - target: {fileID: 4968879958990041667, guid: 5cee952e8708f5143a0f1e14976d36e0,
         type: 3}
       propertyPath: moveColor.r

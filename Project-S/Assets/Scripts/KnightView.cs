@@ -7,9 +7,9 @@ using DG.Tweening;
 public class KnightView : KnightParts {
 
     public AnimationPlayer anim;
-    public List<Sprite> idle_front, idle_back;      //後にKnightStatusから取得する予定
-    public List<Sprite> move_front, move_back;
-    public List<Sprite> attack_front, attack_back;
+    List<Sprite> idle_front, idle_back;    
+    List<Sprite> move_front, move_back;
+    List<Sprite> attack_front, attack_back;
     SpriteRenderer sp;
     Dictionary<string, float> animSpeed = new Dictionary<string, float>() {
         {"idle", 1f },
@@ -19,6 +19,12 @@ public class KnightView : KnightParts {
 
     void Awake() {
         sp = GetComponent<SpriteRenderer>();
+        idle_front = core.status.data.image_idle_front;
+        idle_back = core.status.data.image_idle_back;
+        move_front = core.status.data.image_move_front;
+        move_back = core.status.data.image_move_back;
+        attack_front = core.status.data.image_attack_front;
+        attack_back = core.status.data.image_attack_back;
         InitAnimation();
     }
 

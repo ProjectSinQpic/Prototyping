@@ -49,17 +49,23 @@ public class KnightAttack : KnightParts {
     IEnumerator AttackCoroutine(KnightCore target) {
         view.ActionView("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
         DealDamage(core, target);
+        yield return new WaitForSeconds(0.4f);
         if (target.status.HP <= 0) target.NextAction("die");
-        else {
-            yield return new WaitForSeconds(0.5f);
-            target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
-            DealDamage(target, core);
-            if (core.status.HP <= 0) core.NextAction("die");
-            yield return new WaitForSeconds(0.5f);
-        }
+        else yield return StartCoroutine(CounterAttackCoroutine(target));
+        yield return new WaitForSeconds(0.2f);
         StatusUI.Instance().UpdateUI(core.status); //TODO 後にpull型にしたい
         _disp.RemoveArea();
         core.NextAction("finish");
+    }
+
+    IEnumerator CounterAttackCoroutine(KnightCore target) {
+        target.GetComponent<KnightDisplayArea>().CalcAttackable();
+        if (!target.GetComponent<KnightAttack>().CheckAttackable(core)) yield break;
+        yield return new WaitForSeconds(0.2f);
+        target.GetComponent<KnightView>().ActionView("attack", target.status.dir);
+        DealDamage(target, core);
+        yield return new WaitForSeconds(0.4f);
+        if (core.status.HP <= 0) core.NextAction("die");
     }
 
     void DealDamage(KnightCore off, KnightCore def) {
@@ -72,7 +78,7 @@ public class KnightAttack : KnightParts {
         core.NextAction("select");
     }
 
-    bool CheckAttackable(KnightCore target) {
+    public bool CheckAttackable(KnightCore target) {
         if (tag == target.tag) return false;
         return _disp.attackableArea.Contains(target.status.pos);
     }
