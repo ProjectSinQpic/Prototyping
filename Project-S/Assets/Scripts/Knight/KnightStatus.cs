@@ -9,7 +9,9 @@ public class KnightStatus : MonoBehaviour
     public Vector2 pos;
     public Direction dir;
 
+    public int level;
 
+    public int SP;
 
     [HideInInspector] public int HP;
     [HideInInspector] public int MP;
@@ -19,12 +21,8 @@ public class KnightStatus : MonoBehaviour
     [HideInInspector] public int attackRange;
 
     public void Init() {
-        HP = data.maxHP;
-        MP = data.maxMP;
-        attack = data.attack;
-        defense = data.defense;
-        moveRange = data.moveRange;
-        attackRange = data.attackRange;
+        StatusCalculator calculator = new TRSP_StatusCalculator(this);
+        calculator.Calc();
         GetComponent<KnightView>().Init();
     }
 

@@ -7,12 +7,12 @@ using System.Linq;
 
 public class FieldTest : MonoBehaviour {
     // Start is called before the first frame update
-    public List<KnightDatabase> knights;
+    public List<KnightInfo> knights;
     public bool isLoadMode;
     public bool isSaveMode;
 
     void Start() {
-        InventoryLoader.knights = knights.Select(x => KnightInfo.Create(x)).ToList(); 
+        InventoryLoader.knights = knights; 
         if(isLoadMode){
             InventoryLoader.Load();
         }

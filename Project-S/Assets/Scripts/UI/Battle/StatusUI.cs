@@ -7,8 +7,10 @@ using UniRx;
 public class StatusUI : MonoBehaviour
 {
 
-    public Text obj_attack;
     public Text obj_HP;
+    public Text obj_MP;
+    public Text obj_attack;
+    public Text obj_defense;
     public Text turn;
 
     static StatusUI instance = null;
@@ -29,8 +31,10 @@ public class StatusUI : MonoBehaviour
     }
 
     public void UpdateUI(KnightStatus status) {
-        obj_attack.text = "攻撃力 : " + status.attack.ToString();
         obj_HP.text = "HP : " + status.HP.ToString();
+        obj_MP.text = "MP : " + status.MP.ToString();
+        obj_attack.text = "攻撃力 : " + status.attack.ToString();
+        obj_defense.text = "防御力 : " + status.defense.ToString();
     }
 
     void UpdateTurn(bool turnState) {

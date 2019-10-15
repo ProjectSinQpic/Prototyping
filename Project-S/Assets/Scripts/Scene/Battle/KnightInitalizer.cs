@@ -8,9 +8,16 @@ public class KnightInitalizer : MonoBehaviour {
     public List<KnightStatus> players, enemies; //TODO 後にプレハブから生成したい
     void Awake() {
         
-        for(int i = 0; i < players.Count; i++) {
-            players[i].data = InventoryLoader.Knights[i].data;
+        if(InventoryLoader.Knights != null) {
+            for(int i = 0; i < players.Count; i++) {
+                var player = players[i];
+                var inventory = InventoryLoader.Knights[i];
+                player.data = inventory.data;
+                player.level = inventory.level;
+                player.SP = inventory.SP;
+            }
         }
+        
 
         players.ForEach(x => x.Init());
 
