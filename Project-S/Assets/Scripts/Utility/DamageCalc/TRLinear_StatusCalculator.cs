@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TRSP_StatusCalculator : StatusCalculator {
+public class TRLinear_StatusCalculator : StatusCalculator {
+
+    /*  
+     *  TR値に基づいてレベルに一次関数的に比例する計算式
+     */
 
     const float TR_HP = 0.3f;
     const float TR_MP = 0.2f;
     const float TR_attack = 0.2f;
     const float TR_defense = 0.2f;
 
-    public TRSP_StatusCalculator(KnightStatus _status) 
+    public TRLinear_StatusCalculator(KnightStatus _status) 
         : base (_status) { 
     }
     

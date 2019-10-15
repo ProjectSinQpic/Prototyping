@@ -21,7 +21,7 @@ public class KnightStatus : MonoBehaviour
     [HideInInspector] public int attackRange;
 
     public void Init() {
-        StatusCalculator calculator = new TRSP_StatusCalculator(this);
+        StatusCalculator calculator = new TRLinear_StatusCalculator(this);
         calculator.Calc();
         GetComponent<KnightView>().Init();
     }
