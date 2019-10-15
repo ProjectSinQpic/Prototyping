@@ -18,13 +18,14 @@ public class KnightStatus : MonoBehaviour
     [HideInInspector] public int moveRange;
     [HideInInspector] public int attackRange;
 
-    void Awake() {
+    public void Init() {
         HP = data.maxHP;
         MP = data.maxMP;
         attack = data.attack;
         defense = data.defense;
         moveRange = data.moveRange;
         attackRange = data.attackRange;
+        GetComponent<KnightView>().Init();
     }
 
 }

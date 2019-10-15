@@ -17,7 +17,7 @@ public class KnightView : KnightParts {
         {"attack", 0.25f },
     };
 
-    void Awake() {
+    public void Init() {
         sp = GetComponent<SpriteRenderer>();
         idle_front = core.status.data.image_idle_front;
         idle_back = core.status.data.image_idle_back;
