@@ -246,7 +246,7 @@ MonoBehaviour:
     exp: 0
     SP: 0
   isLoadMode: 0
-  isSaveMode: 1
+  isSaveMode: 0
 --- !u!4 &1217793020
 Transform:
   m_ObjectHideFlags: 0

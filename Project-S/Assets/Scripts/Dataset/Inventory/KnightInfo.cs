@@ -10,14 +10,13 @@ public class KnightInfo {
     public int exp;
     public int SP;
 
-    public static KnightInfo Create(KnightDatabase data, int level = 1) {
-        var knight = new KnightInfo();
+    public static KnightInfo Create (KnightDatabase data, int level = 1) {
+        var knight = new KnightInfo ();
         knight.data = data;
         knight.level = level;
         knight.exp = 0;
         knight.SP = 0;
         return knight;
     }
-
 
 }

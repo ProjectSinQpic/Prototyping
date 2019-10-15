@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightStatus : MonoBehaviour
-{
+public class KnightStatus : MonoBehaviour {
     public KnightDatabase data;
 
     public Vector2 pos;
@@ -20,10 +19,10 @@ public class KnightStatus : MonoBehaviour
     [HideInInspector] public int moveRange;
     [HideInInspector] public int attackRange;
 
-    public void Init() {
-        StatusCalculator calculator = new TRLinear_StatusCalculator(this);
-        calculator.Calc();
-        GetComponent<KnightView>().Init();
+    public void Init () {
+        StatusCalculator calculator = new TRLinear_StatusCalculator (this);
+        calculator.Calc ();
+        GetComponent<KnightView> ().Init ();
     }
 
 }

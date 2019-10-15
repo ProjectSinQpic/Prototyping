@@ -13,22 +13,20 @@ public class TRLinear_StatusCalculator : StatusCalculator {
     const float TR_attack = 0.2f;
     const float TR_defense = 0.2f;
 
-    public TRLinear_StatusCalculator(KnightStatus _status) 
-        : base (_status) { 
-    }
-    
-    public override void Calc(){
-        status.HP = CalcStatus(status.data.maxHP, TR_HP, status.SP);
-        status.MP = CalcStatus(status.data.maxMP, TR_MP, status.SP);
-        status.attack = CalcStatus(status.data.attack, TR_attack, status.SP);
-        status.defense = CalcStatus(status.data.defense, TR_defense, status.SP);
+    public TRLinear_StatusCalculator (KnightStatus _status) : base (_status) { }
+
+    public override void Calc () {
+        status.HP = CalcStatus (status.data.maxHP, TR_HP, status.SP);
+        status.MP = CalcStatus (status.data.maxMP, TR_MP, status.SP);
+        status.attack = CalcStatus (status.data.attack, TR_attack, status.SP);
+        status.defense = CalcStatus (status.data.defense, TR_defense, status.SP);
         status.moveRange = status.data.moveRange;
         status.attackRange = status.data.attackRange;
-    } 
+    }
 
-    int CalcStatus(int _base, float _rate, int SP) {
+    int CalcStatus (int _base, float _rate, int SP) {
         var x = _rate * _base + (1 - _rate) * _base * (status.level / 40f) + SP;
-        return Mathf.RoundToInt(x);
+        return Mathf.RoundToInt (x);
     }
 
 }

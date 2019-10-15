@@ -1,12 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System;
-using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using UnityEngine;
 
-public class MapPointer : MonoBehaviour
-{
+public class MapPointer : MonoBehaviour {
 
     public static MapPointer instance;
 
@@ -16,56 +15,53 @@ public class MapPointer : MonoBehaviour
     [SerializeField] RayDetecter detecter;
     [SerializeField] GameObject cursor;
 
-
-
     Vector2 cursorPos;
     Vector2 prevPos;
     public GameObject pointedKnight;
     Vector2 rotSpeed;
 
-
-    void Awake() {
+    void Awake () {
 
         if (instance == null) instance = this;
 
-        OnClickedMap = this.UpdateAsObservable()
-                           .Where(_ => Input.GetMouseButtonDown(0) && pointedKnight == null)
-                           .Where(_ => !MenuGenerator.Instance().isLocked)
-                           .Select(_ => cursorPos);
+        OnClickedMap = this.UpdateAsObservable ()
+            .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight == null)
+            .Where (_ => !MenuGenerator.Instance ().isLocked)
+            .Select (_ => cursorPos);
 
-        OnClickedKnight = this.UpdateAsObservable()
-                              .Where(_ => Input.GetMouseButtonDown(0) && pointedKnight != null)
-                              .Where(_ => !MenuGenerator.Instance().isLocked)
-                              .Select(_ => pointedKnight);
+        OnClickedKnight = this.UpdateAsObservable ()
+            .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight != null)
+            .Where (_ => !MenuGenerator.Instance ().isLocked)
+            .Select (_ => pointedKnight);
 
-        OnClickedMap.Subscribe(_ => Debug.Log(cursorPos));
-        OnClickedKnight.Subscribe(o => Debug.Log(o));
+        OnClickedMap.Subscribe (_ => Debug.Log (cursorPos));
+        OnClickedKnight.Subscribe (o => Debug.Log (o));
 
-        this.UpdateAsObservable()
-            .Select(_ => MenuGenerator.Instance().isLocked)
-            .DistinctUntilChanged()
-            .Subscribe(x => cursor.GetComponent<MeshRenderer>().enabled = !x);
+        this.UpdateAsObservable ()
+            .Select (_ => MenuGenerator.Instance ().isLocked)
+            .DistinctUntilChanged ()
+            .Subscribe (x => cursor.GetComponent<MeshRenderer> ().enabled = !x);
 
     }
 
-    void Start() {
-        detecter.OnPointedObject.Where(o => o.collider.tag == "MapDetect")
-                                .Subscribe(o => {
-                                    UpdateCursorPos(o.point);
-                                });
+    void Start () {
+        detecter.OnPointedObject.Where (o => o.collider.tag == "MapDetect")
+            .Subscribe (o => {
+                UpdateCursorPos (o.point);
+            });
 
-        detecter.OnPointedObject.Where(o => o.collider.tag.Contains("Knight"))
-                                .Subscribe(o => {
-                                    pointedKnight = o.collider.gameObject;
-                                });
+        detecter.OnPointedObject.Where (o => o.collider.tag.Contains ("Knight"))
+            .Subscribe (o => {
+                pointedKnight = o.collider.gameObject;
+            });
     }
 
-    void UpdateCursorPos(Vector3 point) {
+    void UpdateCursorPos (Vector3 point) {
         float ms = MapStatus.MAPCHIP_SIZE;
-        Vector3 v = new Vector3(Mathf.Floor(point.x / ms), 0, Mathf.Floor(point.z / ms)) * ms;
+        Vector3 v = new Vector3 (Mathf.Floor (point.x / ms), 0, Mathf.Floor (point.z / ms)) * ms;
         cursor.transform.position = v + Vector3.up;
-        cursorPos = MapStatus.ToMapPos(v);
-        if(prevPos != cursorPos) pointedKnight = null;
+        cursorPos = MapStatus.ToMapPos (v);
+        if (prevPos != cursorPos) pointedKnight = null;
         prevPos = cursorPos;
     }
 
