@@ -232,17 +232,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de54af67dcf8512418d4cf5c15bce80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knights:
+  knights_blue:
   - data: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef, type: 2}
-    level: 40
-    exp: 0
-    SP: 20
-  - data: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef, type: 2}
-    level: 30
+    level: 10
     exp: 0
     SP: 0
   - data: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef, type: 2}
-    level: 40
+    level: 10
+    exp: 0
+    SP: 0
+  - data: {fileID: 11400000, guid: 48b76cc0944433144b618ecffa798fd5, type: 2}
+    level: 10
+    exp: 0
+    SP: 0
+  knights_red:
+  - data: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef, type: 2}
+    level: 10
+    exp: 0
+    SP: 0
+  - data: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef, type: 2}
+    level: 10
+    exp: 0
+    SP: 0
+  - data: {fileID: 11400000, guid: 48b76cc0944433144b618ecffa798fd5, type: 2}
+    level: 10
     exp: 0
     SP: 0
   isLoadMode: 0

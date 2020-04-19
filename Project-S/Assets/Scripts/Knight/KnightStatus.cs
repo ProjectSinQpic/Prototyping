@@ -19,6 +19,8 @@ public class KnightStatus : MonoBehaviour {
     [HideInInspector] public int moveRange;
     [HideInInspector] public int attackRange;
 
+    [HideInInspector] public int coolDown;
+
     public void Init () {
         StatusCalculator calculator = new TRLinear_StatusCalculator (this);
         calculator.Calc ();

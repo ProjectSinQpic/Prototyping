@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public class KnightCore_Player : KnightCore {
+public class KnightCore_Player01 : KnightCore {
 
     public static List<KnightCore> player_all = new List<KnightCore> ();
 
@@ -31,12 +31,12 @@ public class KnightCore_Player : KnightCore {
         Message.Where (x => x == "finish")
             .Subscribe (_ => GameState.selected.Value = null);
 
-        GameState.isMyTurn
+        GameState.isBlueTurn
             .Where (x => x)
             .Subscribe (_ => isFinished = false);
     }
 
     bool isOperable () {
-        return GameState.selected.Value == this && GameState.isMyTurn.Value;
+        return GameState.selected.Value == this && GameState.isBlueTurn.Value;
     }
 }

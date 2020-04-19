@@ -21,7 +21,7 @@ public class StatusUI : MonoBehaviour {
     }
 
     void Start () {
-        GameState.isMyTurn
+        GameState.isBlueTurn
             .Subscribe (x => UpdateTurn (x));
     }
 
@@ -37,7 +37,7 @@ public class StatusUI : MonoBehaviour {
     }
 
     void UpdateTurn (bool turnState) {
-        turn.text = turnState ? "MY TURN" : "ENEMY TURN";
+        turn.text = turnState ? "BLUE TURN" : "RED TURN";
     }
 
 }

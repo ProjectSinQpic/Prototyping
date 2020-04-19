@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class FieldTest : MonoBehaviour {
     // Start is called before the first frame update
-    public List<KnightInfo> knights;
+    public List<KnightInfo> knights_blue, knights_red;
     public bool isLoadMode;
     public bool isSaveMode;
 
     void Start () {
-        InventoryLoader.knights = knights;
+        InventoryLoader.knights_blue = knights_blue;
+        InventoryLoader.knights_blue = knights_red;
         if (isLoadMode) {
             InventoryLoader.Load ();
         }
