@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class GameJudge : MonoBehaviour {
 
-    public Text clearUI;
+
 
     void Start () {
         this.UpdateAsObservable ()
