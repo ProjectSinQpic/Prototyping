@@ -35,6 +35,7 @@ public class KnightMovement : KnightParts {
             return;
         }
         StartCoroutine (MoveToPointCoroutine (_disp.movableArea.Find (m => m.pos == goal)));
+        core.storedCoolDown += 3;
     }
 
     IEnumerator MoveToPointCoroutine (MovableArea area) {

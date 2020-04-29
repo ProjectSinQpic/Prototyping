@@ -21,10 +21,12 @@ public class KnightStatus : MonoBehaviour {
 
     [HideInInspector] public int coolDown;
 
+
+
     public void Init () {
         StatusCalculator calculator = new TRLinear_StatusCalculator (this);
         calculator.Calc ();
-        GetComponent<KnightView> ().Init ();
+        GetComponent<KnightView> ().Init ();    //TODO 改善の余地あり
     }
 
 }

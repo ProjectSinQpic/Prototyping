@@ -7,9 +7,9 @@ using UnityEngine;
 public class Enemy_Brain : MonoBehaviour {
 
     void Start () {
-        GameState.isBlueTurn
+        GameState.turn
             .Where (_ => !KnightCore_Enemy.enemy_all.All (x => x.isDead))
-            .Where (x => !x)
+            .Where (x => x == Turn_State.red)
             .Subscribe (_ => Run ());
     }
 

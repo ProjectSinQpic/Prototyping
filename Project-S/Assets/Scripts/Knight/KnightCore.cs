@@ -13,6 +13,7 @@ public struct MovableArea {
 public class KnightCore : MonoBehaviour {
     public KnightStatus status;
     public Vector2 next_pos, prev_pos;
+    public int storedCoolDown;
     public KnightCore next_target;
     public bool isFinished, isDead;
 
@@ -29,6 +30,7 @@ public class KnightCore : MonoBehaviour {
         transform.position = MapStatus.ToWorldPos (status.pos) /* + Vector3.up * 4f*/ ;
 
         prev_pos = status.pos;
+        storedCoolDown = 0;
     }
 
     void Start () {
@@ -44,7 +46,7 @@ public class KnightCore : MonoBehaviour {
             .Subscribe (_ => OnNotSelected ());
 
         message.Where (x => x == "finish")
-            .Subscribe (_ => isFinished = true);
+            .Subscribe (_ => OnFinish());
 
         Init ();
     }
@@ -66,6 +68,12 @@ public class KnightCore : MonoBehaviour {
         //TODO UI消去処理作っておく
         GetComponent<BoxCollider> ().enabled = true;
         NextAction ("look_cancel");
+    }
+
+    void OnFinish() {
+        isFinished = true;
+        status.coolDown += storedCoolDown;
+        storedCoolDown = 0;
     }
 
 }

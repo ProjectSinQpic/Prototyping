@@ -41,6 +41,7 @@ public class KnightAttack : KnightParts {
             return;
         }
         StartCoroutine (AttackCoroutine (target));
+        core.storedCoolDown += 3;
     }
 
     IEnumerator AttackCoroutine (KnightCore target) {
@@ -59,7 +60,7 @@ public class KnightAttack : KnightParts {
         target.GetComponent<KnightDisplayArea> ().CalcAttackable ();
         if (!target.GetComponent<KnightAttack> ().CheckAttackable (core)) yield break;
         yield return new WaitForSeconds (0.2f);
-        target.GetComponent<KnightView> ().ActionView ("attack", target.status.dir);
+        target.GetComponent<KnightView> ().ActionView ("attack", target.status.dir); //TODO 変更する
         DealDamage (target, core);
         yield return new WaitForSeconds (0.4f);
         if (core.status.HP <= 0) core.NextAction ("die");

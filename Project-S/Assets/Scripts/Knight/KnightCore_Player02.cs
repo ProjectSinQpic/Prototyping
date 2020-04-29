@@ -31,12 +31,13 @@ public class KnightCore_Player02 : KnightCore {
         Message.Where (x => x == "finish")
             .Subscribe (_ => GameState.selected.Value = null);
 
-        GameState.isBlueTurn
-            .Where (x => !x)
+        GameState.turn
+            .Where (x => x == Turn_State.red)
             .Subscribe (_ => isFinished = false);
     }
 
     bool isOperable () {
-        return GameState.selected.Value == this && !GameState.isBlueTurn.Value;
+        return GameState.selected.Value == this && GameState.turn.Value == Turn_State.red
+            && status.coolDown == 0;
     }
 }
