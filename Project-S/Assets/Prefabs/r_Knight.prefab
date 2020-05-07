@@ -226,7 +226,7 @@ Transform:
   m_GameObject: {fileID: 7996462265730013034}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 5}
   m_Children:
   - {fileID: 5705700289041615550}
   m_Father: {fileID: 0}
@@ -296,6 +296,7 @@ MonoBehaviour:
   status: {fileID: 4338725050842158337}
   next_pos: {x: 0, y: 0}
   prev_pos: {x: 0, y: 0}
+  storedCoolDown: 0
   next_target: {fileID: 0}
   isFinished: 0
   isDead: 0
