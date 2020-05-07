@@ -8,6 +8,7 @@ public class LookingForCamera : MonoBehaviour
 
     void Start()
     {
+        //hoge~
     }
 
     void Update()
