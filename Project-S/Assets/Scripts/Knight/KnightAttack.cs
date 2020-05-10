@@ -45,6 +45,7 @@ public class KnightAttack : KnightParts {
     }
 
     IEnumerator AttackCoroutine (KnightCore target) {
+        SoundPlayer.instance.PlaySoundEffect("attack01");
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
         DealDamage (core, target);
         yield return new WaitForSeconds (0.4f);

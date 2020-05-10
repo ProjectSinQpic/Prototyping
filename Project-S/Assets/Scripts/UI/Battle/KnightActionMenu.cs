@@ -20,18 +20,21 @@ public class KnightActionMenu : MonoBehaviour {
     }
 
     void OnAttack (KnightCore core) {
+        SoundPlayer.instance.PlaySoundEffect("menu_select");
         core.NextAction ("attack_set");
         GameState.knight_state.Value = Knight_State.attack;
         MenuGenerator.Instance ().Close ();
     }
 
     void OnWait (KnightCore core) {
+        SoundPlayer.instance.PlaySoundEffect("menu_select");
         core.NextAction ("finish");
         GameState.knight_state.Value = Knight_State.move;
         MenuGenerator.Instance ().Close ();
     }
 
     void OnCancel (KnightCore core) {
+        SoundPlayer.instance.PlaySoundEffect("menu_cancel");
         var diff = core.prev_pos - core.status.pos;
         core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
             Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;

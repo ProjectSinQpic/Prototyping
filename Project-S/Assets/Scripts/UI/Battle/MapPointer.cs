@@ -58,7 +58,7 @@ public class MapPointer : MonoBehaviour {
 
     void UpdateCursorPos (Vector3 point) {
         float ms = MapStatus.MAPCHIP_SIZE;
-        Vector3 v = new Vector3 (Mathf.Floor (point.x / ms) + 0.5f, 0, Mathf.Floor (point.z / ms + 0.5f)) * ms;
+        Vector3 v = new Vector3 (Mathf.Floor (point.x / ms + 0.5f) , 0, Mathf.Floor (point.z / ms + 0.5f)) * ms;
         cursor.transform.position = v + Vector3.up;
         cursorPos = MapStatus.ToMapPos (v);
         if (prevPos != cursorPos) pointedKnight = null;
