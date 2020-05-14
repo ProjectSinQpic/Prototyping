@@ -32,10 +32,11 @@ public class StatusUI : MonoBehaviour {
     }
 
     public void UpdateUI (KnightStatus status) {
+        var statusData = KnightStatusData.Add(status.actual, status.delta);
         obj_HP.text = "HP : " + status.HP.ToString ();
         obj_MP.text = "MP : " + status.MP.ToString ();
-        obj_attack.text = "攻撃力 : " + status.attack.ToString ();
-        obj_defense.text = "防御力 : " + status.defense.ToString ();
+        obj_attack.text = "攻撃力 : " + statusData.attack.ToString ();
+        obj_defense.text = "防御力 : " + statusData.defense.ToString ();
         obj_rest.text = "レスト : " + status.coolDown.ToString ();
     }
 

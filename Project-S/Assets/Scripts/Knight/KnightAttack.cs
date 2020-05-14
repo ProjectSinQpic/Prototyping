@@ -68,7 +68,7 @@ public class KnightAttack : KnightParts {
 
     void DealDamage (KnightCore off, KnightCore def) {
         //TODO ダメージ計算のシステム考える
-        var damage = Mathf.Max (0, off.status.attack - def.status.defense);
+        var damage = Mathf.Max (0, off.statusData.attack - def.statusData.defense);
         def.status.HP -= damage;
     }
 

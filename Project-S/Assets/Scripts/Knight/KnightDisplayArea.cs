@@ -88,7 +88,7 @@ public class KnightDisplayArea : KnightParts {
     }
 
     public void CalcMovable () {
-        FindMovable (new MovableArea () { pos = core.status.pos, root = "" }, core.status.moveRange);
+        FindMovable (new MovableArea () { pos = core.status.pos, root = "" }, core.statusData.moveRange);
     }
 
     void FindMovable (MovableArea p, int mp) {
@@ -96,7 +96,7 @@ public class KnightDisplayArea : KnightParts {
         int next_mp = mp - MapStatus.MAP_MP[(int) MapStatus.MapTypeOf (p.pos)];
         if (KnightCore.all.Where (c => c != core).Where (c => !c.isDead).Select (c => c.status.pos).Contains (p.pos)) next_mp = -1;
         if (next_mp < 0) {
-            FindAttackable (p.pos, core.status.attackRange);
+            FindAttackable (p.pos, core.statusData.attackRange);
             return;
         }
         if (!movableArea.Select (m => m.pos).Contains (p.pos)) movableArea.Add (p);
@@ -114,10 +114,10 @@ public class KnightDisplayArea : KnightParts {
     }
 
     public void CalcAttackable () {
-        FindAttackable (core.status.pos + Vector2.right, core.status.attackRange);
-        FindAttackable (core.status.pos + Vector2.left, core.status.attackRange);
-        FindAttackable (core.status.pos + Vector2.up, core.status.attackRange);
-        FindAttackable (core.status.pos + Vector2.down, core.status.attackRange);
+        FindAttackable (core.status.pos + Vector2.right, core.statusData.attackRange);
+        FindAttackable (core.status.pos + Vector2.left, core.statusData.attackRange);
+        FindAttackable (core.status.pos + Vector2.up, core.statusData.attackRange);
+        FindAttackable (core.status.pos + Vector2.down, core.statusData.attackRange);
     }
 
     void FindAttackable (Vector2 pos, int ap) {

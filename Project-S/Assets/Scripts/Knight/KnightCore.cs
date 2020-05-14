@@ -12,6 +12,13 @@ public struct MovableArea {
 
 public class KnightCore : MonoBehaviour {
     public KnightStatus status;
+
+    public KnightStatusData statusData {
+        get{
+            return KnightStatusData.Add(status.actual, status.delta);
+        }
+    }
+
     public Vector2 next_pos, prev_pos;
     public int storedCoolDown;
     public KnightCore next_target;
@@ -21,6 +28,7 @@ public class KnightCore : MonoBehaviour {
     public IObservable<string> Message { get { return message.AsObservable (); } }
 
     public static List<KnightCore> all = new List<KnightCore> ();
+
 
     void Awake () {
         message = new Subject<string> ();
