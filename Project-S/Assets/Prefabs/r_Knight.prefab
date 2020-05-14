@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2cc016bb37e724a9712b6caad44aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  core: {fileID: 9068619537282208187}
   data: {fileID: 11400000, guid: 98c866892aa030e4b9fc508f291bf4ef, type: 2}
   pos: {x: 10, y: 5}
   dir: 3
@@ -129,6 +130,8 @@ MonoBehaviour:
   coolDown: 0
   level: 1
   SP: 0
+  skills: []
+  activeSkills: []
   actual:
     maxHP: 0
     maxMP: 0

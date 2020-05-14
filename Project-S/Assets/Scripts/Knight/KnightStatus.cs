@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class KnightStatus : MonoBehaviour {
+public class KnightStatus : KnightParts {
     public KnightDatabase data;
 
     public Vector2 pos;
@@ -15,6 +16,9 @@ public class KnightStatus : MonoBehaviour {
     public int level;
     public int SP;
 
+    public List<SkillBase> skills;
+    public List<ActiveSkill> activeSkills;
+
     public KnightStatusData actual, delta;
 
     public void Init () {
@@ -24,6 +28,15 @@ public class KnightStatus : MonoBehaviour {
         calculator.Calc ();
         HP = actual.maxHP;
         MP = actual.maxMP;
+        skills = new List<SkillBase>();
+        foreach (var skill in data.skills) {
+            skills.Add(ScriptableObject.Instantiate(skill));            
+        }
+        activeSkills = skills.Where(s => s is ActiveSkill).Select(s => (ActiveSkill)s).ToList();
+
+        activeSkills.ForEach(s => s.SetOwner(core));
+        activeSkills.ForEach(s => s.Activate());
+
         GetComponent<KnightView> ().Init ();    //TODO 改善の余地あり
     }
 

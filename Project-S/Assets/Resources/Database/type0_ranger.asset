@@ -18,6 +18,8 @@ MonoBehaviour:
   defense: 10
   moveRange: 2
   attackRange: 4
+  skills:
+  - {fileID: 11400000, guid: b6520e89693d5431280b17cf8c54842b, type: 2}
   image_idle_front:
   - {fileID: 21300000, guid: 5657a15d13798eb46bc9f182d5106e28, type: 3}
   - {fileID: 21300000, guid: 164b9832e74701644a11b8ffea54447d, type: 3}
