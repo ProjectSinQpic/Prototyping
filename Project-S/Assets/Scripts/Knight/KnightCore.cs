@@ -5,9 +5,18 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public struct MovableArea {
+[System.Serializable]
+public class SelectedArea {
     public Vector2 pos;
     public string root;
+
+    public AreaType type;
+}
+
+public enum AreaType {
+    move,
+    attack,
+    move_attack
 }
 
 public class KnightCore : MonoBehaviour {

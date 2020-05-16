@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActiveSkill : SkillBase {
 
     public int mana;
+    public int rest;
 
     [HideInInspector]
     public bool isActive = false;

@@ -34,7 +34,8 @@ public class Enemy_Brain : MonoBehaviour {
 
     void DicideNextPos (KnightCore target) {
         var disp = target.GetComponent<KnightDisplayArea> ();
-        var goal = disp.movableArea[Random.Range (0, disp.movableArea.Count)];
+        var movableArea = disp.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack).ToList();
+        var goal = movableArea[Random.Range (0, movableArea.Count)];
         disp.core.next_pos = goal.pos;
     }
 }

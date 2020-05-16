@@ -39,7 +39,6 @@ public class KnightActionMenu : MonoBehaviour {
         }
         choices["キャンセル"] = () => {
             MenuGenerator.Instance ().Close ();
-            OnCancel(core);
         };
         MenuGenerator.Instance ().Create (choices, new Vector3 (Screen.width / 2 - 180, Screen.height / 2 - 750, 0), "knight_skill", true);
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using System.Linq;
 
 public class KnightAttack : KnightParts {
 
@@ -49,14 +50,14 @@ public class KnightAttack : KnightParts {
         DealDamage (core, target);
         yield return new WaitForSeconds (0.4f);
         if (target.status.HP <= 0) target.NextAction ("die");
-        else yield return StartCoroutine (CounterAttackCoroutine (target));
-        yield return new WaitForSeconds (0.2f);
+        //else yield return StartCoroutine (CounterAttackCoroutine (target));
+        //yield return new WaitForSeconds (0.2f);
         StatusUI.Instance ().UpdateUI (core.status); //TODO 後にpull型にしたい
         _disp.RemoveArea ();
         core.NextAction ("finish");
     }
 
-    IEnumerator CounterAttackCoroutine (KnightCore target) {
+    /*IEnumerator CounterAttackCoroutine (KnightCore target) {
         target.GetComponent<KnightDisplayArea> ().CalcAttackable ();
         if (!target.GetComponent<KnightAttack> ().CheckAttackable (core)) yield break;
         yield return new WaitForSeconds (0.2f);
@@ -64,7 +65,7 @@ public class KnightAttack : KnightParts {
         DealDamage (target, core);
         yield return new WaitForSeconds (0.4f);
         if (core.status.HP <= 0) core.NextAction ("die");
-    }
+    }*/
 
     void DealDamage (KnightCore off, KnightCore def) {
         //TODO ダメージ計算のシステム考える
@@ -79,6 +80,7 @@ public class KnightAttack : KnightParts {
 
     public bool CheckAttackable (KnightCore target) {
         if (tag == target.tag) return false;
-        return _disp.attackableArea.Contains (target.status.pos);
+        var attackArea = _disp.selectedArea.Where(s => s.type == AreaType.attack).Select(a => a.pos);
+        return attackArea.Contains (target.status.pos);
     }
 }
