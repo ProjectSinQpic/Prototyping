@@ -11,6 +11,8 @@ public enum Knight_State {
     move,
     select,
     attack,
+    skill_knight, //ユニット指定のスキル
+    skill_area,  //地点指定のスキル
 }
 
 public enum Turn_State {

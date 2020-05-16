@@ -31,10 +31,9 @@ public class KnightActionMenu : MonoBehaviour {
         var choices = new Dictionary<string, UnityEngine.Events.UnityAction>();
         foreach (var skill in core.status.activeSkills) {
             choices[skill.skillName] = () => {
+                MenuGenerator.Instance ().Close ();
+                MenuGenerator.Instance ().Close ();
                 skill.Activate();
-                core.NextAction ("finish");
-                MenuGenerator.Instance ().Close ();
-                MenuGenerator.Instance ().Close ();
             };
         }
         choices["キャンセル"] = () => {

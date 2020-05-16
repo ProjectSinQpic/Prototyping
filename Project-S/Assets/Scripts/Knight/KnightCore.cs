@@ -28,9 +28,18 @@ public class KnightCore : MonoBehaviour {
         }
     }
 
+    [HideInInspector]
     public Vector2 next_pos, prev_pos;
+    
+    [HideInInspector]
     public int storedCoolDown;
+
+    [HideInInspector]
     public KnightCore next_target;
+
+    [HideInInspector]
+
+
     public bool isFinished, isDead;
 
     Subject<string> message;
@@ -93,4 +102,11 @@ public class KnightCore : MonoBehaviour {
         storedCoolDown = 0;
     }
 
+
+    public static List<KnightCore> GetAllies(KnightCore core) {
+        if(KnightCore_Player01.player_all.Contains(core)) return KnightCore_Player01.player_all;
+        else if(KnightCore_Player02.player_all.Contains(core)) return KnightCore_Player02.player_all;
+        else if(KnightCore_Enemy.enemy_all.Contains(core)) return KnightCore_Enemy.enemy_all;
+        else return new List<KnightCore>();
+    }
 }

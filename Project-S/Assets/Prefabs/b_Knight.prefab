@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 6240505563308200277}
   - component: {fileID: 6240505563308200276}
   - component: {fileID: 7408229843218225922}
+  - component: {fileID: 2476237880416840262}
   m_Layer: 9
   m_Name: b_Knight
   m_TagString: Knight_Player
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   core: {fileID: 5983699599012323669}
-  attackableArea: []
+  selectedArea: []
   prefab_area: {fileID: 8953533423184074616, guid: faeb762054eeef54f9a93a680fc82b7b,
     type: 3}
   moveColor: {r: 0, g: 0.38631964, b: 1, a: 0.29411766}
@@ -255,6 +256,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0fd8d1b530dd46c58603cb36ca95845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 5983699599012323669}
+--- !u!114 &2476237880416840262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190650587746638775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed1509c2844d447ba0e26bd85f37999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   core: {fileID: 5983699599012323669}

@@ -7,11 +7,11 @@ using System.Linq;
 public class KnightAttack : KnightParts {
 
     public KnightView view;
-    KnightDisplayArea _disp;
+    KnightDisplayArea disp;
     bool iscanceled;
 
     void Awake () {
-        _disp = core.GetComponent<KnightDisplayArea> ();
+        disp = core.GetComponent<KnightDisplayArea> ();
         iscanceled = false;
     }
 
@@ -32,7 +32,7 @@ public class KnightAttack : KnightParts {
     }
 
     void SelectOpponent () {
-        _disp.DisplayAttackArea ();
+        disp.DisplayArea(AreaShapeType.attackable, core.status.pos, core.statusData.attackRange);
 
     }
 
@@ -45,6 +45,10 @@ public class KnightAttack : KnightParts {
         core.storedCoolDown += 3;
     }
 
+    public void AttackInSkill(KnightCore target) {
+        StartCoroutine (AttackCoroutine (target));
+    }
+
     IEnumerator AttackCoroutine (KnightCore target) {
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
         DealDamage (core, target);
@@ -53,7 +57,7 @@ public class KnightAttack : KnightParts {
         //else yield return StartCoroutine (CounterAttackCoroutine (target));
         //yield return new WaitForSeconds (0.2f);
         StatusUI.Instance ().UpdateUI (core.status); //TODO 後にpull型にしたい
-        _disp.RemoveArea ();
+        disp.RemoveArea ();
         core.NextAction ("finish");
     }
 
@@ -74,13 +78,13 @@ public class KnightAttack : KnightParts {
     }
 
     void CancelAttack () {
-        _disp.RemoveArea ();
+        disp.RemoveArea ();
         core.NextAction ("select");
     }
 
     public bool CheckAttackable (KnightCore target) {
         if (tag == target.tag) return false;
-        var attackArea = _disp.selectedArea.Where(s => s.type == AreaType.attack).Select(a => a.pos);
+        var attackArea = disp.selectedArea.Where(s => s.type == AreaType.attack).Select(a => a.pos);
         return attackArea.Contains (target.status.pos);
     }
 }

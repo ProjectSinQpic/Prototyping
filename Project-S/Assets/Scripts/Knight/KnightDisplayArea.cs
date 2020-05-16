@@ -43,9 +43,10 @@ public class KnightDisplayArea : KnightParts {
         }
     }
 
-    public void DisplayAttackArea () {
+    public void DisplayArea(AreaShapeType type, Vector2 pos, int value) {
         RemoveArea ();
-        selectedArea = AreaCalculator.CalcAttackable(core);
+        selectedArea = AreaCalculator.GetArea(type, pos, value);
+        Debug.Log("a");
         foreach (var i in selectedArea) {
             var obj = Instantiate (prefab_area, MapStatus.ToWorldPos (i.pos) + Vector3.up, Quaternion.identity);
             objects_area.Add (obj);
@@ -54,6 +55,7 @@ public class KnightDisplayArea : KnightParts {
             r.material.color = col;
         }
     }
+
 
     public void RemoveArea () {
         foreach (var o in objects_area) {

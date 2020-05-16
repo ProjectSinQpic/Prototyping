@@ -3,7 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+public enum AreaShapeType {
+    attackable,
+    line,
+}
+
 public class AreaCalculator {
+
+    static Dictionary<AreaShapeType, System.Func<Vector2, int, List<SelectedArea>>> dict = new Dictionary<AreaShapeType, System.Func<Vector2, int, List<SelectedArea>>>() {
+        {AreaShapeType.attackable, CalcAttackable},
+        {AreaShapeType.line, CalcLineArea}
+    };
+
+    public static List<SelectedArea> GetArea(AreaShapeType shape, Vector2 pos, int value) {
+        return dict[shape](pos, value);
+    }
 
     static public List<SelectedArea> CalcMovable (KnightCore core) {
         var sa = new List<SelectedArea>();
@@ -33,12 +47,12 @@ public class AreaCalculator {
         FindMovable (new SelectedArea () { pos = p.pos + Vector2.down, root = p.root + "d" }, next_mp, sa, core);
     }
 
-    public static List<SelectedArea> CalcAttackable (KnightCore core) {
+    static List<SelectedArea> CalcAttackable (Vector2 pos, int value) {
         List<SelectedArea> sa = new List<SelectedArea>();
-        FindAttackable (core.status.pos + Vector2.right, core.statusData.attackRange, sa);
-        FindAttackable (core.status.pos + Vector2.left, core.statusData.attackRange, sa);
-        FindAttackable (core.status.pos + Vector2.up, core.statusData.attackRange, sa);
-        FindAttackable (core.status.pos + Vector2.down, core.statusData.attackRange, sa);
+        FindAttackable (pos + Vector2.right, value, sa);
+        FindAttackable (pos + Vector2.left, value, sa);
+        FindAttackable (pos + Vector2.up, value, sa);
+        FindAttackable (pos + Vector2.down, value, sa);
         return sa;
     }
 
@@ -54,6 +68,18 @@ public class AreaCalculator {
         FindAttackable (pos + Vector2.left, next_ap, sa);
         FindAttackable (pos + Vector2.up, next_ap, sa);
         FindAttackable (pos + Vector2.down, next_ap, sa);
+    }
+
+    static List<SelectedArea> CalcLineArea(Vector2 pos, int value) {
+        List<SelectedArea> sa = new List<SelectedArea>();
+        for(int i = 1; i <= value; i++) {
+            sa.Add(new SelectedArea() {pos = pos + Vector2.right * i, type = AreaType.attack});
+            sa.Add(new SelectedArea() {pos = pos + Vector2.left * i, type = AreaType.attack});
+            sa.Add(new SelectedArea() {pos = pos + Vector2.up * i, type = AreaType.attack});
+            sa.Add(new SelectedArea() {pos = pos + Vector2.down * i, type = AreaType.attack});
+        }
+        sa = sa.Where(s => !MapStatus.IsOutOfMap (s.pos) && MapStatus.MapTypeOf (s.pos) != Map_type.MAP_NONE).ToList();
+        return sa;
     }
 
 }

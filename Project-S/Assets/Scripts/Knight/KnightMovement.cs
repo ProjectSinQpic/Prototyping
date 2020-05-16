@@ -34,10 +34,11 @@ public class KnightMovement : KnightParts {
             GameState.selected.Value = null;
             return;
         }
-        StartCoroutine (MoveToPointCoroutine (_disp.selectedArea
+        var sa = _disp.selectedArea
             .Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
-            .Where(m => m.pos == goal).First()));
-        core.storedCoolDown += 3;
+            .Where(m => m.pos == goal).First();
+        StartCoroutine (MoveToPointCoroutine (sa));
+        if(sa.root.Length > 0) core.storedCoolDown += 3;
     }
 
     IEnumerator MoveToPointCoroutine (SelectedArea area) {
