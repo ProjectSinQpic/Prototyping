@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6cc2548e5d2264f956eab6b05ac5ee, type: 3}
   m_Name: type0_support
   m_EditorClassIdentifier: 
-  maxHP: 70
+  maxHP: 50
   maxMP: 50
-  attack: 20
-  defense: 20
+  attack: 10
+  defense: 0
   moveRange: 3
-  attackRange: 2
+  attackRange: 3
   skills:
   - {fileID: 11400000, guid: 20a9795fa34b74f98b5038d5837b9ee3, type: 2}
   image_idle_front:

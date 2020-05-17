@@ -31,6 +31,7 @@ public class KnightActionMenu : MonoBehaviour {
         var choices = new Dictionary<string, UnityEngine.Events.UnityAction>();
         foreach (var skill in core.status.activeSkills) {
             choices[skill.skillName] = () => {
+                if(skill.mana > core.status.MP) return;
                 MenuGenerator.Instance ().Close ();
                 MenuGenerator.Instance ().Close ();
                 skill.Activate();

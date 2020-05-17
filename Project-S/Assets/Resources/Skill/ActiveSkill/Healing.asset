@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Healing
   m_EditorClassIdentifier: 
   skillName: "\u30D2\u30FC\u30EA\u30F3\u30B0"
-  mana: 50
+  mana: 25
   rest: 3
   isActive: 0
   duration: 1
-  healingHelth: 50
+  healingHelth: 20
