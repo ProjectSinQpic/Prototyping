@@ -31,15 +31,18 @@ public class KnightActionMenu : MonoBehaviour {
 
     void OnSkill (KnightCore core) {
         var choices = new Dictionary<string, UnityEngine.Events.UnityAction>();
+        SoundPlayer.instance.PlaySoundEffect("menu_select");
         foreach (var skill in core.status.activeSkills) {
             choices[skill.skillName] = () => {
                 if(skill.mana > core.status.MP) return;
+                SoundPlayer.instance.PlaySoundEffect("menu_select");
                 MenuGenerator.Instance ().Close ();
                 MenuGenerator.Instance ().Close ();
                 skill.Activate();
             };
         }
         choices["キャンセル"] = () => {
+            SoundPlayer.instance.PlaySoundEffect("menu_cancel");
             MenuGenerator.Instance ().Close ();
         };
         MenuGenerator.Instance ().Create (choices, new Vector3 (Screen.width / 2 - 360, Screen.height / 2 - 750, 0), "knight_skill", true);

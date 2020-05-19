@@ -48,8 +48,18 @@ public class ActiveSkill : SkillBase {
 
     protected void OnTargeted(List<KnightCore> targets) {
         MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
-            {"決定", () => { MenuGenerator.Instance().Close(); OnStart(targets);}},
-            {"キャンセル", () => { MenuGenerator.Instance().Close(); owner.GetComponent<KnightSkill>().OnCancel();}}
+            {"決定", () => {
+                    SoundPlayer.instance.PlaySoundEffect("menu_select");
+                    MenuGenerator.Instance().Close();
+                    OnStart(targets);
+                }
+            },
+            {"キャンセル", () => {
+                    SoundPlayer.instance.PlaySoundEffect("menu_cancel");
+                    MenuGenerator.Instance().Close();
+                    owner.GetComponent<KnightSkill>().OnCancel();
+                }
+            }
         }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);
     }
 
