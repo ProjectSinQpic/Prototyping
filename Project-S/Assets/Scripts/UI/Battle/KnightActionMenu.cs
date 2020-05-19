@@ -18,7 +18,7 @@ public class KnightActionMenu : MonoBehaviour {
             { "スキル", () => OnSkill (core) },
             { "待機", () => OnWait (core) },
             { "キャンセル", () => OnCancel (core) },
-        }, new Vector3 (Screen.width / 2 - 180, Screen.height / 2 - 250, 0), "knight_choice", true);
+        }, new Vector3 (Screen.width / 2 - 250, Screen.height / 2 - 250, 0), "knight_choice", true);
         GameState.knight_state.Value = Knight_State.select;
     }
 
