@@ -17,6 +17,7 @@ public class MenuGenerator : MonoBehaviour {
 
     static MenuGenerator instance = null;
 
+
     void Awake() {
         lockingMenues = new List<string>();
         menu_list = new Stack<GameObject>();

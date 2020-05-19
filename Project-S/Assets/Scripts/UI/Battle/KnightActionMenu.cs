@@ -7,6 +7,7 @@ public class KnightActionMenu : MonoBehaviour {
     public static KnightActionMenu instance { get { return _instance; } }
     static KnightActionMenu _instance = null;
 
+
     void Awake () {
         if (_instance == null) _instance = this;
     }
