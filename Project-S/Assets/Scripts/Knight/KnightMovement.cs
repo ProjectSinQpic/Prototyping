@@ -34,11 +34,14 @@ public class KnightMovement : KnightParts {
             GameState.selected.Value = null;
             return;
         }
-        StartCoroutine (MoveToPointCoroutine (_disp.movableArea.Find (m => m.pos == goal)));
-        core.storedCoolDown += 3;
+        var sa = _disp.selectedArea
+            .Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
+            .Where(m => m.pos == goal).First();
+        StartCoroutine (MoveToPointCoroutine (sa));
+        if(sa.root.Length > 0) core.storedCoolDown += 3;
     }
 
-    IEnumerator MoveToPointCoroutine (MovableArea area) {
+    IEnumerator MoveToPointCoroutine (SelectedArea area) {
         isMoving = true;
         var nowDir = Direction.NONE;
         foreach (var d in area.root) {
@@ -62,7 +65,8 @@ public class KnightMovement : KnightParts {
     }
 
     bool CheckMovable (Vector2 point) {
-        return _disp.movableArea.Select (m => m.pos).Contains (point);
+        return _disp.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
+            .Select (m => m.pos).Contains (point);
     }
 
 }

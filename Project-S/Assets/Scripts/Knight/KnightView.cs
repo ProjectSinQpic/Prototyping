@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
+using UniRx.Triggers;
 
 public class KnightView : KnightParts {
 
@@ -14,6 +15,8 @@ public class KnightView : KnightParts {
     Dictionary<string, float> animSpeed = new Dictionary<string, float> () { { "idle", 1f }, { "move", 0.25f }, { "attack", 0.25f },
     };
 
+    Color originalColor;
+
     public void Init () {
         sp = GetComponent<SpriteRenderer> ();
         idle_front = core.status.data.image_idle_front;
@@ -22,6 +25,7 @@ public class KnightView : KnightParts {
         move_back = core.status.data.image_move_back;
         attack_front = core.status.data.image_attack_front;
         attack_back = core.status.data.image_attack_back;
+        originalColor = sp.color;
         InitAnimation ();
     }
 
@@ -31,6 +35,11 @@ public class KnightView : KnightParts {
         anim.isPlaying
             .Where (x => !x)
             .Subscribe (_ => ActionView ("idle", core.status.dir));
+        this.UpdateAsObservable()
+            .Select(_ => core.status.coolDown)
+            .DistinctUntilChanged()
+            .Subscribe(c => ChangeRestState(c));
+
     }
 
     void InitAnimation () {
@@ -62,4 +71,14 @@ public class KnightView : KnightParts {
         var key = action + "_" + d;
         anim.Play (key, speed, isLoop);
     }
+
+    void ChangeRestState(int c) {
+        if(c == 0) {
+            sp.color = originalColor;
+        }
+        else {
+            sp.color = originalColor * 0.4f + new Color(0, 0, 0, 1);
+        }
+    }
+
 }

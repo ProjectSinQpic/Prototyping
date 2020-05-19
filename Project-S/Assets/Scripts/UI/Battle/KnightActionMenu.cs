@@ -13,7 +13,9 @@ public class KnightActionMenu : MonoBehaviour {
     }
 
     public void DisplayMenu (KnightCore core) {
-        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { { "攻撃", () => OnAttack (core) },
+        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
+            { "攻撃", () => OnAttack (core) },
+            { "スキル", () => OnSkill (core) },
             { "待機", () => OnWait (core) },
             { "キャンセル", () => OnCancel (core) },
         }, new Vector3 (Screen.width / 2 - 180, Screen.height / 2 - 250, 0), "knight_choice", true);
@@ -25,6 +27,22 @@ public class KnightActionMenu : MonoBehaviour {
         core.NextAction ("attack_set");
         GameState.knight_state.Value = Knight_State.attack;
         MenuGenerator.Instance ().Close ();
+    }
+
+    void OnSkill (KnightCore core) {
+        var choices = new Dictionary<string, UnityEngine.Events.UnityAction>();
+        foreach (var skill in core.status.activeSkills) {
+            choices[skill.skillName] = () => {
+                if(skill.mana > core.status.MP) return;
+                MenuGenerator.Instance ().Close ();
+                MenuGenerator.Instance ().Close ();
+                skill.Activate();
+            };
+        }
+        choices["キャンセル"] = () => {
+            MenuGenerator.Instance ().Close ();
+        };
+        MenuGenerator.Instance ().Create (choices, new Vector3 (Screen.width / 2 - 180, Screen.height / 2 - 750, 0), "knight_skill", true);
     }
 
     void OnWait (KnightCore core) {

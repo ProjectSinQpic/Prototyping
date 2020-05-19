@@ -5,22 +5,48 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public struct MovableArea {
+[System.Serializable]
+public class SelectedArea {
     public Vector2 pos;
     public string root;
+
+    public AreaType type;
+}
+
+public enum AreaType {
+    move,
+    attack,
+    move_attack
 }
 
 public class KnightCore : MonoBehaviour {
     public KnightStatus status;
+
+    public KnightStatusData statusData {
+        get{
+            return KnightStatusData.Add(status.actual, status.delta);
+        }
+    }
+
+    [HideInInspector]
     public Vector2 next_pos, prev_pos;
+    
+    [HideInInspector]
     public int storedCoolDown;
+
+    [HideInInspector]
     public KnightCore next_target;
+
+    [HideInInspector]
+
+
     public bool isFinished, isDead;
 
     Subject<string> message;
     public IObservable<string> Message { get { return message.AsObservable (); } }
 
     public static List<KnightCore> all = new List<KnightCore> ();
+
 
     void Awake () {
         message = new Subject<string> ();
@@ -76,4 +102,11 @@ public class KnightCore : MonoBehaviour {
         storedCoolDown = 0;
     }
 
+
+    public static List<KnightCore> GetAllies(KnightCore core) {
+        if(KnightCore_Player01.player_all.Contains(core)) return KnightCore_Player01.player_all;
+        else if(KnightCore_Player02.player_all.Contains(core)) return KnightCore_Player02.player_all;
+        else if(KnightCore_Enemy.enemy_all.Contains(core)) return KnightCore_Enemy.enemy_all;
+        else return new List<KnightCore>();
+    }
 }

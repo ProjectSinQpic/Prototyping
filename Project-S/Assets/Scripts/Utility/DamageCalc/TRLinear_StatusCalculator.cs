@@ -16,12 +16,12 @@ public class TRLinear_StatusCalculator : StatusCalculator {
     public TRLinear_StatusCalculator (KnightStatus _status) : base (_status) { }
 
     public override void Calc () {
-        status.HP = CalcStatus (status.data.maxHP, TR_HP, status.SP);
-        status.MP = CalcStatus (status.data.maxMP, TR_MP, status.SP);
-        status.attack = CalcStatus (status.data.attack, TR_attack, status.SP);
-        status.defense = CalcStatus (status.data.defense, TR_defense, status.SP);
-        status.moveRange = status.data.moveRange;
-        status.attackRange = status.data.attackRange;
+        status.actual.maxHP = CalcStatus (status.data.maxHP, TR_HP, status.SP);
+        status.actual.maxMP = CalcStatus (status.data.maxMP, TR_MP, status.SP);
+        status.actual.attack = CalcStatus (status.data.attack, TR_attack, status.SP);
+        status.actual.defense = CalcStatus (status.data.defense, TR_defense, status.SP);
+        status.actual.moveRange = status.data.moveRange;
+        status.actual.attackRange = status.data.attackRange;
     }
 
     int CalcStatus (int _base, float _rate, int SP) {
