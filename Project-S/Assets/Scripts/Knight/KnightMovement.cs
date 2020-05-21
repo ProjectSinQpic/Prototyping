@@ -39,6 +39,7 @@ public class KnightMovement : KnightParts {
             .Where(m => m.pos == goal).First();
         StartCoroutine (MoveToPointCoroutine (sa));
         if(sa.root.Length > 0) core.storedCoolDown += 3;
+        GetComponent<BoxCollider> ().enabled = true;
     }
 
     IEnumerator MoveToPointCoroutine (SelectedArea area) {

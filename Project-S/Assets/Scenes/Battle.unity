@@ -1342,6 +1342,7 @@ MonoBehaviour:
   obj_defense: {fileID: 1571130163}
   obj_rest: {fileID: 1671449117}
   turn: {fileID: 1731158637}
+  statusBox: {fileID: 1307023438}
 --- !u!114 &1307023441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2801,6 +2802,7 @@ MonoBehaviour:
   pointer: {fileID: 1074379196}
   ViewPos: {fileID: 2033618161}
   cameraPos: {fileID: 534669905}
+  target: {fileID: 0}
 --- !u!114 &2127935758 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4338725050842158337, guid: 23b984dcb7486467ea4e8be5f23459c7,

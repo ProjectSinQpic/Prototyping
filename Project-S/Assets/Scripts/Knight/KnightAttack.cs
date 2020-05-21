@@ -57,7 +57,6 @@ public class KnightAttack : KnightParts {
         if (target.status.HP <= 0) target.NextAction ("die");
         //else yield return StartCoroutine (CounterAttackCoroutine (target));
         //yield return new WaitForSeconds (0.2f);
-        StatusUI.Instance ().UpdateUI (core.status); //TODO 後にpull型にしたい
         disp.RemoveArea ();
         core.NextAction ("finish");
     }

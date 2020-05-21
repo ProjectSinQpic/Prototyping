@@ -85,13 +85,11 @@ public class KnightCore : MonoBehaviour {
     }
 
     void OnSelected () {
-        StatusUI.Instance ().UpdateUI (status);
         GetComponent<BoxCollider> ().enabled = false;
         NextAction ("look");
     }
 
     void OnNotSelected () {
-        //TODO UI消去処理作っておく
         GetComponent<BoxCollider> ().enabled = true;
         NextAction ("look_cancel");
     }

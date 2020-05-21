@@ -13,6 +13,8 @@ public class StatusUI : MonoBehaviour {
     public Text obj_rest;
     public Text turn;
 
+    public GameObject statusBox;
+
 
     static StatusUI instance = null;
 
@@ -20,11 +22,20 @@ public class StatusUI : MonoBehaviour {
         if (instance == null) {
             instance = this;
         }
+        statusBox.transform.localScale = Vector3.zero;
     }
 
     void Start () {
         GameState.turn
             .Subscribe (x => UpdateTurn (x));
+    }
+
+    void Update() {
+        if(Input.GetMouseButtonDown(1) && MapPointer.instance.pointedKnight != null) {
+            UpdateUI(MapPointer.instance.pointedKnight.GetComponent<KnightStatus>());
+            statusBox.transform.localScale = Vector3.one;
+        }
+        if(Input.GetMouseButtonUp(1)) statusBox.transform.localScale = Vector3.zero;
     }
 
     public static StatusUI Instance () {
@@ -46,5 +57,7 @@ public class StatusUI : MonoBehaviour {
         if(turnState == Turn_State.none) turn.text = "WAIT...";
 
     }
+
+
 
 }
