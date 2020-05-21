@@ -11,8 +11,7 @@ public class ViewOperater : MonoBehaviour {
     [SerializeField] Transform cameraPos;
     public static ReactiveProperty<Direction> viewDir;
 
-    Transform target;
-    Vector2 rotSpeed;
+    public Transform target;
     bool isTurning;
 
     void Awake () {
@@ -27,15 +26,8 @@ public class ViewOperater : MonoBehaviour {
     }
 
     void Update () {
-        MoveView ();
         FollowTarget ();
         DragMap ();
-    }
-
-    void MoveView () {
-        ViewPos.transform.Rotate (Vector3.down * rotSpeed.x, Space.World);
-        ViewPos.transform.Rotate (Vector3.right * rotSpeed.y, Space.World);
-        rotSpeed *= 0.75f;
     }
 
     void FollowTarget () {
@@ -57,14 +49,17 @@ public class ViewOperater : MonoBehaviour {
                 .SetEase (Ease.OutCirc)
                 .OnComplete (() => isTurning = false);
         }
-        //if (Input.GetMouseButton(2)) {
-        //    rotSpeed += new Vector2(-Input.GetAxis("Mouse X"), 0);
-        //}
-        if (Input.GetMouseButton (1)) {
+
+        var v = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height) * 2 - Vector2.one;
+
+        if(Mathf.Abs(v.x) > 0.75f) {
             target = null;
-            var vx = Input.GetAxis ("Mouse X") * transform.right;
-            var vy = Input.GetAxis ("Mouse Y") * transform.forward;
-            ViewPos.position -= (vx + vy) * 4f;
+            ViewPos.position += transform.right * v.x * 4f;
         }
+        if(Mathf.Abs(v.y) > 0.75f) {
+            target = null;
+            ViewPos.position += transform.forward * v.y * 4f;
+        }
+
     }
 }

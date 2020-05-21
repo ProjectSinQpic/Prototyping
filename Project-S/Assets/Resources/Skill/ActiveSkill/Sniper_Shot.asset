@@ -17,5 +17,5 @@ MonoBehaviour:
   rest: 4
   isActive: 0
   duration: 1
-  areaShape: 0
+  areaShape: 1
   additionalRange: 2
