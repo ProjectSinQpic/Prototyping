@@ -85,7 +85,7 @@ public class KnightCore : MonoBehaviour {
     }
 
     void OnSelected () {
-        GetComponent<BoxCollider> ().enabled = false;
+        if(isOperable()) GetComponent<BoxCollider> ().enabled = false;
         NextAction ("look");
     }
 
@@ -106,5 +106,9 @@ public class KnightCore : MonoBehaviour {
         else if(KnightCore_Player02.player_all.Contains(core)) return KnightCore_Player02.player_all;
         else if(KnightCore_Enemy.enemy_all.Contains(core)) return KnightCore_Enemy.enemy_all;
         else return new List<KnightCore>();
+    }
+
+    protected virtual bool isOperable() {
+        return true;
     }
 }

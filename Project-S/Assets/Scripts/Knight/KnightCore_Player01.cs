@@ -45,7 +45,7 @@ public class KnightCore_Player01 : KnightCore {
             .Subscribe (_ => isFinished = false);
     }
 
-    bool isOperable () {
+    protected override bool isOperable () {
         return GameState.selected.Value == this && GameState.turn.Value == Turn_State.blue
             && status.coolDown == 0;
     }
