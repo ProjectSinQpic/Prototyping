@@ -38,8 +38,6 @@ public class KnightCore : MonoBehaviour {
     public KnightCore next_target;
 
     [HideInInspector]
-
-
     public bool isFinished, isDead;
 
     Subject<string> message;

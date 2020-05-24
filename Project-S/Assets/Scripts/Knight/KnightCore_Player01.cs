@@ -27,7 +27,10 @@ public class KnightCore_Player01 : KnightCore {
         MapPointer.instance.OnClickedKnight
             .Where (_ => isOperable ())
             .Where (_ => GameState.knight_state.Value == Knight_State.skill_knight)
-            .Subscribe (n => GetComponent<KnightSkill>().OnTargeted(new List<KnightCore>(){n.GetComponent<KnightCore>()}));
+            .Subscribe (n => {
+                if(!GetComponent<KnightAttack>().CheckAttackable(n.GetComponent<KnightCore>())) GetComponent<KnightSkill>().OnCancel();
+                else GetComponent<KnightSkill>().OnTargeted(new List<KnightCore>(){n.GetComponent<KnightCore>()});
+            });
         MapPointer.instance.OnClickedMap
             .Where (_ => isOperable ())
             .Where (_ => GameState.knight_state.Value == Knight_State.skill_knight)

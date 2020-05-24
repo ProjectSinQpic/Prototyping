@@ -4,6 +4,18 @@ using UniRx;
 using UnityEngine;
 using System.Linq;
 
+public class AttackResult {
+
+    public AttackResult(KnightCore attacker, KnightCore target, int damage) {
+        this.attacker = attacker;
+        this.target = target;
+        this.damage = damage;
+    }
+    public KnightCore attacker, target;
+
+    public int damage;
+}
+
 public class KnightAttack : KnightParts {
 
     public KnightView view;
@@ -22,7 +34,7 @@ public class KnightAttack : KnightParts {
 
         core.Message
             .Where (x => x == "attack")
-            .Subscribe (_ => Attack (core.next_target));
+            .Subscribe (_ => AttackPrepare (core.next_target));
 
         core.Message
             .Where (x => x == "attack_cancel")
@@ -36,23 +48,55 @@ public class KnightAttack : KnightParts {
 
     }
 
-    void Attack (KnightCore target) {
+    void AttackPrepare(KnightCore target) {
         if (!CheckAttackable (target)) {
             core.NextAction ("attack_cancel");
             return;
         }
-        StartCoroutine (AttackCoroutine (target));
+        var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
+        var result = new AttackResult(core, target, damage);
+
+        AttackPrediction.instance.SetPredictionUI(result);
+        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
+            {"決定", () => {
+                    SoundPlayer.instance.PlaySoundEffect("menu_select");
+                    MenuGenerator.Instance().Close();
+                    AttackPrediction.instance.HidePredictionUI();
+                    Attack(result);
+                }
+            },
+            {"キャンセル", () => {
+                    SoundPlayer.instance.PlaySoundEffect("menu_cancel");
+                    MenuGenerator.Instance().Close();
+                    AttackPrediction.instance.HidePredictionUI();
+                    core.NextAction ("attack_cancel");
+                }
+            }
+        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);
+
+    }
+
+    void Attack (AttackResult result) {
+
+        StartCoroutine (AttackCoroutine (result));
         core.storedCoolDown += 3;
     }
 
     public void AttackInSkill(KnightCore target) {
-        StartCoroutine (AttackCoroutine (target));
+        if (!CheckAttackable (target)) {
+            GetComponent<KnightSkill>().OnCancel();
+            return;
+        }
+        var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
+        var result = new AttackResult(core, target, damage);
+        StartCoroutine (AttackCoroutine (result));
     }
 
-    IEnumerator AttackCoroutine (KnightCore target) {
+    IEnumerator AttackCoroutine (AttackResult result) {
+        var target = result.target;
         SoundPlayer.instance.PlaySoundEffect("attack01");
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
-        DealDamage (core, target);
+        target.status.HP -= result.damage;
         yield return new WaitForSeconds (0.4f);
         if (target.status.HP <= 0) target.NextAction ("die");
         //else yield return StartCoroutine (CounterAttackCoroutine (target));
@@ -70,12 +114,6 @@ public class KnightAttack : KnightParts {
         yield return new WaitForSeconds (0.4f);
         if (core.status.HP <= 0) core.NextAction ("die");
     }*/
-
-    void DealDamage (KnightCore off, KnightCore def) {
-        //TODO ダメージ計算のシステム考える
-        var damage = Mathf.Max (0, off.statusData.attack - def.statusData.defense);
-        def.status.HP -= damage;
-    }
 
     void CancelAttack () {
         disp.RemoveArea ();
