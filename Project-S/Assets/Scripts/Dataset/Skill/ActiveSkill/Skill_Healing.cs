@@ -14,10 +14,11 @@ public class Skill_Healing : AutoSelectSkill {
     }
 
     protected override void OnSpell() {
-        foreach(var target in targets) {
+        Debug.Log("skill");
+        foreach(var target in owner.targets) {
             target.status.HP = Mathf.Min(target.statusData.maxHP, target.status.HP + healingHelth);
         }
-        owner.NextAction("finish");
+        owner.NextAction(KnightAction.finish);
     }
 
 }

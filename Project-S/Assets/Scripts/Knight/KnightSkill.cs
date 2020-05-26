@@ -1,37 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class KnightSkill : KnightParts {
 
-    System.Action<List<KnightCore>> skillAction;
+    void Start() {
+        core.Message
+            .Where (x => x == KnightAction.skill)
+            .Subscribe (_ => OnSpell());
 
-    ActiveSkill nowSkill;
-
-    public void SubscribeSkill(ActiveSkill skill) {
-        nowSkill = skill;
+        core.Message
+            .Where (x => x == KnightAction.skill_cancel)
+            .Subscribe (_ => OnCancel());
     }
 
-    public void SelectKnight(AreaShapeType shape, Vector2 pos, int value, System.Action<List<KnightCore>> act) {
-        GameState.knight_state.Value = Knight_State.skill_knight;
-        GetComponent<KnightDisplayArea>().DisplayArea(shape, pos, value);
-        skillAction = act;
-    }
-
-    public void OnTargeted(List<KnightCore> targets){
-        GetComponent<KnightDisplayArea>().RemoveArea();
-        skillAction(targets);
-    } 
-
-    public void OnSpell() {
-        core.status.MP -= nowSkill.mana;
-        core.storedCoolDown += nowSkill.rest;
+    void OnSpell() {
+        core.nowSkill.OnStart();
     }
 
     public void OnCancel() {
-        nowSkill = null;
-        GetComponent<KnightDisplayArea>().RemoveArea();
-        core.NextAction("select");
+        core.nowSkill = null;
+        core.NextAction(KnightAction.look_cancel);
+        core.NextAction(KnightAction.select);
     }
 
 }

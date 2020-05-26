@@ -31,7 +31,7 @@ public class ViewOperater : MonoBehaviour {
 
     void Update () {
         FollowTarget ();
-        DragMap ();
+        if(!MenuGenerator.Instance().isLocked) DragMap ();
     }
 
     void FollowTarget () {
@@ -70,7 +70,6 @@ public class ViewOperater : MonoBehaviour {
             target = null;
             newPos += transform.forward * v.y * 4f;
         }
-        Debug.Log(newPos);
         if(newPos.magnitude <= maxDistance)
             ViewPos.position = newPos;
     }

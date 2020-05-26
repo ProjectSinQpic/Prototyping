@@ -3,6 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+[System.Serializable]
+public class SelectedArea {
+    public Vector2 pos;
+    public string root;
+
+    public AreaType type;
+}
+
+public enum AreaType {
+    move,
+    attack,
+    move_attack
+}
+
 public enum AreaShapeType {
     attackable,
     line,

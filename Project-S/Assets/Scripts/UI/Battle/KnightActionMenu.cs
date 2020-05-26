@@ -24,12 +24,12 @@ public class KnightActionMenu : MonoBehaviour {
 
     void OnAttack (KnightCore core) {
         SoundPlayer.instance.PlaySoundEffect("menu_select");
-        core.NextAction ("attack_set");
+        core.NextAction (KnightAction.attack_look);
         GameState.knight_state.Value = Knight_State.attack;
         MenuGenerator.Instance ().Close ();
     }
 
-    void OnSkill (KnightCore core) {
+    void OnSkill (KnightCore core) { //TODO: あとで分離
         var choices = new Dictionary<string, UnityEngine.Events.UnityAction>();
         SoundPlayer.instance.PlaySoundEffect("menu_select");
         foreach (var skill in core.status.activeSkills) {
@@ -50,7 +50,7 @@ public class KnightActionMenu : MonoBehaviour {
 
     void OnWait (KnightCore core) {
         SoundPlayer.instance.PlaySoundEffect("menu_select");
-        core.NextAction ("finish");
+        core.NextAction (KnightAction.finish);
         GameState.knight_state.Value = Knight_State.move;
         MenuGenerator.Instance ().Close ();
     }

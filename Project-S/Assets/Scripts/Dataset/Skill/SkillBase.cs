@@ -7,7 +7,7 @@ public class SkillBase : ScriptableObject {
     public string skillName;
     protected KnightCore owner;
 
-    public void SetOwner(KnightCore core) {
+    public virtual void Init(KnightCore core) {
         owner = core;
     }   
 

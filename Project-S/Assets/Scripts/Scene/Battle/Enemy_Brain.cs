@@ -27,15 +27,14 @@ public class Enemy_Brain : MonoBehaviour {
         DicideNextPos (target);
 
         yield return new WaitForSeconds (0.5f);
-        target.NextAction ("move");
+        target.NextAction (KnightAction.move);
 
-        target.NextAction ("finish");
+        target.NextAction (KnightAction.finish);
     }
 
     void DicideNextPos (KnightCore target) {
-        var disp = target.GetComponent<KnightDisplayArea> ();
-        var movableArea = disp.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack).ToList();
+        var movableArea = target.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack).ToList();
         var goal = movableArea[Random.Range (0, movableArea.Count)];
-        disp.core.next_pos = goal.pos;
+        target.next_pos = goal.pos;
     }
 }

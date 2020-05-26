@@ -7,7 +7,8 @@ using UnityEngine;
 public class AutoSelectSkill : ActiveSkill {
 
     protected override void OnWait() {
-        OnTargeted(GetTargets());
+        owner.targets = GetTargets();
+        owner.NextAction(KnightAction.skill_prepare);        
     }
 
     //スキルを発動する対象を決定する

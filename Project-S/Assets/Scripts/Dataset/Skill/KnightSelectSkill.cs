@@ -7,14 +7,14 @@ using UnityEngine;
 public class KnightSelectSkill : ActiveSkill {
 
     public AreaShapeType areaShape;
-
-    protected Vector2 pos;
-    protected int value;
+    public  Vector2 pos;
+    public int value;
 
 
     protected override void OnWait() {
         OnInit();
-        owner.GetComponent<KnightSkill>().SelectKnight(areaShape, pos, value, OnTargeted);
+        GameState.knight_state.Value = Knight_State.skill_knight;
+        owner.NextAction(KnightAction.skill_look_knight);
     }
 
     protected virtual void OnInit() {}

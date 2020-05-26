@@ -34,7 +34,7 @@ public class KnightStatus : KnightParts {
         }
         activeSkills = skills.Where(s => s is ActiveSkill).Select(s => (ActiveSkill)s).ToList();
 
-        activeSkills.ForEach(s => s.SetOwner(core));
+        activeSkills.ForEach(s => s.Init(core));
 
         GetComponent<KnightView> ().Init ();    //TODO 改善の余地あり
     }

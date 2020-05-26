@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class ActiveSkill : SkillBase {
 
@@ -14,10 +15,8 @@ public class ActiveSkill : SkillBase {
     public int duration;
     protected int count = 0;
 
-    protected List<KnightCore> targets;
-
     public void Activate() {
-        owner.GetComponent<KnightSkill>().SubscribeSkill(this);
+        owner.nowSkill = this;
         OnWait();
     }
 
@@ -26,11 +25,11 @@ public class ActiveSkill : SkillBase {
     protected virtual void OnFinish(){}
 
 
-    protected void OnStart(List<KnightCore> t) {
+    public void OnStart() {
         isActive = true;
         count = 0;
-        targets = t;
-        owner.GetComponent<KnightSkill>().OnSpell();
+        owner.status.MP -= owner.nowSkill.mana;
+        owner.storedCoolDown += owner.nowSkill.rest;
         Update();
     }
 
@@ -46,22 +45,7 @@ public class ActiveSkill : SkillBase {
 
     }
 
-    protected void OnTargeted(List<KnightCore> targets) {
-        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
-            {"決定", () => {
-                    SoundPlayer.instance.PlaySoundEffect("menu_select");
-                    MenuGenerator.Instance().Close();
-                    OnStart(targets);
-                }
-            },
-            {"キャンセル", () => {
-                    SoundPlayer.instance.PlaySoundEffect("menu_cancel");
-                    MenuGenerator.Instance().Close();
-                    owner.GetComponent<KnightSkill>().OnCancel();
-                }
-            }
-        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);
-    }
+
 
 
 }
