@@ -13,8 +13,8 @@ public class Skill_SniperShot : KnightSelectSkill {
         value = owner.statusData.attackRange + additionalRange;
     }
     protected override void OnSpell() {
-        Debug.Log("skill");
-        owner.GetComponent<KnightAttack>().AttackInSkill(owner.targets[0]);
+        owner.skillDamage = owner.statusData.attack;
+        owner.NextAction(KnightAction.skill_attack);
     }
 
 }

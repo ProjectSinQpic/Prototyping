@@ -14,7 +14,6 @@ public class Skill_Healing : AutoSelectSkill {
     }
 
     protected override void OnSpell() {
-        Debug.Log("skill");
         foreach(var target in owner.targets) {
             target.status.HP = Mathf.Min(target.statusData.maxHP, target.status.HP + healingHelth);
         }

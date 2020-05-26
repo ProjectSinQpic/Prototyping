@@ -37,6 +37,10 @@ public class KnightAttack : KnightParts {
             .Subscribe (_ => Attack(core.attackResult));
 
         core.Message
+            .Where (x => x == KnightAction.skill_attack)
+            .Subscribe (_ => AttackInSkill(core.targets[0]));
+
+        core.Message
             .Where (x => x == KnightAction.attack_cancel)
             .Where (_ => !iscanceled)
             .Subscribe (_ => CancelAttack ());
@@ -46,17 +50,15 @@ public class KnightAttack : KnightParts {
     void AttackPrepare(KnightCore target) {
         var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
         core.attackResult = new AttackResult(core, target, damage);
-
     }
 
     void Attack (AttackResult result) {
-
         StartCoroutine (AttackCoroutine (result));
         core.storedCoolDown += 3;
     }
 
     public void AttackInSkill(KnightCore target) {
-        var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
+        var damage = Mathf.Max (0, core.skillDamage);
         var result = new AttackResult(core, target, damage);
         StartCoroutine (AttackCoroutine (result));
     }

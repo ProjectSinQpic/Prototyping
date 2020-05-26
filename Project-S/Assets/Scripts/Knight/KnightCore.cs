@@ -18,6 +18,7 @@ public enum KnightAction {
     skill_look_knight,
     skill_prepare,
     skill,
+    skill_attack,
     skill_cancel,
     die,
     finish,
@@ -58,6 +59,9 @@ public class KnightCore : MonoBehaviour {
 
     [HideInInspector]
     public ActiveSkill nowSkill;
+
+    [HideInInspector]
+    public int skillDamage;
 
 
     [HideInInspector]
