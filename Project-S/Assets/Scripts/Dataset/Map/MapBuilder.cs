@@ -11,7 +11,7 @@ public class MapBuilder : MonoBehaviour {
 
     void Start () {
         MapStatus.field_map = MapFileDecoder.DecodeMap ("simple_field.txt");
-        BuildMap ();
+        //BuildMap ();
     }
 
     void BuildMap () {
