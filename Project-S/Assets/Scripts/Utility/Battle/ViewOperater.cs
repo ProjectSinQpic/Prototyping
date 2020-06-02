@@ -47,7 +47,7 @@ public class ViewOperater : MonoBehaviour {
 
     void Update () {
         FollowTarget ();
-        if(!MenuGenerator.Instance().isLocked && !isLocked) DragMap ();
+        if(!UIWindow.isLocked && !isLocked) DragMap ();
     }
 
     void FollowTarget () {

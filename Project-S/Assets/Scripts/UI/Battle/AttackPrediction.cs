@@ -16,7 +16,7 @@ public class AttackPrediction : MonoBehaviour {
     public static AttackPrediction instance;
 
     public void Start() {
-        instance = this;
+        if (instance == null) instance = this;
     }
 
     public void SetPredictionUI(AttackResult result) {

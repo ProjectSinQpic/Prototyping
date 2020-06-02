@@ -68,7 +68,7 @@ public class KnightCore_Player : KnightCore {
         ////
 
         Message.Where (x => x == KnightAction.select)
-            .Subscribe (_ => KnightActionMenu.instance.DisplayMenu (this));
+            .Subscribe (_ => KnightActionWindow.instance.DisplayMenu (this));
 
         Message.Where (x => x == KnightAction.finish)
             .Subscribe (_ => GameState.selected.Value = null);
@@ -83,35 +83,35 @@ public class KnightCore_Player : KnightCore {
 
     void OpenAttackWindow() {
         AttackPrediction.instance.SetPredictionUI(attackResult);
-        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
+        GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect("menu_select");
-                    MenuGenerator.Instance().Close();
+                    GenericWindow.instance.Close();
                     AttackPrediction.instance.HidePredictionUI();
                     NextAction(KnightAction.attack);
                 }
             },
             {"キャンセル", () => {
                     SoundPlayer.instance.PlaySoundEffect("menu_cancel");
-                    MenuGenerator.Instance().Close();
+                    GenericWindow.instance.Close();
                     AttackPrediction.instance.HidePredictionUI();
                     NextAction (KnightAction.attack_cancel);
                 }
             }
-        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);
+        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "attack_target", true);
     }
 
     void OpenSkillWindow() {
-        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
+        GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect("menu_select");
-                    MenuGenerator.Instance().Close();
+                    GenericWindow.instance.Close();
                     NextAction(KnightAction.skill);
                 }
             },
             {"キャンセル", () => {
                     SoundPlayer.instance.PlaySoundEffect("menu_cancel");
-                    MenuGenerator.Instance().Close();
+                    GenericWindow.instance.Close();
                     NextAction(KnightAction.skill_cancel);
                 }
             }

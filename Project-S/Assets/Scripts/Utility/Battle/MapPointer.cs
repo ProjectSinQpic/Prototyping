@@ -26,19 +26,19 @@ public class MapPointer : MonoBehaviour {
 
         OnClickedMap = this.UpdateAsObservable ()
             .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight == null)
-            .Where (_ => !MenuGenerator.Instance ().isLocked)
+            .Where (_ => !UIWindow.isLocked)
             .Select (_ => cursorPos);
 
         OnClickedKnight = this.UpdateAsObservable ()
             .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight != null)
-            .Where (_ => !MenuGenerator.Instance ().isLocked)
+            .Where (_ => !UIWindow.isLocked)
             .Select (_ => pointedKnight);
 
         OnClickedMap.Subscribe (_ => Debug.Log (cursorPos));
         OnClickedKnight.Subscribe (o => Debug.Log (o));
 
         this.UpdateAsObservable ()
-            .Select (_ => MenuGenerator.Instance ().isLocked)
+            .Select (_ => UIWindow.isLocked)
             .DistinctUntilChanged ()
             .Subscribe (x => cursor.GetComponent<MeshRenderer> ().enabled = !x);
 

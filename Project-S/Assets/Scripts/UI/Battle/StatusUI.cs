@@ -20,9 +20,7 @@ public class StatusUI : MonoBehaviour {
     public ReactiveProperty<KnightCore> target = new ReactiveProperty<KnightCore>(null);
 
     void Awake () {
-        if (instance == null) {
-            instance = this;
-        }
+        if (instance == null) instance = this;
         statusBox.transform.localScale = Vector3.zero;
     }
 
