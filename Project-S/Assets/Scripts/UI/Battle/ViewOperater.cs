@@ -13,25 +13,40 @@ public class ViewOperater : MonoBehaviour {
 
     public Transform target;
     bool isTurning;
+    public static bool isLocked;
+    public static bool isFocusing;
 
     public float maxDistance;
     public int zoomMax, zoomMin;
     int zoom;
 
+    public float moveSpeed;
+
+    public float focusSpeed;
+    public float focusRate;
+
     void Awake () {
         target = null;
         viewDir = new ReactiveProperty<Direction> (Direction.NORTH);
+        isFocusing = false;
+        isLocked = false;
     }
 
     void Start () {
         isTurning = false;
         GameState.selected
             .Subscribe (k => target = k ? k.transform : null);
+        StatusUI.Instance().target
+            .Subscribe(t => {
+                if(t == null) FocusOut();
+                else FocusIn(t.transform);
+            });    
+
     }
 
     void Update () {
         FollowTarget ();
-        if(!MenuGenerator.Instance().isLocked) DragMap ();
+        if(!MenuGenerator.Instance().isLocked && !isLocked) DragMap ();
     }
 
     void FollowTarget () {
@@ -64,13 +79,30 @@ public class ViewOperater : MonoBehaviour {
         var newPos = ViewPos.position;
         if(Mathf.Abs(v.x) > 0.75f) {
             target = null;
-            newPos += transform.right * v.x * 4f;
+            newPos += transform.right * v.x * moveSpeed;
         }
         if(Mathf.Abs(v.y) > 0.75f) {
             target = null;
-            newPos += transform.forward * v.y * 4f;
+            newPos += transform.forward * v.y * moveSpeed;
         }
         if(newPos.magnitude <= maxDistance)
             ViewPos.position = newPos;
     }
+
+    public void FocusIn(Transform target) {
+        isFocusing = true;
+        this.target = target;
+        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate, focusSpeed).OnComplete(() => isFocusing = false);
+        isLocked = true;
+    }
+
+    public void FocusOut() {
+        this.target = null;
+        if(isLocked) {
+            isFocusing = true;
+            cameraPos.DOLocalMove(cameraPos.localPosition * focusRate, focusSpeed).OnComplete(() => isFocusing = false);
+        }
+        isLocked = false;
+    }
+
 }

@@ -15,8 +15,9 @@ public class StatusUI : MonoBehaviour {
 
     public GameObject statusBox;
 
-
     static StatusUI instance = null;
+
+    public ReactiveProperty<KnightCore> target = new ReactiveProperty<KnightCore>(null);
 
     void Awake () {
         if (instance == null) {
@@ -31,11 +32,17 @@ public class StatusUI : MonoBehaviour {
     }
 
     void Update() {
-        if(Input.GetMouseButtonDown(1) && MapPointer.instance.pointedKnight != null) {
-            UpdateUI(MapPointer.instance.pointedKnight.GetComponent<KnightStatus>());
+        if(ViewOperater.isFocusing) return;
+        if(Input.GetMouseButtonDown(1) && MapPointer.instance.pointedKnight != null 
+            && !ViewOperater.isLocked) {
+            target.Value = MapPointer.instance.pointedKnight.GetComponent<KnightCore>();
+            UpdateUI(target.Value.status);
             statusBox.transform.localScale = Vector3.one;
         }
-        if(Input.GetMouseButtonUp(1)) statusBox.transform.localScale = Vector3.zero;
+        if(Input.GetMouseButtonUp(1) && ViewOperater.isLocked) {
+            target.Value = null;
+            statusBox.transform.localScale = Vector3.zero;
+        }
     }
 
     public static StatusUI Instance () {
