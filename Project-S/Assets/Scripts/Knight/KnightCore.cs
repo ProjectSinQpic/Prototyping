@@ -11,6 +11,7 @@ public enum KnightAction {
     look_cancel,
     move,
     select,
+    select_cancel,
     attack_look,
     attack_prepare,
     attack,

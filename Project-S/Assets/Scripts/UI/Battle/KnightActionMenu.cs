@@ -57,12 +57,8 @@ public class KnightActionMenu : MonoBehaviour {
 
     void OnCancel (KnightCore core) {
         SoundPlayer.instance.PlaySoundEffect("menu_cancel");
-        var diff = core.prev_pos - core.status.pos;
-        core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
-            Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
-        core.status.pos = core.prev_pos;
+        core.NextAction(KnightAction.select_cancel);
         MenuGenerator.Instance ().Close ();
         GameState.knight_state.Value = Knight_State.move;
-        GameState.selected.Value = null;
     }
 }

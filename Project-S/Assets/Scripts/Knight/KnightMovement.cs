@@ -18,6 +18,10 @@ public class KnightMovement : KnightParts {
             .Where (x => x == KnightAction.finish)
             .Subscribe (_ => core.prev_pos = core.status.pos);
 
+        core.Message
+            .Where (x => x == KnightAction.select_cancel)
+            .Subscribe (_ => OnCancel());
+
     }
 
     public void MoveToPoint (Vector2 goal) {
@@ -61,6 +65,14 @@ public class KnightMovement : KnightParts {
     bool CheckMovable (Vector2 point) {
         return core.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
             .Select (m => m.pos).Contains (point);
+    }
+
+    public void OnCancel() {
+        var diff = core.prev_pos - core.status.pos;
+        core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
+            Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
+        core.status.pos = core.prev_pos;
+        GameState.selected.Value = null;
     }
 
 }
