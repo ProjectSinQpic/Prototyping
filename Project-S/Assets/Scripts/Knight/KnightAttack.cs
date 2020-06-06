@@ -27,7 +27,6 @@ public class KnightAttack : KnightParts {
 
     void Start () {
 
-
         core.Message
             .Where (x => x == KnightAction.attack_prepare)
             .Subscribe (_ => AttackPrepare (core.targets[0]));
@@ -39,6 +38,10 @@ public class KnightAttack : KnightParts {
         core.Message
             .Where (x => x == KnightAction.skill_attack)
             .Subscribe (_ => AttackInSkill(core.targets[0]));
+
+        core.Message
+            .Where (x => x == KnightAction.counter_attack)
+            .Subscribe (_ => CounterAttack(core.attackResult));
 
         core.Message
             .Where (x => x == KnightAction.attack_cancel)
@@ -53,38 +56,35 @@ public class KnightAttack : KnightParts {
     }
 
     void Attack (AttackResult result) {
-        StartCoroutine (AttackCoroutine (result));
+        StartCoroutine (AttackCoroutine (result, false));
         core.storedCoolDown += 3;
     }
 
     public void AttackInSkill(KnightCore target) {
         var damage = Mathf.Max (0, core.skillDamage);
         var result = new AttackResult(core, target, damage);
-        StartCoroutine (AttackCoroutine (result));
+        StartCoroutine (AttackCoroutine (result, false));
     }
 
-    IEnumerator AttackCoroutine (AttackResult result) {
+    void CounterAttack(AttackResult result) { //TODO: あとで作る
+        Debug.Log("counter : " + result.target.name);
+    }
+
+    IEnumerator AttackCoroutine (AttackResult result, bool isCounter) {
         var target = result.target;
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.attack01);
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
         target.status.HP -= result.damage;
         yield return new WaitForSeconds (0.4f);
         if (target.status.HP <= 0) target.NextAction (KnightAction.die);
-        //else yield return StartCoroutine (CounterAttackCoroutine (target));
-        //yield return new WaitForSeconds (0.2f);
+        else if(!isCounter) {
+            target.attackResult = result;
+            target.NextAction(KnightAction.counter_attack);
+        }
+        yield return new WaitForSeconds (0.2f);
         core.NextAction(KnightAction.look_cancel);
         core.NextAction(KnightAction.finish);
     }
-
-    /*IEnumerator CounterAttackCoroutine (KnightCore target) {
-        target.GetComponent<KnightDisplayArea> ().CalcAttackable ();
-        if (!target.GetComponent<KnightAttack> ().CheckAttackable (core)) yield break;
-        yield return new WaitForSeconds (0.2f);
-        target.GetComponent<KnightView> ().ActionView ("attack", target.status.dir); //TODO 変更する
-        DealDamage (target, core);
-        yield return new WaitForSeconds (0.4f);
-        if (core.status.HP <= 0) core.NextAction ("die");
-    }*/
 
     void CancelAttack () {
         core.NextAction(KnightAction.look_cancel);

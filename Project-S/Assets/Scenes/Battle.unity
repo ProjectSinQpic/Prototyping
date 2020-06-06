@@ -2322,15 +2322,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seTable:
     list:
-    - Key: menu_select
+    - Key: 0
       Value: {fileID: 8300000, guid: 993123ed8ea6f46d597945cf6889faeb, type: 3}
-    - Key: menu_cancel
+    - Key: 1
       Value: {fileID: 8300000, guid: 7cad0df07c39f4706a70513bdb953d88, type: 3}
-    - Key: attack01
+    - Key: 2
       Value: {fileID: 8300000, guid: d41db9c31000f430ebb09efa6624a5d6, type: 3}
   musicTable:
     list:
-    - Key: battle
+    - Key: 0
       Value: {fileID: 8300000, guid: 0b374c7d0e5af41ab93f804e96f3f705, type: 3}
 --- !u!4 &1660827497
 Transform:

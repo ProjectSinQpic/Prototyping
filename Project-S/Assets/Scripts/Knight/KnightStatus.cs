@@ -16,7 +16,7 @@ public class KnightStatus : KnightParts {
     public int level;
     public int SP;
 
-    public List<SkillBase> skills;
+    public List<SkillBase> skills; //TODO: プロパティに変更
     public List<ActiveSkill> activeSkills;
 
     public KnightStatusData actual, delta;

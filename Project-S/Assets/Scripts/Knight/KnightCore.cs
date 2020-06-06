@@ -16,6 +16,7 @@ public enum KnightAction {
     attack_prepare,
     attack,
     attack_cancel,
+    counter_attack,
     skill_look_knight,
     skill_prepare,
     skill,
