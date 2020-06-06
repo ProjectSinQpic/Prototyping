@@ -68,6 +68,9 @@ public class GameState : MonoBehaviour {
         this.UpdateAsObservable ()
             .Where (_ => KnightCore_Player02.player_all.All (x => x.isDead))
             .Subscribe (_ => clearUI.text = "BLUE WIN");
+
+
+        SoundPlayer.instance.PlayBackGroundMusic("battle");
     }
 
     void WasteTime() {

@@ -17,7 +17,7 @@ public class SoundPlayer : MonoBehaviour {
 
     AudioSource[] sources;
 
-    void Start() {
+    void Awake() {
         instance = this;
         sources = GetComponents<AudioSource>();
     }

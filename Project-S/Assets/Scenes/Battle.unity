@@ -2329,7 +2329,9 @@ MonoBehaviour:
     - Key: attack01
       Value: {fileID: 8300000, guid: d41db9c31000f430ebb09efa6624a5d6, type: 3}
   musicTable:
-    list: []
+    list:
+    - Key: battle
+      Value: {fileID: 8300000, guid: 0b374c7d0e5af41ab93f804e96f3f705, type: 3}
 --- !u!4 &1660827497
 Transform:
   m_ObjectHideFlags: 0
@@ -3346,7 +3348,7 @@ MonoBehaviour:
   zoomMin: -2
   moveSpeed: 1.5
   focusSpeed: 0.5
-  focusRate: 2
+  focusRate: 3
   focusEasing: 15
 --- !u!114 &2127935758 stripped
 MonoBehaviour:
