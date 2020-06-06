@@ -51,7 +51,7 @@ public class GameState : MonoBehaviour {
                 || KnightCore_Player02.player_all.All (x => x.status.coolDown > 0))
             .Subscribe (_ => {
                 turn.Value = Turn_State.none;
-                WasteTime();
+                StartCoroutine(WasteTimeCoroutine());
             });
 
         MapPointer.instance.OnClickedKnight
@@ -73,9 +73,10 @@ public class GameState : MonoBehaviour {
         SoundPlayer.instance.PlayBackGroundMusic(BackGroundMusic.battle01);
     }
 
-    void WasteTime() {
+    IEnumerator WasteTimeCoroutine() {
         KnightCore_Player01.player_all.ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
         KnightCore_Player02.player_all.ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
+        yield return new WaitForSeconds(2f);
         turn.Value = Turn_State.blue;
     }
 
