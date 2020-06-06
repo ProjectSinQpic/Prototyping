@@ -65,7 +65,7 @@ public class KnightAttack : KnightParts {
 
     IEnumerator AttackCoroutine (AttackResult result) {
         var target = result.target;
-        SoundPlayer.instance.PlaySoundEffect("attack01");
+        SoundPlayer.instance.PlaySoundEffect(SoundEffect.attack01);
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
         target.status.HP -= result.damage;
         yield return new WaitForSeconds (0.4f);

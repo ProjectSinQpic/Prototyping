@@ -22,7 +22,7 @@ public class KnightActionWindow : UIWindow {
     }
 
     void OnAttack (KnightCore core) {
-        SoundPlayer.instance.PlaySoundEffect("menu_select");
+        SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
         core.NextAction (KnightAction.attack_look);
         GameState.knight_state.Value = Knight_State.attack;
         GenericWindow.instance.Close ();
@@ -33,14 +33,14 @@ public class KnightActionWindow : UIWindow {
     }
 
     void OnWait (KnightCore core) {
-        SoundPlayer.instance.PlaySoundEffect("menu_select");
+        SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
         core.NextAction (KnightAction.finish);
         GameState.knight_state.Value = Knight_State.move;
         GenericWindow.instance.Close ();
     }
 
     void OnCancel (KnightCore core) {
-        SoundPlayer.instance.PlaySoundEffect("menu_cancel");
+        SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_cancel);
         core.NextAction(KnightAction.select_cancel);
         GenericWindow.instance.Close ();
         GameState.knight_state.Value = Knight_State.move;

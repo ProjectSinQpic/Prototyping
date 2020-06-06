@@ -70,7 +70,7 @@ public class GameState : MonoBehaviour {
             .Subscribe (_ => clearUI.text = "BLUE WIN");
 
 
-        SoundPlayer.instance.PlayBackGroundMusic("battle");
+        SoundPlayer.instance.PlayBackGroundMusic(BackGroundMusic.battle01);
     }
 
     void WasteTime() {

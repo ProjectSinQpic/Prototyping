@@ -85,14 +85,14 @@ public class KnightCore_Player : KnightCore {
         AttackPrediction.instance.SetPredictionUI(attackResult);
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
-                    SoundPlayer.instance.PlaySoundEffect("menu_select");
+                    SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
                     GenericWindow.instance.Close();
                     AttackPrediction.instance.HidePredictionUI();
                     NextAction(KnightAction.attack);
                 }
             },
             {"キャンセル", () => {
-                    SoundPlayer.instance.PlaySoundEffect("menu_cancel");
+                    SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_cancel);
                     GenericWindow.instance.Close();
                     AttackPrediction.instance.HidePredictionUI();
                     NextAction (KnightAction.attack_cancel);
@@ -104,13 +104,13 @@ public class KnightCore_Player : KnightCore {
     void OpenSkillWindow() {
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
-                    SoundPlayer.instance.PlaySoundEffect("menu_select");
+                    SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
                     GenericWindow.instance.Close();
                     NextAction(KnightAction.skill);
                 }
             },
             {"キャンセル", () => {
-                    SoundPlayer.instance.PlaySoundEffect("menu_cancel");
+                    SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_cancel);
                     GenericWindow.instance.Close();
                     NextAction(KnightAction.skill_cancel);
                 }
