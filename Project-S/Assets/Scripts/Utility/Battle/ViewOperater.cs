@@ -47,35 +47,18 @@ public class ViewOperater : MonoBehaviour {
 
     void Update () {
         FollowTarget ();
-        if(!UIWindow.isLocked && !isLocked) DragMap ();
+        if(!UIWindow.isLocked && !isLocked) {
+            MoveCamera();
+            ZoomCamera();
+            if(Input.GetMouseButtonDown (2) && !isTurning) TurnCamera();
+        }
     }
 
     void FollowTarget () {
         if (target == null) return;
         ViewPos.position += (target.position - ViewPos.position) * 0.15f;
     }
-
-    void DragMap () {
-        var wheel = Input.GetAxis ("Mouse ScrollWheel");
-        if (wheel > 0 && zoom < zoomMax) {
-            cameraPos.localPosition *= 0.8f;
-            zoom++;
-        }
-        else if (wheel < 0 && zoom > zoomMin) {
-            cameraPos.localPosition *= 1.25f;
-            zoom--;
-        }
-
-        if (Input.GetMouseButtonDown (2) && !isTurning) {
-            //rotSpeed = new Vector2(0, 0);
-            viewDir.Value = (Direction) (((int) viewDir.Value + 1) % 4);
-            isTurning = true;
-            var nextAngle = (transform.rotation.eulerAngles.y + 90) % 360;
-            ViewPos.transform.DORotate (Vector3.up * nextAngle, 0.5f)
-                .SetEase (Ease.OutCirc)
-                .OnComplete (() => isTurning = false);
-        }
-
+    void MoveCamera() {
         var v = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height) * 2 - Vector2.one;
         var newPos = ViewPos.position;
         if(Mathf.Abs(v.x) > 0.75f) {
@@ -88,6 +71,28 @@ public class ViewOperater : MonoBehaviour {
         }
         if(newPos.magnitude <= maxDistance)
             ViewPos.position = newPos;
+    }
+
+    void ZoomCamera() {
+        var wheel = Input.GetAxis ("Mouse ScrollWheel");
+        if (wheel > 0 && zoom < zoomMax) {
+            cameraPos.localPosition *= 0.8f;
+            zoom++;
+        }
+        else if (wheel < 0 && zoom > zoomMin) {
+            cameraPos.localPosition *= 1.25f;
+            zoom--;
+        }
+    }
+
+    void TurnCamera() {
+        //rotSpeed = new Vector2(0, 0);
+        viewDir.Value = (Direction) (((int) viewDir.Value + 1) % 4);
+        isTurning = true;
+        var nextAngle = (transform.rotation.eulerAngles.y + 90) % 360;
+        ViewPos.transform.DORotate (Vector3.up * nextAngle, 0.5f)
+            .SetEase (Ease.OutCirc)
+            .OnComplete (() => isTurning = false);
     }
 
     public void FocusIn(Transform target) {
