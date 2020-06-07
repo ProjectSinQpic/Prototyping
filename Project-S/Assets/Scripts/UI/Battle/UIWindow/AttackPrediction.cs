@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 
-public class AttackPrediction : MonoBehaviour {
+public class AttackPrediction : UIWindow {
 
     //とりあえず仮のUI表示を作る
     public GameObject ui;
@@ -24,10 +24,12 @@ public class AttackPrediction : MonoBehaviour {
         attacker.text = "攻撃：" + result.attacker.status.data.name;
         target.text = "被攻撃：" + result.target.status.data.name;
         damage.text = "ダメージ：" + result.damage;
+        Lock("attack_prediction");
     }
 
     public void HidePredictionUI() {
         ui.transform.localScale = Vector3.zero;
+        UnLock("attack_prediction");
     }
 
 }

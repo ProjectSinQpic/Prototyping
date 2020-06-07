@@ -21,23 +21,25 @@ public class MapPointer : MonoBehaviour {
     public GameObject pointedKnight;
     Vector2 rotSpeed;
 
-    void Awake () {
+    bool isActiveLeft, isActiveRight;
 
+    void Awake () {
+        isActiveLeft = isActiveRight = true;
         if (instance == null) instance = this;
 
         OnClickedMap = this.UpdateAsObservable ()
             .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight == null)
-            .Where (_ => !UIWindow.isLocked)
+            .Where (_ => !UIWindow.isLocked && isActiveLeft)
             .Select (_ => cursorPos);
 
         OnClickedKnight = this.UpdateAsObservable ()
             .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight != null)
-            .Where (_ => !UIWindow.isLocked)
+            .Where (_ => !UIWindow.isLocked && isActiveLeft)
             .Select (_ => pointedKnight);
 
         OnPressedRightButton = this.UpdateAsObservable ()
             .Where (_ => Input.GetMouseButtonDown (1) || Input.GetMouseButtonUp (1))
-            .Where (_ => !UIWindow.isLocked)
+            .Where (_ => !UIWindow.isLocked && isActiveRight)
             .Select (_ => (pointedKnight, Input.GetMouseButtonDown (1)));
 
         OnClickedMap.Subscribe (_ => Debug.Log (cursorPos));
@@ -46,7 +48,7 @@ public class MapPointer : MonoBehaviour {
         this.UpdateAsObservable ()
             .Select (_ => UIWindow.isLocked)
             .DistinctUntilChanged ()
-            .Subscribe (x => cursor.GetComponent<MeshRenderer> ().enabled = !x);
+            .Subscribe (_ => SetCursorView());
 
     }
 
@@ -69,6 +71,16 @@ public class MapPointer : MonoBehaviour {
         cursorPos = MapStatus.ToMapPos (v);
         if (prevPos != cursorPos) pointedKnight = null;
         prevPos = cursorPos;
+    }
+
+    public void SetActive(bool left, bool right) {
+        isActiveLeft = left;
+        isActiveRight = right;
+        SetCursorView();
+    }
+
+    void SetCursorView() {
+        cursor.GetComponent<MeshRenderer> ().enabled = isActiveLeft && !UIWindow.isLocked;
     }
 
 }

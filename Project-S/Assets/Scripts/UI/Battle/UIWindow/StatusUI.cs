@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatusUI : MonoBehaviour {
+public class StatusUI : UIWindow {
 
     public Text obj_HP;
     public Text obj_MP;
@@ -36,19 +36,21 @@ public class StatusUI : MonoBehaviour {
     }
 
     void OpenWindow(GameObject obj) {
-        if(ViewOperater.isFocusing) return;
-        if(ViewOperater.isLocked) return;
+        if(ViewOperater.instance.isFocusing) return;
+        if(ViewOperater.instance.isLocked) return;
         if(MapPointer.instance.pointedKnight == null ) return;
         target.Value = obj.GetComponent<KnightCore>();
         UpdateUI(target.Value.status);
         statusBox.transform.localScale = Vector3.one;
+        MapPointer.instance.SetActive(false, true);
     }
 
     void HideWindow(){
-        if(ViewOperater.isFocusing) return;
-        if(!ViewOperater.isLocked) return;
+        if(ViewOperater.instance.isFocusing) return;
+        if(!ViewOperater.instance.isLocked) return;
         target.Value = null;
         statusBox.transform.localScale = Vector3.zero;
+        MapPointer.instance.SetActive(true, true);
     }
 
     public static StatusUI Instance () {

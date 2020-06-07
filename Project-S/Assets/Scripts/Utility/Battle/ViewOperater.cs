@@ -13,8 +13,8 @@ public class ViewOperater : MonoBehaviour {
 
     public Transform target;
     bool isTurning;
-    public static bool isLocked;
-    public static bool isFocusing;
+    public bool isLocked;
+    public bool isFocusing;
 
     public float maxDistance;
     public int zoomMax, zoomMin;
@@ -26,11 +26,18 @@ public class ViewOperater : MonoBehaviour {
     public float focusRate;
     public Ease focusEasing; 
 
+    bool isActive;
+
+    public static ViewOperater instance;
+
+
     void Awake () {
+        if(instance == null) instance = this;
         target = null;
         viewDir = new ReactiveProperty<Direction> (Direction.NORTH);
         isFocusing = false;
         isLocked = false;
+        isActive = true;
     }
 
     void Start () {
@@ -47,7 +54,7 @@ public class ViewOperater : MonoBehaviour {
 
     void Update () {
         FollowTarget ();
-        if(!UIWindow.isLocked && !isLocked) {
+        if(!UIWindow.isLocked && !isLocked && isActive) {
             MoveCamera();
             ZoomCamera();
             if(Input.GetMouseButtonDown (2) && !isTurning) TurnCamera();
@@ -109,6 +116,10 @@ public class ViewOperater : MonoBehaviour {
             cameraPos.DOLocalMove(cameraPos.localPosition * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
         }
         isLocked = false;
+    }
+
+    public void SetActive(bool isActive) {
+        this.isActive = isActive;
     }
 
 }

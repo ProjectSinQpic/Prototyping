@@ -73,6 +73,22 @@ public class KnightCore_Player : KnightCore {
         Message.Where (x => x == KnightAction.finish || x == KnightAction.move_cancel)
             .Subscribe (_ => GameState.instance.ResetState());
 
+
+        Message.Where (x => x == KnightAction.move || x == KnightAction.skill || x == KnightAction.attack)
+            .Subscribe (_ => {
+                MapPointer.instance.SetActive(false, false);
+                ViewOperater.instance.SetActive(false);
+            });
+
+        Message.Where (x => x == KnightAction.select || x == KnightAction.move_cancel || x == KnightAction.finish)
+            .DelayFrame(1)
+            .Subscribe (_ => {
+                MapPointer.instance.SetActive(true, true);
+                ViewOperater.instance.SetActive(true);
+            });
+
+        
+
     }
 
     bool CheckAttackable (KnightCore target) {
