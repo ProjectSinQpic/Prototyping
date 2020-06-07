@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy_Brain : MonoBehaviour {
 
     void Start () {
-        GameState.turn
+        GameState.instance.turn
             .Where (_ => !KnightCore_Enemy.enemy_all.All (x => x.isDead))
             .Where (x => x == Turn_State.red)
             .Subscribe (_ => Run ());
@@ -23,7 +23,7 @@ public class Enemy_Brain : MonoBehaviour {
 
         yield return new WaitForSeconds (0.5f);
 
-        GameState.selected.Value = target;
+        GameState.instance.selected.Value = target;
         DicideNextPos (target);
 
         yield return new WaitForSeconds (0.5f);

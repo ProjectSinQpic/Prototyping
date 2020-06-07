@@ -11,13 +11,13 @@ public class KnightCore_Player01 : KnightCore_Player {
         base.Init();
         player_all.Add (this);
 
-        GameState.turn
+        GameState.instance.turn
             .Where (x => x == Turn_State.blue)
             .Subscribe (_ => isFinished = false);
     }
 
     protected override bool isOperable () {
-        return GameState.selected.Value == this && GameState.turn.Value == Turn_State.blue
+        return GameState.instance.selected.Value == this && GameState.instance.turn.Value == Turn_State.blue
             && status.coolDown == 0;
     }
 }

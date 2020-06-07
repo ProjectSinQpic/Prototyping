@@ -11,6 +11,7 @@ public class MapPointer : MonoBehaviour {
 
     public IObservable<Vector2> OnClickedMap;
     public IObservable<GameObject> OnClickedKnight;
+    public IObservable<(GameObject, bool)> OnPressedRightButton;
 
     [SerializeField] RayDetecter detecter;
     [SerializeField] GameObject cursor;
@@ -33,6 +34,11 @@ public class MapPointer : MonoBehaviour {
             .Where (_ => Input.GetMouseButtonDown (0) && pointedKnight != null)
             .Where (_ => !UIWindow.isLocked)
             .Select (_ => pointedKnight);
+
+        OnPressedRightButton = this.UpdateAsObservable ()
+            .Where (_ => Input.GetMouseButtonDown (1) || Input.GetMouseButtonUp (1))
+            .Where (_ => !UIWindow.isLocked)
+            .Select (_ => (pointedKnight, Input.GetMouseButtonDown (1)));
 
         OnClickedMap.Subscribe (_ => Debug.Log (cursorPos));
         OnClickedKnight.Subscribe (o => Debug.Log (o));

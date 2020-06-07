@@ -23,15 +23,18 @@ public enum Turn_State {
 
 public class GameState : MonoBehaviour {
 
-    public static ReactiveProperty<Turn_State> turn;
+    public ReactiveProperty<Turn_State> turn;
 
-    public static ReactiveProperty<KnightCore> selected;
+    public ReactiveProperty<KnightCore> selected;
 
-    public static ReactiveProperty<Knight_State> knight_state;
+    public ReactiveProperty<Knight_State> knight_state;
 
     public Text clearUI;
 
+    public static GameState instance;
+
     void Awake () {
+        if (instance == null) instance = this;
         knight_state = new ReactiveProperty<Knight_State> (Knight_State.move);
         turn = new ReactiveProperty<Turn_State> (Turn_State.blue);
         selected = new ReactiveProperty<KnightCore> (null);
@@ -39,6 +42,7 @@ public class GameState : MonoBehaviour {
 
     void Start () {
 
+        //ターン制御
         this.UpdateAsObservable ()
             .Where(_ => turn.Value == Turn_State.blue)
             .Where (_ => KnightCore_Player01.player_all.Any (x => x.isFinished)
@@ -53,6 +57,7 @@ public class GameState : MonoBehaviour {
                 turn.Value = Turn_State.none;
                 StartCoroutine(WasteTimeCoroutine());
             });
+        ////
 
         MapPointer.instance.OnClickedKnight
             .Where (_ => knight_state.Value == Knight_State.move)

@@ -35,7 +35,7 @@ public class ViewOperater : MonoBehaviour {
 
     void Start () {
         isTurning = false;
-        GameState.selected
+        GameState.instance.selected
             .Subscribe (k => target = k ? k.transform : null);
         StatusUI.Instance().target
             .Subscribe(t => {

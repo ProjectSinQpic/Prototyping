@@ -25,22 +25,30 @@ public class StatusUI : MonoBehaviour {
     }
 
     void Start () {
-        GameState.turn
+        GameState.instance.turn
             .Subscribe (x => UpdateTurn (x));
+
+        MapPointer.instance.OnPressedRightButton
+            .Subscribe(x => {
+                if(x.Item2) OpenWindow(x.Item1);
+                else HideWindow();
+            });
     }
 
-    void Update() {
+    void OpenWindow(GameObject obj) {
         if(ViewOperater.isFocusing) return;
-        if(Input.GetMouseButtonDown(1) && MapPointer.instance.pointedKnight != null 
-            && !ViewOperater.isLocked) {
-            target.Value = MapPointer.instance.pointedKnight.GetComponent<KnightCore>();
-            UpdateUI(target.Value.status);
-            statusBox.transform.localScale = Vector3.one;
-        }
-        if(Input.GetMouseButtonUp(1) && ViewOperater.isLocked) {
-            target.Value = null;
-            statusBox.transform.localScale = Vector3.zero;
-        }
+        if(ViewOperater.isLocked) return;
+        if(MapPointer.instance.pointedKnight == null ) return;
+        target.Value = obj.GetComponent<KnightCore>();
+        UpdateUI(target.Value.status);
+        statusBox.transform.localScale = Vector3.one;
+    }
+
+    void HideWindow(){
+        if(ViewOperater.isFocusing) return;
+        if(!ViewOperater.isLocked) return;
+        target.Value = null;
+        statusBox.transform.localScale = Vector3.zero;
     }
 
     public static StatusUI Instance () {

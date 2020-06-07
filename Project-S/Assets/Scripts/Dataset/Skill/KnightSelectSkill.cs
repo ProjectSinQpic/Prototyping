@@ -13,7 +13,7 @@ public class KnightSelectSkill : ActiveSkill {
 
     protected override void OnWait() {
         OnInit();
-        GameState.knight_state.Value = Knight_State.skill_knight;
+        GameState.instance.knight_state.Value = Knight_State.skill_knight;
         owner.NextAction(KnightAction.skill_look_knight);
     }
 

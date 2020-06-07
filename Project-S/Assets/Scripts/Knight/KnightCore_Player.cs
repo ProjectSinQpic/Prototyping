@@ -14,7 +14,7 @@ public class KnightCore_Player : KnightCore {
 
         MapPointer.instance.OnClickedMap
             .Where (_ => isOperable ())
-            .Where (_ => GameState.knight_state.Value == Knight_State.move)
+            .Where (_ => GameState.instance.knight_state.Value == Knight_State.move)
             .Subscribe (v => {
                 next_pos = v;
                 NextAction (KnightAction.move);
@@ -22,7 +22,7 @@ public class KnightCore_Player : KnightCore {
 
         var attackStream = MapPointer.instance.OnClickedKnight
             .Where (_ => isOperable ())
-            .Where (_ => GameState.knight_state.Value == Knight_State.attack);
+            .Where (_ => GameState.instance.knight_state.Value == Knight_State.attack);
 
 
         attackStream.Subscribe (n => {
@@ -38,7 +38,7 @@ public class KnightCore_Player : KnightCore {
 
         MapPointer.instance.OnClickedMap
             .Where (_ => isOperable ())
-            .Where (_ => GameState.knight_state.Value == Knight_State.attack)
+            .Where (_ => GameState.instance.knight_state.Value == Knight_State.attack)
             .Subscribe (n => NextAction (KnightAction.attack_cancel));
 
 
@@ -46,7 +46,7 @@ public class KnightCore_Player : KnightCore {
 
         MapPointer.instance.OnClickedKnight
             .Where (_ => isOperable ())
-            .Where (_ => GameState.knight_state.Value == Knight_State.skill_knight)
+            .Where (_ => GameState.instance.knight_state.Value == Knight_State.skill_knight)
             .Subscribe (n => {
                 if(!CheckAttackable(n.GetComponent<KnightCore>())) NextAction(KnightAction.skill_cancel);
                 else {
@@ -56,7 +56,7 @@ public class KnightCore_Player : KnightCore {
             });
         MapPointer.instance.OnClickedMap
             .Where (_ => isOperable ())
-            .Where (_ => GameState.knight_state.Value == Knight_State.skill_knight)
+            .Where (_ => GameState.instance.knight_state.Value == Knight_State.skill_knight)
             .Subscribe (n => {
                 NextAction(KnightAction.skill_cancel);
             });
@@ -71,7 +71,7 @@ public class KnightCore_Player : KnightCore {
             .Subscribe (_ => KnightActionWindow.instance.DisplayMenu (this));
 
         Message.Where (x => x == KnightAction.finish)
-            .Subscribe (_ => GameState.selected.Value = null);
+            .Subscribe (_ => GameState.instance.selected.Value = null);
 
     }
 

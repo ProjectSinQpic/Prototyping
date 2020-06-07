@@ -18,13 +18,13 @@ public class KnightActionWindow : UIWindow {
             { "待機", () => OnWait (core) },
             { "キャンセル", () => OnCancel (core) },
         }, new Vector3 (Screen.width / 2 - 250, Screen.height / 2 - 250, 0), "knight_choice", true);
-        GameState.knight_state.Value = Knight_State.select;
+        GameState.instance.knight_state.Value = Knight_State.select;
     }
 
     void OnAttack (KnightCore core) {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
         core.NextAction (KnightAction.attack_look);
-        GameState.knight_state.Value = Knight_State.attack;
+        GameState.instance.knight_state.Value = Knight_State.attack;
         GenericWindow.instance.Close ();
     }
 
@@ -35,7 +35,7 @@ public class KnightActionWindow : UIWindow {
     void OnWait (KnightCore core) {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
         core.NextAction (KnightAction.finish);
-        GameState.knight_state.Value = Knight_State.move;
+        GameState.instance.knight_state.Value = Knight_State.move;
         GenericWindow.instance.Close ();
     }
 
@@ -43,6 +43,6 @@ public class KnightActionWindow : UIWindow {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_cancel);
         core.NextAction(KnightAction.select_cancel);
         GenericWindow.instance.Close ();
-        GameState.knight_state.Value = Knight_State.move;
+        GameState.instance.knight_state.Value = Knight_State.move;
     }
 }

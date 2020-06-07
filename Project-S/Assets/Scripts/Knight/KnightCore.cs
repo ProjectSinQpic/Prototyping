@@ -90,11 +90,11 @@ public class KnightCore : MonoBehaviour {
 
     void Start () {
 
-        GameState.selected
+        GameState.instance.selected
             .Where (b => b == this)
             .Subscribe (_ => OnSelected ());
 
-        GameState.selected
+        GameState.instance.selected
             .Select (b => b == this)
             .DistinctUntilChanged ()
             .Where (b => !b)

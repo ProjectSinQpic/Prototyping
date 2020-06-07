@@ -28,7 +28,7 @@ public class KnightMovement : KnightParts {
         if (isMoving) return;
         core.NextAction (KnightAction.look_cancel);
         if (!CheckMovable (goal)) {
-            GameState.selected.Value = null;
+            GameState.instance.selected.Value = null;
             return;
         }
         var sa = core.selectedArea
@@ -72,7 +72,7 @@ public class KnightMovement : KnightParts {
         core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
             Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
         core.status.pos = core.prev_pos;
-        GameState.selected.Value = null;
+        GameState.instance.selected.Value = null;
     }
 
 }
