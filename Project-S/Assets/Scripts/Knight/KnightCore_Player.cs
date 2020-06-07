@@ -70,8 +70,8 @@ public class KnightCore_Player : KnightCore {
         Message.Where (x => x == KnightAction.select)
             .Subscribe (_ => KnightActionWindow.instance.DisplayMenu (this));
 
-        Message.Where (x => x == KnightAction.finish)
-            .Subscribe (_ => GameState.instance.selected.Value = null);
+        Message.Where (x => x == KnightAction.finish || x == KnightAction.move_cancel)
+            .Subscribe (_ => GameState.instance.ResetState());
 
     }
 

@@ -85,4 +85,8 @@ public class GameState : MonoBehaviour {
         turn.Value = Turn_State.blue;
     }
 
+    public void ResetState() {
+        selected.Value = null;
+        knight_state.Value = Knight_State.move;
+    }
 }
