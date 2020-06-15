@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StatusWindow : UIWindow {
 
@@ -19,6 +20,7 @@ public class StatusWindow : UIWindow {
     public Text text_rest;
 
     public Transform skillList;
+    public float popupOffset;
     public Text turn;
 
     public GameObject statusBox;
@@ -102,10 +104,25 @@ public class StatusWindow : UIWindow {
             var tag = skillList.GetChild(i);
             if(i >= skills.Count) tag.gameObject.SetActive(false);
             else {
+                SkillBase skill = skills[i];
                 tag.gameObject.SetActive(true);
-                tag.Find("name").GetComponent<Text>().text = skills[i].skillName;
+                tag.Find("name").GetComponent<Text>().text = skill.skillName;
+                AddPointerEvents(tag, skill);
             }
         }
+    }
+
+    void AddPointerEvents(Transform tag, SkillBase skill) {
+        EventTrigger trigger = tag.GetComponent<EventTrigger>();
+        trigger.triggers = new List<EventTrigger.Entry>();
+        EventTrigger.Entry onEnter = new EventTrigger.Entry();
+        onEnter.eventID = EventTriggerType.PointerEnter;
+        onEnter.callback.AddListener((x) => SkillDetailWindow.instance.OpenWindow(tag.position + Vector3.left * popupOffset, skill));
+        trigger.triggers.Add(onEnter);
+        EventTrigger.Entry onExit = new EventTrigger.Entry();
+        onExit.eventID = EventTriggerType.PointerExit;
+        onExit.callback.AddListener((x) => SkillDetailWindow.instance.CloseWindow());
+        trigger.triggers.Add(onExit);
     }
 
 

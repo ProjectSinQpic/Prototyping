@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkillBase : ScriptableObject {
 
     public string skillName;
+    [TextArea] public string explainText;
     protected KnightCore owner;
 
     public virtual void Init(KnightCore core) {
