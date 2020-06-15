@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatusUI : UIWindow {
+public class StatusWindow : UIWindow {
 
     public Text obj_HP;
     public Text obj_MP;
@@ -15,7 +15,7 @@ public class StatusUI : UIWindow {
 
     public GameObject statusBox;
 
-    static StatusUI instance = null;
+    static StatusWindow instance = null;
 
     public ReactiveProperty<KnightCore> target = new ReactiveProperty<KnightCore>(null);
 
@@ -53,7 +53,7 @@ public class StatusUI : UIWindow {
         MapPointer.instance.SetActive(true, true);
     }
 
-    public static StatusUI Instance () {
+    public static StatusWindow Instance () {
         return instance;
     }
 

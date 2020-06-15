@@ -98,19 +98,19 @@ public class KnightCore_Player : KnightCore {
     }
 
     void OpenAttackWindow() {
-        AttackPrediction.instance.SetPredictionUI(attackResult);
+        AttackPredictionWindow.instance.SetPredictionUI(attackResult);
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
                     GenericWindow.instance.Close();
-                    AttackPrediction.instance.HidePredictionUI();
+                    AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction(KnightAction.attack);
                 }
             },
             {"キャンセル", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_cancel);
                     GenericWindow.instance.Close();
-                    AttackPrediction.instance.HidePredictionUI();
+                    AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction (KnightAction.attack_cancel);
                 }
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 
-public class AttackPrediction : UIWindow {
+public class AttackPredictionWindow : UIWindow {
 
     //とりあえず仮のUI表示を作る
     public GameObject ui;
@@ -13,7 +13,7 @@ public class AttackPrediction : UIWindow {
     public Text target;
     public Text damage;
 
-    public static AttackPrediction instance;
+    public static AttackPredictionWindow instance;
 
     public void Start() {
         if (instance == null) instance = this;

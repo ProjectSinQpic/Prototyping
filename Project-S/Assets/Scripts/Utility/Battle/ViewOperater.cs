@@ -44,7 +44,7 @@ public class ViewOperater : MonoBehaviour {
         isTurning = false;
         GameState.instance.selected
             .Subscribe (k => target = k ? k.transform : null);
-        StatusUI.Instance().target
+        StatusWindow.Instance().target
             .Subscribe(t => {
                 if(t == null) FocusOut();
                 else FocusIn(t.transform);
