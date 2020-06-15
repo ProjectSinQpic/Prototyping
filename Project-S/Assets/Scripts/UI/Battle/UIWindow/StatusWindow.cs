@@ -6,11 +6,19 @@ using UnityEngine.UI;
 
 public class StatusWindow : UIWindow {
 
-    public Text obj_HP;
-    public Text obj_MP;
-    public Text obj_attack;
-    public Text obj_defense;
-    public Text obj_rest;
+    public Text text_nowHP;
+    public Text text_maxHP;
+    public GameObject bar_HP;
+    public Text text_nowMP;
+    public Text text_maxMP;
+    public GameObject bar_MP;
+    public Text text_attack;
+    public Text text_defense;
+    public Text text_moveRange;
+    public Text text_attackRange;
+    public Text text_rest;
+
+    public Transform skillList;
     public Text turn;
 
     public GameObject statusBox;
@@ -18,6 +26,8 @@ public class StatusWindow : UIWindow {
     static StatusWindow instance = null;
 
     public ReactiveProperty<KnightCore> target = new ReactiveProperty<KnightCore>(null);
+
+    float bar_maxSize;
 
     void Awake () {
         if (instance == null) instance = this;
@@ -33,6 +43,8 @@ public class StatusWindow : UIWindow {
                 if(x.Item2) OpenWindow(x.Item1);
                 else HideWindow();
             });
+        bar_maxSize = bar_HP.GetComponent<RectTransform>().rect.width;
+
     }
 
     void OpenWindow(GameObject obj) {
@@ -59,11 +71,18 @@ public class StatusWindow : UIWindow {
 
     public void UpdateUI (KnightStatus status) {
         var statusData = KnightStatusData.Add(status.actual, status.delta);
-        obj_HP.text = "HP : " + status.HP.ToString ();
-        obj_MP.text = "MP : " + status.MP.ToString ();
-        obj_attack.text = "攻撃力 : " + statusData.attack.ToString ();
-        obj_defense.text = "防御力 : " + statusData.defense.ToString ();
-        obj_rest.text = "レスト : " + status.coolDown.ToString ();
+        text_nowHP.text = status.HP.ToString () + " /";
+        text_maxHP.text = statusData.maxHP.ToString ();
+        SetBarWidth(bar_HP, status.HP, statusData.maxHP);
+        text_nowMP.text = status.MP.ToString () + " /";
+        text_maxMP.text = statusData.maxMP.ToString ();
+        SetBarWidth(bar_MP, status.MP, statusData.maxMP);
+        text_attack.text = statusData.attack.ToString ();
+        text_defense.text = statusData.defense.ToString ();
+        text_moveRange.text = statusData.moveRange.ToString ();
+        text_attackRange.text = statusData.attackRange.ToString ();
+        text_rest.text =  status.coolDown.ToString ();
+        AddSkillTags(status.skills);
     }
 
     void UpdateTurn (Turn_State turnState) {
@@ -71,6 +90,22 @@ public class StatusWindow : UIWindow {
         if(turnState == Turn_State.red) turn.text = "RED TURN";
         if(turnState == Turn_State.none) turn.text = "WAIT...";
 
+    }
+
+    void SetBarWidth(GameObject bar, float now, float max) {
+        var size = bar_maxSize * (now / max);
+        bar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
+    }
+
+    void AddSkillTags(List<SkillBase> skills) {
+        for(int i = 0; i < skillList.childCount; i++) {
+            var tag = skillList.GetChild(i);
+            if(i >= skills.Count) tag.gameObject.SetActive(false);
+            else {
+                tag.gameObject.SetActive(true);
+                tag.Find("name").GetComponent<Text>().text = skills[i].skillName;
+            }
+        }
     }
 
 

@@ -24,6 +24,8 @@ public class ViewOperater : MonoBehaviour {
 
     public float focusSpeed;
     public float focusRate;
+
+    public float focusOffsetX;
     public Ease focusEasing; 
 
     bool isActive;
@@ -105,7 +107,7 @@ public class ViewOperater : MonoBehaviour {
     public void FocusIn(Transform target) {
         isFocusing = true;
         this.target = target;
-        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + cameraPos.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
         isLocked = true;
     }
 
@@ -113,7 +115,7 @@ public class ViewOperater : MonoBehaviour {
         this.target = null;
         if(isLocked) {
             isFocusing = true;
-            cameraPos.DOLocalMove(cameraPos.localPosition * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+            cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
         }
         isLocked = false;
     }
