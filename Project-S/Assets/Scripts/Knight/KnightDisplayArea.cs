@@ -34,7 +34,7 @@ public class KnightDisplayArea : KnightParts {
             .Where (x => x == KnightAction.skill_look_knight)
             .Subscribe (_ => {
                 var skill = core.nowSkill as KnightSelectSkill;
-                DisplayArea(skill.areaShape, skill.pos, skill.value);
+                DisplayArea(skill.areaShape, skill.areaCenterPos, skill.GetParam("areaRange"));
             });
 
     }

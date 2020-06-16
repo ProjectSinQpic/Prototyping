@@ -20,7 +20,7 @@ public class SkillDetailWindow : UIWindow {
         transform.localScale = Vector3.one;
         transform.position = pos;
         text_skillName.text = skill.skillName;
-        text_skillExplainText.text = skill.explainText;
+        text_skillExplainText.text = SkillExplainTextBuilder.Build(skill);
     }
 
     public void CloseWindow() {

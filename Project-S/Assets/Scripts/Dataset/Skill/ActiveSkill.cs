@@ -5,14 +5,10 @@ using UniRx;
 
 public class ActiveSkill : SkillBase {
 
-    public int mana;
-    public int rest;
-
     [HideInInspector]
     public bool isActive = false;
 
     //効果が何ターン続くか
-    public int duration;
     protected int count = 0;
 
     public void Activate() {
@@ -28,8 +24,8 @@ public class ActiveSkill : SkillBase {
     public void OnStart() {
         isActive = true;
         count = 0;
-        owner.status.MP -= owner.nowSkill.mana;
-        owner.storedCoolDown += owner.nowSkill.rest;
+        owner.status.MP -= owner.nowSkill.GetParam("mana");
+        owner.storedCoolDown += owner.nowSkill.GetParam("rest");
         Update();
     }
 
@@ -38,7 +34,7 @@ public class ActiveSkill : SkillBase {
         if(!isActive) return;
         OnSpell();
         count++;
-        if(count >= duration) {
+        if(count >= GetParam("duration", 1)) {
             OnFinish();
             isActive = false;
         }

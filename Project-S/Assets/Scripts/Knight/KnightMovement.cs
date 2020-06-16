@@ -72,6 +72,7 @@ public class KnightMovement : KnightParts {
         core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
             Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
         core.status.pos = core.prev_pos;
+        core.storedCoolDown -= 3;
         core.NextAction(KnightAction.look);
     }
 

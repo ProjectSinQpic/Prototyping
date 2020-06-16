@@ -7,9 +7,7 @@ using UnityEngine;
 public class KnightSelectSkill : ActiveSkill {
 
     public AreaShapeType areaShape;
-    public  Vector2 pos;
-    public int value;
-
+    [HideInInspector] public Vector2 areaCenterPos;
 
     protected override void OnWait() {
         OnInit();
