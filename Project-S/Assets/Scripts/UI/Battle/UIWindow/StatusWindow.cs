@@ -31,6 +31,10 @@ public class StatusWindow : UIWindow {
 
     float bar_maxSize;
 
+    public Sprite sprite_back_left_b, sprite_back_right_b;
+    public Sprite sprite_back_left_r, sprite_back_right_r;
+    public Image image_back_left, image_back_right;
+
     void Awake () {
         if (instance == null) instance = this;
         statusBox.transform.localScale = Vector3.zero;
@@ -54,7 +58,7 @@ public class StatusWindow : UIWindow {
         if(ViewOperater.instance.isLocked) return;
         if(MapPointer.instance.pointedKnight == null ) return;
         target.Value = obj.GetComponent<KnightCore>();
-        UpdateUI(target.Value.status);
+        UpdateUI(target.Value.status, KnightCore_Player01.player_all.Contains(target.Value));
         statusBox.transform.localScale = Vector3.one;
         MapPointer.instance.SetActive(false, true);
     }
@@ -71,7 +75,7 @@ public class StatusWindow : UIWindow {
         return instance;
     }
 
-    public void UpdateUI (KnightStatus status) {
+    public void UpdateUI (KnightStatus status, bool isBlue) {
         var statusData = KnightStatusData.Add(status.actual, status.delta);
         text_nowHP.text = status.HP.ToString () + " /";
         text_maxHP.text = statusData.maxHP.ToString ();
@@ -85,6 +89,7 @@ public class StatusWindow : UIWindow {
         text_attackRange.text = statusData.attackRange.ToString ();
         text_rest.text =  status.coolDown.ToString ();
         AddSkillTags(status.skills);
+        SetBackGround(isBlue);
     }
 
     void UpdateTurn (Turn_State turnState) {
@@ -92,6 +97,17 @@ public class StatusWindow : UIWindow {
         if(turnState == Turn_State.red) turn.text = "RED TURN";
         if(turnState == Turn_State.none) turn.text = "WAIT...";
 
+    }
+
+    void SetBackGround(bool isBlue) {
+        if(isBlue) {
+            image_back_left.sprite = sprite_back_left_b;
+            image_back_right.sprite = sprite_back_right_b;
+        }
+        else {
+            image_back_left.sprite = sprite_back_left_r;
+            image_back_right.sprite = sprite_back_right_r;
+        }
     }
 
     void SetBarWidth(GameObject bar, float now, float max) {
