@@ -1,23 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class ActiveSkill : SkillBase {
-
-    public int mana;
-    public int rest;
 
     [HideInInspector]
     public bool isActive = false;
 
     //効果が何ターン続くか
-    public int duration;
     protected int count = 0;
 
-    protected List<KnightCore> targets;
-
     public void Activate() {
-        owner.GetComponent<KnightSkill>().SubscribeSkill(this);
+        owner.nowSkill = this;
         OnWait();
     }
 
@@ -26,11 +21,11 @@ public class ActiveSkill : SkillBase {
     protected virtual void OnFinish(){}
 
 
-    protected void OnStart(List<KnightCore> t) {
+    public void OnStart() {
         isActive = true;
         count = 0;
-        targets = t;
-        owner.GetComponent<KnightSkill>().OnSpell();
+        owner.status.MP -= owner.nowSkill.GetParam("mana");
+        owner.storedCoolDown += owner.nowSkill.GetParam("rest");
         Update();
     }
 
@@ -39,19 +34,14 @@ public class ActiveSkill : SkillBase {
         if(!isActive) return;
         OnSpell();
         count++;
-        if(count >= duration) {
+        if(count >= GetParam("duration", 1)) {
             OnFinish();
             isActive = false;
         }
 
     }
 
-    protected void OnTargeted(List<KnightCore> targets) {
-        MenuGenerator.Instance ().Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
-            {"決定", () => { MenuGenerator.Instance().Close(); OnStart(targets);}},
-            {"キャンセル", () => { MenuGenerator.Instance().Close(); owner.GetComponent<KnightSkill>().OnCancel();}}
-        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);
-    }
+
 
 
 }

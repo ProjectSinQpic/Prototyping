@@ -4,87 +4,92 @@ using UniRx;
 using UnityEngine;
 using System.Linq;
 
+public class AttackResult {
+
+    public AttackResult(KnightCore attacker, KnightCore target, int damage) {
+        this.attacker = attacker;
+        this.target = target;
+        this.damage = damage;
+    }
+    public KnightCore attacker, target;
+
+    public int damage;
+}
+
 public class KnightAttack : KnightParts {
 
     public KnightView view;
-    KnightDisplayArea disp;
     bool iscanceled;
 
     void Awake () {
-        disp = core.GetComponent<KnightDisplayArea> ();
         iscanceled = false;
     }
 
     void Start () {
-        core.Message
-            .Where (x => x == "attack_set")
-            .Subscribe (_ => SelectOpponent ());
 
         core.Message
-            .Where (x => x == "attack")
-            .Subscribe (_ => Attack (core.next_target));
+            .Where (x => x == KnightAction.attack_prepare)
+            .Subscribe (_ => AttackPrepare (core.targets[0]));
 
         core.Message
-            .Where (x => x == "attack_cancel")
+            .Where (x => x == KnightAction.attack)
+            .Subscribe (_ => Attack(core.attackResult));
+
+        core.Message
+            .Where (x => x == KnightAction.skill_attack)
+            .Subscribe (_ => AttackInSkill(core.targets[0]));
+
+        core.Message
+            .Where (x => x == KnightAction.counter_attack)
+            .Subscribe (_ => CounterAttack(core.attackResult));
+
+        core.Message
+            .Where (x => x == KnightAction.attack_cancel)
             .Where (_ => !iscanceled)
             .Subscribe (_ => CancelAttack ());
 
     }
 
-    void SelectOpponent () {
-        disp.DisplayArea(AreaShapeType.attackable, core.status.pos, core.statusData.attackRange);
-
+    void AttackPrepare(KnightCore target) {
+        var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
+        core.attackResult = new AttackResult(core, target, damage);
     }
 
-    void Attack (KnightCore target) {
-        if (!CheckAttackable (target)) {
-            core.NextAction ("attack_cancel");
-            return;
-        }
-        StartCoroutine (AttackCoroutine (target));
+    void Attack (AttackResult result) {
+        StartCoroutine (AttackCoroutine (result, false));
         core.storedCoolDown += 3;
     }
 
     public void AttackInSkill(KnightCore target) {
-        StartCoroutine (AttackCoroutine (target));
+        var damage = Mathf.Max (0, core.skillDamage);
+        var result = new AttackResult(core, target, damage);
+        StartCoroutine (AttackCoroutine (result, false));
     }
 
-    IEnumerator AttackCoroutine (KnightCore target) {
+    void CounterAttack(AttackResult result) { //TODO: あとで作る
+        Debug.Log("counter : " + result.target.name);
+    }
+
+    IEnumerator AttackCoroutine (AttackResult result, bool isCounter) {
+        var target = result.target;
+        SoundPlayer.instance.PlaySoundEffect(SoundEffect.attack01);
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
-        DealDamage (core, target);
+        target.status.HP -= result.damage;
         yield return new WaitForSeconds (0.4f);
-        if (target.status.HP <= 0) target.NextAction ("die");
-        //else yield return StartCoroutine (CounterAttackCoroutine (target));
-        //yield return new WaitForSeconds (0.2f);
-        StatusUI.Instance ().UpdateUI (core.status); //TODO 後にpull型にしたい
-        disp.RemoveArea ();
-        core.NextAction ("finish");
-    }
-
-    /*IEnumerator CounterAttackCoroutine (KnightCore target) {
-        target.GetComponent<KnightDisplayArea> ().CalcAttackable ();
-        if (!target.GetComponent<KnightAttack> ().CheckAttackable (core)) yield break;
+        if (target.status.HP <= 0) target.NextAction (KnightAction.die);
+        else if(!isCounter) {
+            target.attackResult = result;
+            target.NextAction(KnightAction.counter_attack);
+        }
         yield return new WaitForSeconds (0.2f);
-        target.GetComponent<KnightView> ().ActionView ("attack", target.status.dir); //TODO 変更する
-        DealDamage (target, core);
-        yield return new WaitForSeconds (0.4f);
-        if (core.status.HP <= 0) core.NextAction ("die");
-    }*/
-
-    void DealDamage (KnightCore off, KnightCore def) {
-        //TODO ダメージ計算のシステム考える
-        var damage = Mathf.Max (0, off.statusData.attack - def.statusData.defense);
-        def.status.HP -= damage;
+        core.NextAction(KnightAction.look_cancel);
+        core.NextAction(KnightAction.finish);
     }
 
     void CancelAttack () {
-        disp.RemoveArea ();
-        core.NextAction ("select");
+        core.NextAction(KnightAction.look_cancel);
+        core.NextAction (KnightAction.select);
     }
 
-    public bool CheckAttackable (KnightCore target) {
-        if (tag == target.tag) return false;
-        var attackArea = disp.selectedArea.Where(s => s.type == AreaType.attack).Select(a => a.pos);
-        return attackArea.Contains (target.status.pos);
-    }
+
 }

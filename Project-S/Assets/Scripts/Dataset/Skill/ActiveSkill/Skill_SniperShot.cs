@@ -6,14 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Skill/SniperShot")]
 public class Skill_SniperShot : KnightSelectSkill {
 
-    public int additionalRange;
-
     protected override void OnInit() {
-        pos = owner.status.pos;
-        value = owner.statusData.attackRange + additionalRange;
+        areaCenterPos = owner.status.pos;
+        AddParam("areaRange", owner.statusData.attackRange + GetParam("additionalRange"));
     }
     protected override void OnSpell() {
-        owner.GetComponent<KnightAttack>().AttackInSkill(targets[0]);
+        owner.skillDamage = owner.statusData.attack;
+        owner.NextAction(KnightAction.skill_attack);
     }
 
 }

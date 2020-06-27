@@ -6,34 +6,43 @@ using UnityEngine;
 
 public class KnightDisplayArea : KnightParts {
 
-    public List<SelectedArea> selectedArea;
     public GameObject prefab_area;
     List<GameObject> objects_area;
 
     public Color moveColor, attackColor;
 
     void Awake () {
-        selectedArea = new List<SelectedArea> ();
+        core.selectedArea = new List<SelectedArea> ();
         objects_area = new List<GameObject> ();
     }
 
     void Start () {
 
         core.Message
-            .Where (x => x == "look")
+            .Where (x => x == KnightAction.attack_look)
+            .Subscribe (_ => DisplayArea(AreaShapeType.attackable, core.status.pos, core.statusData.attackRange));
+
+        core.Message
+            .Where (x => x == KnightAction.look)
             .Subscribe (_ => DisplayMoveArea ());
 
         core.Message
-            .Where (x => x == "look_cancel")
+            .Where (x => x == KnightAction.look_cancel)
             .Subscribe (_ => RemoveArea ());
+
+        core.Message
+            .Where (x => x == KnightAction.skill_look_knight)
+            .Subscribe (_ => {
+                var skill = core.nowSkill as KnightSelectSkill;
+                DisplayArea(skill.areaShape, skill.areaCenterPos, skill.GetParam("areaRange"));
+            });
 
     }
 
     public void DisplayMoveArea () {
         RemoveArea ();
-        selectedArea = AreaCalculator.CalcMovable(core);
-        var m = selectedArea.Select (x => x.pos);
-        foreach (var i in selectedArea) {
+        core.selectedArea = AreaCalculator.CalcMovable(core);
+        foreach (var i in core.selectedArea) {
             var obj = Instantiate (prefab_area, MapStatus.ToWorldPos (i.pos) + Vector3.up, Quaternion.identity);
             objects_area.Add (obj);
             var r = obj.GetComponent<Renderer> ();
@@ -45,9 +54,8 @@ public class KnightDisplayArea : KnightParts {
 
     public void DisplayArea(AreaShapeType type, Vector2 pos, int value) {
         RemoveArea ();
-        selectedArea = AreaCalculator.GetArea(type, pos, value);
-        Debug.Log("a");
-        foreach (var i in selectedArea) {
+        core.selectedArea = AreaCalculator.GetArea(type, pos, value);
+        foreach (var i in core.selectedArea) {
             var obj = Instantiate (prefab_area, MapStatus.ToWorldPos (i.pos) + Vector3.up, Quaternion.identity);
             objects_area.Add (obj);
             var r = obj.GetComponent<Renderer> ();
