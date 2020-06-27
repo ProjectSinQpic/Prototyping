@@ -9,7 +9,8 @@ public class KnightCore_Enemy : KnightCore {
 
     protected override void Init () {
         enemy_all.Add (this);
-        GameState.turn
+        
+        GameState.instance.turn
             .Where (x => x == Turn_State.red)
             .Subscribe (_ => isFinished = false);
 

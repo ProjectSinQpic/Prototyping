@@ -7,17 +7,15 @@ using UnityEngine;
 
 public class Skill_Healing : AutoSelectSkill {
 
-    public int healingHelth;
-
     protected override List<KnightCore> GetTargets() {
         return KnightCore.GetAllies(owner);
     }
 
     protected override void OnSpell() {
-        foreach(var target in targets) {
-            target.status.HP = Mathf.Min(target.statusData.maxHP, target.status.HP + healingHelth);
+        foreach(var target in owner.targets) {
+            target.status.HP = Mathf.Min(target.statusData.maxHP, target.status.HP + GetParam("healingHelth"));
         }
-        owner.NextAction("finish");
+        owner.NextAction(KnightAction.finish);
     }
 
 }

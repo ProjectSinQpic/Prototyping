@@ -5,19 +5,34 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-[System.Serializable]
-public class SelectedArea {
-    public Vector2 pos;
-    public string root;
 
-    public AreaType type;
-}
-
-public enum AreaType {
+public enum KnightAction {
+    look,
+    look_cancel,
     move,
+    move_cancel,
+    select,
+    select_cancel,
+    attack_look,
+    attack_prepare,
     attack,
-    move_attack
+    attack_cancel,
+    counter_attack,
+    skill_look_knight,
+    skill_prepare,
+    skill,
+    skill_attack,
+    skill_cancel,
+    die,
+    finish,
+
 }
+
+
+
+/**
+    全てのユニットに共通の処理，全KnightParts間で共有するフィールドを持つクラス
+ */
 
 public class KnightCore : MonoBehaviour {
     public KnightStatus status;
@@ -28,6 +43,11 @@ public class KnightCore : MonoBehaviour {
         }
     }
 
+    //KnightParts間で共有するフィールド
+
+    [HideInInspector]    
+    public List<SelectedArea> selectedArea;
+
     [HideInInspector]
     public Vector2 next_pos, prev_pos;
     
@@ -35,21 +55,31 @@ public class KnightCore : MonoBehaviour {
     public int storedCoolDown;
 
     [HideInInspector]
-    public KnightCore next_target;
+    public List<KnightCore> targets;
 
     [HideInInspector]
+    public AttackResult attackResult;
+
+    [HideInInspector]
+    public ActiveSkill nowSkill;
+
+    [HideInInspector]
+    public int skillDamage;
 
 
+    [HideInInspector]
     public bool isFinished, isDead;
 
-    Subject<string> message;
-    public IObservable<string> Message { get { return message.AsObservable (); } }
+    ////
+
+    Subject<KnightAction> message;
+    public IObservable<KnightAction> Message { get { return message.AsObservable (); } }
 
     public static List<KnightCore> all = new List<KnightCore> ();
 
 
     void Awake () {
-        message = new Subject<string> ();
+        message = new Subject<KnightAction>();
         isFinished = false;
         isDead = false;
         all.Add (this);
@@ -61,17 +91,17 @@ public class KnightCore : MonoBehaviour {
 
     void Start () {
 
-        GameState.selected
+        GameState.instance.selected
             .Where (b => b == this)
             .Subscribe (_ => OnSelected ());
 
-        GameState.selected
+        GameState.instance.selected
             .Select (b => b == this)
             .DistinctUntilChanged ()
             .Where (b => !b)
             .Subscribe (_ => OnNotSelected ());
 
-        message.Where (x => x == "finish")
+        message.Where (x => x == KnightAction.finish)
             .Subscribe (_ => OnFinish());
 
         Init ();
@@ -79,34 +109,37 @@ public class KnightCore : MonoBehaviour {
 
     protected virtual void Init () { }
 
-    public void NextAction (string action) {
-        Debug.Log ("Action : " + action);
+    public void NextAction (KnightAction action) {
+        Debug.Log (action);
         message.OnNext (action);
     }
 
     void OnSelected () {
-        StatusUI.Instance ().UpdateUI (status);
-        GetComponent<BoxCollider> ().enabled = false;
-        NextAction ("look");
+        if(isOperable()) GetComponent<BoxCollider> ().enabled = false;
+        NextAction (KnightAction.look);
     }
 
     void OnNotSelected () {
-        //TODO UI消去処理作っておく
         GetComponent<BoxCollider> ().enabled = true;
-        NextAction ("look_cancel");
+        NextAction (KnightAction.look_cancel);
     }
 
     void OnFinish() {
+        Debug.Log("turn end");
         isFinished = true;
         status.coolDown += storedCoolDown;
         storedCoolDown = 0;
     }
 
 
-    public static List<KnightCore> GetAllies(KnightCore core) {
+    public static List<KnightCore> GetAllies(KnightCore core) { //TODO: 余裕があれば修正したい
         if(KnightCore_Player01.player_all.Contains(core)) return KnightCore_Player01.player_all;
         else if(KnightCore_Player02.player_all.Contains(core)) return KnightCore_Player02.player_all;
         else if(KnightCore_Enemy.enemy_all.Contains(core)) return KnightCore_Enemy.enemy_all;
         else return new List<KnightCore>();
+    }
+
+    protected virtual bool isOperable() {
+        return true;
     }
 }
