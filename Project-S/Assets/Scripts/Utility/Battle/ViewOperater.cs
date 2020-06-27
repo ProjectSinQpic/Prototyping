@@ -115,6 +115,7 @@ public class ViewOperater : MonoBehaviour {
         this.target = null;
         if(isLocked) {
             isFocusing = true;
+            Debug.Log(cameraPos.right);
             cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
         }
         isLocked = false;

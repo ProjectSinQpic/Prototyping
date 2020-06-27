@@ -2617,7 +2617,7 @@ MonoBehaviour:
   text_attackRange: {fileID: 1270109106}
   text_rest: {fileID: 2130634551}
   skillList: {fileID: 340527832}
-  popupOffset: 600
+  popupOffset: 320
   turn: {fileID: 1731158637}
   statusBox: {fileID: 887784012}
   sprite_back_left_b: {fileID: 21300000, guid: 33fa2dae00b0549fab983795d8961b1f, type: 3}
@@ -5450,7 +5450,7 @@ MonoBehaviour:
   musicTable:
     list:
     - Key: 0
-      Value: {fileID: 8300000, guid: 0b374c7d0e5af41ab93f804e96f3f705, type: 3}
+      Value: {fileID: 8300000, guid: 3ea975456036b4e5dba120d6d2ca73f0, type: 3}
 --- !u!4 &1660827497
 Transform:
   m_ObjectHideFlags: 0
@@ -7307,7 +7307,7 @@ MonoBehaviour:
   moveSpeed: 1.5
   focusSpeed: 0.5
   focusRate: 3
-  focusOffsetX: -5
+  focusOffsetX: 0
   focusEasing: 15
 --- !u!1 &2046533605
 GameObject:
