@@ -45,30 +45,13 @@ public class KnightCore : MonoBehaviour {
 
     //KnightParts間で共有するフィールド
 
-    [HideInInspector]    
-    public List<SelectedArea> selectedArea;
-
-    [HideInInspector]
-    public Vector2 next_pos, prev_pos;
-    
-    [HideInInspector]
-    public int storedCoolDown;
-
-    [HideInInspector]
-    public List<KnightCore> targets;
-
-    [HideInInspector]
-    public AttackResult attackResult;
-
-    [HideInInspector]
-    public ActiveSkill nowSkill;
-
-    [HideInInspector]
-    public int skillDamage;
-
-
-    [HideInInspector]
-    public bool isFinished, isDead;
+    [HideInInspector] public List<SelectedArea> selectedArea;
+    [HideInInspector] public Vector2 next_pos, prev_pos;
+    [HideInInspector] public int storedCoolDown;
+    [HideInInspector] public List<KnightCore> targets;
+    [HideInInspector] public AttackResult attackResultPrediction;
+    [HideInInspector] public ActiveSkill nowSkill;
+    [HideInInspector] public bool isFinished, isDead;
 
     ////
 

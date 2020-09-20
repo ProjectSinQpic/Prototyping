@@ -9,6 +9,8 @@ public class KnightSelectSkill : ActiveSkill {
     public AreaShapeType areaShape;
     [HideInInspector] public Vector2 areaCenterPos;
 
+    public virtual void OnTargetSelected(KnightCore target) {}
+
     protected override void OnWait() {
         OnInit();
         GameState.instance.knight_state.Value = Knight_State.skill_knight;

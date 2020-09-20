@@ -11,6 +11,8 @@ public class ActiveSkill : SkillBase {
     //効果が何ターン続くか
     protected int count = 0;
 
+
+    // スキル選択画面で選ばれた時
     public void Activate() {
         owner.nowSkill = this;
         OnWait();
@@ -21,11 +23,10 @@ public class ActiveSkill : SkillBase {
     protected virtual void OnFinish(){}
 
 
+    // 決定ボタンを押してスキルが開始する時
     public void OnStart() {
         isActive = true;
         count = 0;
-        owner.status.MP -= owner.nowSkill.GetParam("mana");
-        owner.storedCoolDown += owner.nowSkill.GetParam("rest");
         Update();
     }
 
@@ -40,8 +41,5 @@ public class ActiveSkill : SkillBase {
         }
 
     }
-
-
-
 
 }
