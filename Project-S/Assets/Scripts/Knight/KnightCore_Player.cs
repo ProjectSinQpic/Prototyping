@@ -51,6 +51,8 @@ public class KnightCore_Player : KnightCore {
                 if(!CheckAttackable(n.GetComponent<KnightCore>())) NextAction(KnightAction.skill_cancel);
                 else {
                     targets = new List<KnightCore>(){ n.GetComponent<KnightCore>() };
+                    var skill = nowSkill as KnightSelectSkill;
+                    skill.OnTargetSelected(targets[0]);
                     NextAction(KnightAction.skill_prepare);
                 }
             });
@@ -63,6 +65,7 @@ public class KnightCore_Player : KnightCore {
 
 
         Message.Where (x => x == KnightAction.skill_prepare)
+            .DelayFrame(1)
             .Subscribe (_ => OpenSkillWindow());
 
         ////
@@ -87,8 +90,6 @@ public class KnightCore_Player : KnightCore {
                 ViewOperater.instance.SetActive(true);
             });
 
-        
-
     }
 
     bool CheckAttackable (KnightCore target) {
@@ -98,7 +99,7 @@ public class KnightCore_Player : KnightCore {
     }
 
     void OpenAttackWindow() {
-        AttackPredictionWindow.instance.SetPredictionUI(attackResult);
+        AttackPredictionWindow.instance.SetPredictionUI(attackResultPrediction);
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
@@ -118,16 +119,20 @@ public class KnightCore_Player : KnightCore {
     }
 
     void OpenSkillWindow() {
+        bool isKnightSelectSkill = nowSkill is KnightSelectSkill;
+        if(isKnightSelectSkill) AttackPredictionWindow.instance.SetPredictionUI(attackResultPrediction);
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
                     GenericWindow.instance.Close();
+                    if(isKnightSelectSkill) AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction(KnightAction.skill);
                 }
             },
             {"キャンセル", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_cancel);
                     GenericWindow.instance.Close();
+                    if(isKnightSelectSkill) AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction(KnightAction.skill_cancel);
                 }
             }
