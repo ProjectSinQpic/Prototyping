@@ -49,7 +49,7 @@ public class KnightCore : MonoBehaviour {
     [HideInInspector] public Vector2 next_pos, prev_pos;
     [HideInInspector] public int storedCoolDown;
     [HideInInspector] public List<KnightCore> targets;
-    [HideInInspector] public AttackResult attackResultPrediction;
+    [HideInInspector] public AttackResult attackResult;
     [HideInInspector] public ActiveSkill nowSkill;
     [HideInInspector] public bool isFinished, isDead;
 
@@ -88,6 +88,7 @@ public class KnightCore : MonoBehaviour {
             .Subscribe (_ => OnFinish());
 
         Init ();
+        attackResult = new AttackResult(this);
     }
 
     protected virtual void Init () { }
@@ -112,6 +113,7 @@ public class KnightCore : MonoBehaviour {
         isFinished = true;
         status.coolDown += storedCoolDown;
         storedCoolDown = 0;
+        attackResult = new AttackResult(this);
     }
 
 

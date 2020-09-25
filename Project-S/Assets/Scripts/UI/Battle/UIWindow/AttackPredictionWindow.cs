@@ -38,7 +38,7 @@ public class AttackPredictionWindow : UIWindow {
 
     public void SetPredictionUI(AttackResult result) {
         ui.transform.localScale = Vector3.one;
-        SetStatus(result.attacker, result.target, result);
+        SetStatus(result);
         Lock("attack_prediction");
     }
 
@@ -47,32 +47,38 @@ public class AttackPredictionWindow : UIWindow {
         UnLock("attack_prediction");
     }
 
-    void SetStatus(KnightCore core_a, KnightCore core_b, AttackResult result) {
+    void SetStatus(AttackResult result) {
+        var diff_a = result.GetAttacker();
+        var diff_b = result.GetTarget();
+        var core_a = diff_a.knight;
+        var core_b = diff_b.knight;
+        Debug.Log(core_a + "  " + core_b);
         var statusData_a = KnightStatusData.Add(core_a.status.actual, core_a.status.delta);
         var statusData_b = KnightStatusData.Add(core_b.status.actual, core_b.status.delta);
+
         text_nowHP_a.text = core_a.status.HP.ToString () + " /";
         text_maxHP_a.text = statusData_a.maxHP.ToString ();
-        SetBarWidth(bar_HP_a, core_a.status.HP, statusData_a.maxHP);
+        SetAppliedBarWidth(bar_HP_a, core_a.status.HP, statusData_a.maxHP, bar_applyHP_a, diff_a.hpDiff);
         text_nowMP_a.text = core_a.status.MP.ToString () + " /";
         text_maxMP_a.text = statusData_a.maxMP.ToString ();
-        SetAppliedBarWidth(bar_MP_a, core_a.status.MP, statusData_a.maxMP, bar_applyMP_a, result.mana);
+        SetAppliedBarWidth(bar_MP_a, core_a.status.MP, statusData_a.maxMP, bar_applyMP_a, diff_a.mpDiff);
         text_attack_a.text = statusData_a.attack.ToString ();
         text_defense_a.text = statusData_a.defense.ToString ();
         text_moveRange_a.text = statusData_a.moveRange.ToString ();
         text_attackRange_a.text = statusData_a.attackRange.ToString ();
-        text_rest_a.text =  core_a.status.coolDown.ToString () + " → " + result.rest;
+        text_rest_a.text =  core_a.status.coolDown.ToString () + " → " + (core_a.status.coolDown + diff_a.restDiff);
 
         text_nowHP_b.text = core_b.status.HP.ToString () + " /";
         text_maxHP_b.text = statusData_b.maxHP.ToString ();
-        SetAppliedBarWidth(bar_HP_b, core_b.status.HP, statusData_b.maxHP, bar_applyHP_b, result.damage);
+        SetAppliedBarWidth(bar_HP_b, core_b.status.HP, statusData_b.maxHP, bar_applyHP_b, diff_b.hpDiff);
         text_nowMP_b.text = core_b.status.MP.ToString () + " /";
         text_maxMP_b.text = statusData_b.maxMP.ToString ();
-        SetBarWidth(bar_MP_b, core_b.status.MP, statusData_b.maxMP);
+        SetAppliedBarWidth(bar_MP_b, core_b.status.MP, statusData_b.maxMP, bar_applyMP_b, diff_b.mpDiff);
         text_attack_b.text = statusData_b.attack.ToString ();
         text_defense_b.text = statusData_b.defense.ToString ();
         text_moveRange_b.text = statusData_b.moveRange.ToString ();
         text_attackRange_b.text = statusData_b.attackRange.ToString ();
-        text_rest_b.text =  core_b.status.coolDown.ToString ();
+        text_rest_b.text =  core_b.status.coolDown.ToString () + " → " + (core_b.status.coolDown + diff_b.restDiff);
     }
 
     void SetBarWidth(GameObject bar, float now, float max) {

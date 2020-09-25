@@ -23,12 +23,12 @@ public class KnightSkill : KnightParts {
         var predictDamage = core.nowSkill.GetParam("damage");
         var predictMana = core.nowSkill.GetParam("mana");
         var predictRest = core.nowSkill.GetParam("rest");
-        core.attackResultPrediction = new AttackResult(core, core.targets[0], predictDamage, predictMana, predictRest);
+        core.attackResult.SetTarget(core.targets[0]);
+        core.attackResult.AddValue(true, -predictDamage, -predictMana, -predictRest); //TODO: 符号を合わせる
     }
 
     void OnSpell() {
-        core.status.MP -= core.nowSkill.GetParam("mana");
-        core.storedCoolDown += core.nowSkill.GetParam("rest");
+        core.NextAction(KnightAction.attack);
         core.nowSkill.OnStart();
     }
 
