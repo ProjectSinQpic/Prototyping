@@ -10,8 +10,8 @@ public class MapBuilder : MonoBehaviour {
     GameObject[] MapChip_set;
 
     void Start () {
-        MapStatus.field_map = MapFileDecoder.DecodeMap ("test3.txt");
-        BuildMap ();
+        MapStatus.field_map = MapFileDecoder.DecodeMap ("simple_field.txt");
+        //BuildMap ();
     }
 
     void BuildMap () {
@@ -20,7 +20,7 @@ public class MapBuilder : MonoBehaviour {
                 int map_index = (int) MapStatus.MapTypeOf (new Vector2 (i, j));
                 if (map_index == 0) continue;
                 var map_obj = Instantiate (MapChip_set[map_index], container);
-                map_obj.transform.localPosition = MapStatus.ToWorldPos (new Vector2 (i, j));
+                map_obj.transform.localPosition = MapStatus.ToWorldPos (new Vector2 (i, j)) - new Vector3(0, 5, 0);
             }
         }
     }

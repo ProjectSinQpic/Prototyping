@@ -7,37 +7,44 @@ using UnityEngine;
 public class KnightMovement : KnightParts {
     public bool isMoving = false;
     public KnightView view;
-
-    KnightDisplayArea _disp;
-
     readonly int moveFrame = 5;
-
-    void Awake () {
-        _disp = core.GetComponent<KnightDisplayArea> ();
-    }
+    bool isKeeped;
 
     void Start () {
         core.Message
-            .Where (x => x == "move")
+            .Where (x => x == KnightAction.move)
             .Subscribe (_ => MoveToPoint (core.next_pos));
 
         core.Message
-            .Where (x => x == "finish")
+            .Where (x => x == KnightAction.finish)
             .Subscribe (_ => core.prev_pos = core.status.pos);
+
+        core.Message
+            .Where (x => x == KnightAction.select_cancel)
+            .Subscribe (_ => OnCancel());
 
     }
 
     public void MoveToPoint (Vector2 goal) {
         if (isMoving) return;
-        core.NextAction ("look_cancel");
+        core.NextAction (KnightAction.look_cancel);
         if (!CheckMovable (goal)) {
-            GameState.selected.Value = null;
+            core.NextAction (KnightAction.move_cancel);
             return;
         }
-        StartCoroutine (MoveToPointCoroutine (_disp.movableArea.Find (m => m.pos == goal)));
+        var sa = core.selectedArea
+            .Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
+            .Where(m => m.pos == goal).First();
+        StartCoroutine (MoveToPointCoroutine (sa));
+        if(sa.root.Length > 0) {
+            isKeeped = false;
+            core.storedCoolDown += 3;
+        }
+        else isKeeped = true;
+        GetComponent<BoxCollider> ().enabled = true;
     }
 
-    IEnumerator MoveToPointCoroutine (MovableArea area) {
+    IEnumerator MoveToPointCoroutine (SelectedArea area) {
         isMoving = true;
         var nowDir = Direction.NONE;
         foreach (var d in area.root) {
@@ -56,12 +63,22 @@ public class KnightMovement : KnightParts {
         core.status.pos = area.pos;
         view.ActionView ("idle", nowDir);
         core.status.dir = nowDir;
-        core.NextAction ("select");
+        core.NextAction (KnightAction.select);
         isMoving = false;
     }
 
     bool CheckMovable (Vector2 point) {
-        return _disp.movableArea.Select (m => m.pos).Contains (point);
+        return core.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
+            .Select (m => m.pos).Contains (point);
+    }
+
+    public void OnCancel() {
+        var diff = core.prev_pos - core.status.pos;
+        core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
+            Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
+        core.status.pos = core.prev_pos;
+        if(!isKeeped) core.storedCoolDown -= 3;
+        core.NextAction(KnightAction.look);
     }
 
 }

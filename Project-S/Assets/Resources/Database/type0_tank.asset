@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6cc2548e5d2264f956eab6b05ac5ee, type: 3}
+  m_Name: type0_tank
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  maxMP: 50
+  attack: 20
+  defense: 10
+  moveRange: 5
+  attackRange: 1
+  skills:
+  - {fileID: 11400000, guid: b4b18e3ad44804a67b7679103e2c8b37, type: 2}
+  view: {fileID: 11400000, guid: ba934573bb16c407bb243d174b6b729c, type: 2}

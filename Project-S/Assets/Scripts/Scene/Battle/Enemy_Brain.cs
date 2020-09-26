@@ -7,9 +7,9 @@ using UnityEngine;
 public class Enemy_Brain : MonoBehaviour {
 
     void Start () {
-        GameState.isMyTurn
+        GameState.instance.turn
             .Where (_ => !KnightCore_Enemy.enemy_all.All (x => x.isDead))
-            .Where (x => !x)
+            .Where (x => x == Turn_State.red)
             .Subscribe (_ => Run ());
     }
 
@@ -23,18 +23,18 @@ public class Enemy_Brain : MonoBehaviour {
 
         yield return new WaitForSeconds (0.5f);
 
-        GameState.selected.Value = target;
+        GameState.instance.selected.Value = target;
         DicideNextPos (target);
 
         yield return new WaitForSeconds (0.5f);
-        target.NextAction ("move");
+        target.NextAction (KnightAction.move);
 
-        target.NextAction ("finish");
+        target.NextAction (KnightAction.finish);
     }
 
     void DicideNextPos (KnightCore target) {
-        var disp = target.GetComponent<KnightDisplayArea> ();
-        var goal = disp.movableArea[Random.Range (0, disp.movableArea.Count)];
-        disp.core.next_pos = goal.pos;
+        var movableArea = target.selectedArea.Where(s => s.type == AreaType.move || s.type == AreaType.move_attack).ToList();
+        var goal = movableArea[Random.Range (0, movableArea.Count)];
+        target.next_pos = goal.pos;
     }
 }

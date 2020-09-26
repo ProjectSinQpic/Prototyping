@@ -7,7 +7,7 @@ public class KnightDeath : KnightParts {
 
     void Start () {
         core.Message
-            .Where (x => x == "die")
+            .Where (x => x == KnightAction.die)
             .Subscribe (_ => Die ());
     }
 
