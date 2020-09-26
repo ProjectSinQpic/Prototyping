@@ -15,17 +15,25 @@ public class KnightView : KnightParts {
     Dictionary<string, float> animSpeed = new Dictionary<string, float> () { { "idle", 1f }, { "move", 0.25f }, { "attack", 0.25f },
     };
 
+    public string charaName;
+    public Sprite charaImage;
+    public Vector2 charaImageOffset_StatusUI, charaImageOffset_AttackResultUI;
+
     Color originalColor;
 
     public void Init () {
         sp = GetComponent<SpriteRenderer> ();
-        idle_front = core.status.data.image_idle_front;
-        idle_back = core.status.data.image_idle_back;
-        move_front = core.status.data.image_move_front;
-        move_back = core.status.data.image_move_back;
-        attack_front = core.status.data.image_attack_front;
-        attack_back = core.status.data.image_attack_back;
+        idle_front = core.status.data.view.image_idle_front;
+        idle_back = core.status.data.view.image_idle_back;
+        move_front = core.status.data.view.image_move_front;
+        move_back = core.status.data.view.image_move_back;
+        attack_front = core.status.data.view.image_attack_front;
+        attack_back = core.status.data.view.image_attack_back;
         originalColor = sp.color;
+        charaName = core.status.data.view.characterName;
+        charaImage = core.status.data.view.characterImage;
+        charaImageOffset_StatusUI = core.status.data.view.imageOffset_StatusUI;
+        charaImageOffset_AttackResultUI = core.status.data.view.imageOffset_AttackResultUI;
         InitAnimation ();
     }
 

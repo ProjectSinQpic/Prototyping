@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Skill/AttackForOne")]
+[CreateAssetMenu(menuName = "Skill/SimpleAttack")]
 
 /**
 

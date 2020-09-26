@@ -25,6 +25,8 @@ public class AttackPredictionWindow : UIWindow {
     public Text text_attackRange_a, text_attackRange_b;
     public Text text_rest_a, text_rest_b;
 
+    public Image chara_a, chara_b;
+
 
     public static AttackPredictionWindow instance;
 
@@ -69,6 +71,9 @@ public class AttackPredictionWindow : UIWindow {
         text_moveRange_a.text = statusData_a.moveRange.ToString ();
         text_attackRange_a.text = statusData_a.attackRange.ToString ();
         text_rest_a.text =  core_a.status.coolDown.ToString () + " → " + (core_a.status.coolDown + diff_a.restDiff);
+        var view_a = core_a.GetComponent<KnightView>();
+        chara_a.sprite = view_a.charaImage;
+        chara_a.transform.localPosition = view_a.charaImageOffset_AttackResultUI;
 
         text_nowHP_b.text = core_b.status.HP.ToString () + " /";
         text_maxHP_b.text = statusData_b.maxHP.ToString ();
@@ -81,6 +86,9 @@ public class AttackPredictionWindow : UIWindow {
         text_moveRange_b.text = statusData_b.moveRange.ToString ();
         text_attackRange_b.text = statusData_b.attackRange.ToString ();
         text_rest_b.text =  core_b.status.coolDown.ToString () + " → " + (core_b.status.coolDown + diff_b.restDiff);
+        var view_b = core_b.GetComponent<KnightView>();
+        chara_b.sprite = view_b.charaImage;
+        chara_b.transform.localPosition = view_b.charaImageOffset_AttackResultUI;
     }
 
     void SetBarWidth(GameObject bar, float now, float max) {

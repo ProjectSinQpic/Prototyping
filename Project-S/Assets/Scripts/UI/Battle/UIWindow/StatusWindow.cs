@@ -35,6 +35,9 @@ public class StatusWindow : UIWindow {
     public Sprite sprite_back_left_r, sprite_back_right_r;
     public Image image_back_left, image_back_right;
 
+    public Text charaNameText;
+    public Image charaImage;
+
     void Awake () {
         if (instance == null) instance = this;
         statusBox.transform.localScale = Vector3.zero;
@@ -58,7 +61,7 @@ public class StatusWindow : UIWindow {
         if(ViewOperater.instance.isLocked) return;
         if(MapPointer.instance.pointedKnight == null ) return;
         target.Value = obj.GetComponent<KnightCore>();
-        UpdateUI(target.Value.status, KnightCore_Player01.player_all.Contains(target.Value));
+        UpdateUI(target.Value, KnightCore_Player01.player_all.Contains(target.Value));
         statusBox.transform.localScale = Vector3.one;
         MapPointer.instance.SetActive(false, true);
     }
@@ -75,7 +78,8 @@ public class StatusWindow : UIWindow {
         return instance;
     }
 
-    public void UpdateUI (KnightStatus status, bool isBlue) {
+    public void UpdateUI (KnightCore core, bool isBlue) {
+        var status = core.status;
         var statusData = KnightStatusData.Add(status.actual, status.delta);
         text_nowHP.text = status.HP.ToString () + " /";
         text_maxHP.text = statusData.maxHP.ToString ();
@@ -89,6 +93,11 @@ public class StatusWindow : UIWindow {
         text_attackRange.text = statusData.attackRange.ToString ();
         text_rest.text =  status.coolDown.ToString ();
         AddSkillTags(status.skills);
+
+        var view = core.GetComponent<KnightView>();
+        charaNameText.text = view.charaName;
+        charaImage.sprite = view.charaImage;
+        charaImage.transform.localPosition = view.charaImageOffset_StatusUI;
         SetBackGround(isBlue);
     }
 

@@ -6,10 +6,10 @@
 ..ffffffffffffffff..
 ..ffffffffffffffff..
 ..ffffffffffffffff..
-..fffffwwwwww.ffff..
 ..fffffwwwwwwfffff..
 ..fffffwwwwwwfffff..
-..ffff.wwwwwwfffff..
+..fffffwwwwwwfffff..
+..fffffwwwwwwfffff..
 ..ffffffffffffffff..
 ..ffffffffffffffff..
 ..ffffffffffffffff..
