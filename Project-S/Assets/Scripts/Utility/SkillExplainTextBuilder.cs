@@ -12,7 +12,7 @@ public class SkillExplainTextBuilder {
             Match match = regex.Match(text);
             if(!match.Success) break;
             string key = match.ToString().Replace("<", "").Replace(">", "");
-            text = regex.Replace(text, skill.GetParam(key).ToString());
+            text = regex.Replace(text, Mathf.Abs(skill.GetParam(key)).ToString()); //絶対値を埋め込む（負数は入らない）
         }
 
         return text;

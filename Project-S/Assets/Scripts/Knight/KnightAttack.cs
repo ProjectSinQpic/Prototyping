@@ -4,57 +4,7 @@ using UniRx;
 using UnityEngine;
 using System.Linq;
 
-public class AttackResult {
 
-    public AttackResult(KnightCore core) {
-        attacker = new KnightDiff(core);
-        target = new KnightDiff();
-    }
-
-    public void SetTarget(KnightCore target) {
-        this.target = new KnightDiff(target);
-    }
-
-    public KnightDiff GetTarget() {
-        return this.target;
-    }
-
-    public KnightDiff GetAttacker() {
-        return this.attacker;
-    }
-
-    public void AddValue(bool isTarget, int hp, int mp, int rest) {
-        var core = isTarget ? target : attacker;
-        core.hpDiff += hp;
-        core.mpDiff += mp;
-        core.restDiff += rest;
-    }
-
-    public class KnightDiff {
-        public KnightCore knight;
-        public int hpDiff, mpDiff, restDiff;
-
-        public KnightStatusData statusData;
-        public KnightDiff() {
-            this.knight = null;
-            this.hpDiff = 0;
-            this.mpDiff = 0;
-            this.restDiff = 0;
-            this.statusData = null;
-        }
-
-        public KnightDiff(KnightCore core) {
-            this.knight = core;
-            this.hpDiff = 0;
-            this.mpDiff = 0;
-            this.restDiff = 0;
-            this.statusData = core.statusData;
-        }
-    }
-
-    KnightDiff attacker, target;
-
-}
 
 public class KnightAttack : KnightParts {
 
@@ -93,9 +43,10 @@ public class KnightAttack : KnightParts {
     void ApplyAttack(AttackResult result) {
         var diffs = new List<AttackResult.KnightDiff>(){result.GetAttacker(), result.GetTarget()};
         foreach(var d in diffs) {
-            d.knight.status.HP += d.hpDiff;
-            d.knight.status.MP += d.mpDiff;
-            d.knight.storedCoolDown += d.restDiff;
+            if(d.knight == null) continue;
+            d.knight.status.HP = Mathf.Clamp(d.knight.status.HP + d.hpDiff, 0, d.knight.statusData.maxHP);
+            d.knight.status.MP = Mathf.Clamp(d.knight.status.MP + d.mpDiff, 0, d.knight.statusData.maxMP);
+            d.knight.storedCoolDown = Mathf.Max(d.knight.storedCoolDown + d.restDiff, 0);
         }
         StartCoroutine (AttackCoroutine (diffs[0].knight, diffs[1].knight)); //TODO: あとで消す
     }
@@ -106,7 +57,7 @@ public class KnightAttack : KnightParts {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.attack01);
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
         yield return new WaitForSeconds (0.4f);
-        if (target.status.HP <= 0) target.NextAction(KnightAction.die);
+        if (target != null && target.status.HP <= 0) target.NextAction(KnightAction.die);
         yield return new WaitForSeconds (0.2f);
         core.NextAction(KnightAction.look_cancel);
         core.NextAction(KnightAction.finish);
@@ -115,6 +66,7 @@ public class KnightAttack : KnightParts {
     void CancelAttack () {
         core.NextAction(KnightAction.look_cancel);
         core.NextAction (KnightAction.select);
+        core.attackResult = new AttackResult(core);
     }
 
 }

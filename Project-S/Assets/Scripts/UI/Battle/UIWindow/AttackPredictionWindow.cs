@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using System.Linq;
 
 public class AttackPredictionWindow : UIWindow {
 
@@ -34,6 +35,7 @@ public class AttackPredictionWindow : UIWindow {
         if (instance == null) instance = this;
         bar_maxSize = bar_HP_a.GetComponent<RectTransform>().rect.width;
         ui.transform.localScale = Vector3.zero;
+        StartCoroutine(StatusBarFlashCoroutine());
     }
 
     public void SetPredictionUI(AttackResult result) {
@@ -88,10 +90,25 @@ public class AttackPredictionWindow : UIWindow {
 
     void SetAppliedBarWidth(GameObject bar, float now, float max, GameObject applied, float value) {
         var nowSize = bar_maxSize * (now / max);
+        var actualValue = value;
+        if(now + value > max) actualValue = max - now;
+        if(now + value < 0) actualValue = -now;
         bar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, nowSize);
-        applied.GetComponent<RectTransform>().pivot = new Vector2(1, 0.5f); // TODO: 回復も考える
-        var appliedSize = bar_maxSize * (Mathf.Abs(value) / max);
+        applied.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, actualValue > 0 ? 180 : 0);
+        var appliedSize = bar_maxSize * (Mathf.Abs(actualValue) / max);
         applied.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, appliedSize);
+    }
+
+    IEnumerator StatusBarFlashCoroutine() {
+        float t = 0;
+        var barList = new List<GameObject>() {bar_applyHP_a, bar_applyHP_b, bar_applyMP_a, bar_applyMP_b}.Select(b => b.GetComponent<Image>());
+        while(true) {
+            foreach(var bar in barList) {
+            bar.color = new Color(1, 1, 1, 0.75f + 0.25f * Mathf.Sin(t * 5)); // 0.5 ~ 1
+            }
+            yield return null;
+            t += Time.deltaTime;
+        }
     }
 
 }

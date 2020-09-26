@@ -15,11 +15,12 @@ public class SkillSelectWindow : UIWindow {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
         foreach (var skill in core.status.activeSkills) {
             choices[skill.skillName] = () => {
-                if(skill.GetParam("mana") > core.status.MP) return;
+                if(skill.GetRequiredMana() > core.status.MP) return;
                 SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
                 GenericWindow.instance.Close ();
                 GenericWindow.instance.Close ();
-                skill.Activate();
+                core.nowSkill = skill;
+                skill.OnSelected();
             };
         }
         choices["キャンセル"] = () => {

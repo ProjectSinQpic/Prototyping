@@ -7,16 +7,17 @@ using UnityEngine;
 public class KnightSelectSkill : ActiveSkill {
 
     public AreaShapeType areaShape;
-    [HideInInspector] public Vector2 areaCenterPos;
+    //[HideInInspector] public Vector2 areaCenterPos;
+    public int areaRange;
 
     public virtual void OnTargetSelected(KnightCore target) {}
 
-    protected override void OnWait() {
-        OnInit();
+    public override void OnSelected() {
+        OnWaitForTarget();
         GameState.instance.knight_state.Value = Knight_State.skill_knight;
         owner.NextAction(KnightAction.skill_look_knight);
     }
 
-    protected virtual void OnInit() {}
+    protected virtual void OnWaitForTarget() {}
 
 }

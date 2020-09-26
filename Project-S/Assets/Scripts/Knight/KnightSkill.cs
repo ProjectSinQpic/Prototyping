@@ -20,22 +20,19 @@ public class KnightSkill : KnightParts {
     }
 
     void SkillPrepare() {
-        var predictDamage = core.nowSkill.GetParam("damage");
-        var predictMana = core.nowSkill.GetParam("mana");
-        var predictRest = core.nowSkill.GetParam("rest");
-        core.attackResult.SetTarget(core.targets[0]);
-        core.attackResult.AddValue(true, -predictDamage, -predictMana, -predictRest); //TODO: 符号を合わせる
+
     }
 
     void OnSpell() {
         core.NextAction(KnightAction.attack);
-        core.nowSkill.OnStart();
+        core.nowSkill.OnSpell();
     }
 
     public void OnCancel() {
         core.nowSkill = null;
         core.NextAction(KnightAction.look_cancel);
         core.NextAction(KnightAction.select);
+        core.attackResult = new AttackResult(core);
     }
 
 }
