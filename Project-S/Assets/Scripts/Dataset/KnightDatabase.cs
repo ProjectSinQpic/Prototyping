@@ -15,11 +15,6 @@ public class KnightDatabase : ScriptableObject {
 
     public List<SkillBase> skills;
 
-    public List<Sprite> image_idle_front;
-    public List<Sprite> image_idle_back;
-    public List<Sprite> image_move_front;
-    public List<Sprite> image_move_back;
-    public List<Sprite> image_attack_front;
-    public List<Sprite> image_attack_back;
+    public CharacterView view;
 
 }

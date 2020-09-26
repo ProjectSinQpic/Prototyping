@@ -4,20 +4,7 @@ using UniRx;
 using UnityEngine;
 using System.Linq;
 
-public class AttackResult {
 
-    public AttackResult(KnightCore attacker, KnightCore target, int damage, int mana, int rest) {
-        this.attacker = attacker;
-        this.target = target;
-        this.damage = damage;
-        this.mana = mana;
-        this.rest = rest;    
-    }
-
-    public KnightCore attacker, target;
-
-    public int damage, mana, rest;
-}
 
 public class KnightAttack : KnightParts {
 
@@ -35,7 +22,7 @@ public class KnightAttack : KnightParts {
 
         core.Message
             .Where (x => x == KnightAction.attack)
-            .Subscribe (_ => NormalAttack(core.attackResultPrediction));
+            .Subscribe (_ => ApplyAttack(core.attackResult));
 
         core.Message
             .Where (x => x == KnightAction.attack_cancel)
@@ -46,21 +33,31 @@ public class KnightAttack : KnightParts {
 
     void NormalAttackPrepare(KnightCore target) {
         var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
-        core.attackResultPrediction = new AttackResult(core, target, damage, 0, 3);
+        core.attackResult.SetTarget(target);
+        core.attackResult.AddValue(true, -damage, 0, 0);
+        core.attackResult.AddValue(false, 0, 0, 3);
     }
 
-    void NormalAttack (AttackResult result) {
-        StartCoroutine (AttackCoroutine (result, false));
-        core.storedCoolDown += 3;
+
+    //AttackResultを反映させる
+    void ApplyAttack(AttackResult result) {
+        var diffs = new List<AttackResult.KnightDiff>(){result.GetAttacker(), result.GetTarget()};
+        foreach(var d in diffs) {
+            if(d.knight == null) continue;
+            d.knight.status.HP = Mathf.Clamp(d.knight.status.HP + d.hpDiff, 0, d.knight.statusData.maxHP);
+            d.knight.status.MP = Mathf.Clamp(d.knight.status.MP + d.mpDiff, 0, d.knight.statusData.maxMP);
+            d.knight.storedCoolDown = Mathf.Max(d.knight.storedCoolDown + d.restDiff, 0);
+        }
+        StartCoroutine (AttackCoroutine (diffs[0].knight, diffs[1].knight)); //TODO: あとで消す
     }
 
-    IEnumerator AttackCoroutine (AttackResult result, bool isCounter) {
-        var target = result.target;
+
+    //TODO: 攻撃アニメーション　あとで分離
+    IEnumerator AttackCoroutine (KnightCore attcacker, KnightCore target) {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.attack01);
         view.ActionView ("attack", core.status.dir); //TODO 相手の方向を向くように修正したい
-        target.status.HP -= result.damage;
         yield return new WaitForSeconds (0.4f);
-        if (target.status.HP <= 0) target.NextAction (KnightAction.die);
+        if (target != null && target.status.HP <= 0) target.NextAction(KnightAction.die);
         yield return new WaitForSeconds (0.2f);
         core.NextAction(KnightAction.look_cancel);
         core.NextAction(KnightAction.finish);
@@ -69,6 +66,7 @@ public class KnightAttack : KnightParts {
     void CancelAttack () {
         core.NextAction(KnightAction.look_cancel);
         core.NextAction (KnightAction.select);
+        core.attackResult = new AttackResult(core);
     }
 
 }

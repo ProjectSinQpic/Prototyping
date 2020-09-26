@@ -8,6 +8,7 @@ public class KnightMovement : KnightParts {
     public bool isMoving = false;
     public KnightView view;
     readonly int moveFrame = 5;
+    bool isKeeped;
 
     void Start () {
         core.Message
@@ -35,7 +36,11 @@ public class KnightMovement : KnightParts {
             .Where(s => s.type == AreaType.move || s.type == AreaType.move_attack)
             .Where(m => m.pos == goal).First();
         StartCoroutine (MoveToPointCoroutine (sa));
-        if(sa.root.Length > 0) core.storedCoolDown += 3;
+        if(sa.root.Length > 0) {
+            isKeeped = false;
+            core.storedCoolDown += 3;
+        }
+        else isKeeped = true;
         GetComponent<BoxCollider> ().enabled = true;
     }
 
@@ -72,7 +77,7 @@ public class KnightMovement : KnightParts {
         core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
             Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
         core.status.pos = core.prev_pos;
-        core.storedCoolDown -= 3;
+        if(!isKeeped) core.storedCoolDown -= 3;
         core.NextAction(KnightAction.look);
     }
 

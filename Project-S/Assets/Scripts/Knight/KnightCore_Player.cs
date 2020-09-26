@@ -99,7 +99,7 @@ public class KnightCore_Player : KnightCore {
     }
 
     void OpenAttackWindow() {
-        AttackPredictionWindow.instance.SetPredictionUI(attackResultPrediction);
+        AttackPredictionWindow.instance.SetPredictionUI(attackResult);
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
@@ -120,7 +120,7 @@ public class KnightCore_Player : KnightCore {
 
     void OpenSkillWindow() {
         bool isKnightSelectSkill = nowSkill is KnightSelectSkill;
-        if(isKnightSelectSkill) AttackPredictionWindow.instance.SetPredictionUI(attackResultPrediction);
+        if(isKnightSelectSkill) AttackPredictionWindow.instance.SetPredictionUI(attackResult);
         GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
             {"決定", () => {
                     SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);

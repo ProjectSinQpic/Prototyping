@@ -40,6 +40,7 @@ public class TurnChangeUI : MonoBehaviour {
     private void AppearTurnBanner(Turn_State turn) {
         var banner = turn == Turn_State.blue ? sprite_banner_blue : sprite_banner_red; 
         var text = turn == Turn_State.blue ? sprite_text_blue : sprite_text_red; 
+        transform_text.localScale = Vector3.one;
         transform_banner.GetComponent<Image>().sprite = banner;
         transform_text.GetComponent<Image>().sprite = text;
 
@@ -58,6 +59,7 @@ public class TurnChangeUI : MonoBehaviour {
             ViewOperater.instance.SetActive(true);
         });
         sequence.Play();
+        transform_text.localScale = Vector3.zero;
     }
 
     
