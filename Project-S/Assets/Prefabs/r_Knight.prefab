@@ -56,10 +56,11 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 937b0333449284ea982be69b70dac5db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,10 +105,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status: {fileID: 4338725050842158337}
+  selectedArea: []
   next_pos: {x: 0, y: 0}
   prev_pos: {x: 0, y: 0}
   storedCoolDown: 0
-  next_target: {fileID: 0}
+  targets: []
+  nowSkill: {fileID: 0}
   isFinished: 0
   isDead: 0
 --- !u!114 &4338725050842158337
@@ -175,7 +178,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   core: {fileID: 9068619537282208187}
-  selectedArea: []
   prefab_area: {fileID: 8953533423184074616, guid: faeb762054eeef54f9a93a680fc82b7b,
     type: 3}
   moveColor: {r: 0, g: 0.38631964, b: 1, a: 0.29411766}
@@ -194,6 +196,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 9068619537282208187}
   anim: {fileID: 5721275588216470148}
+  charaName: 
+  charaImage: {fileID: 0}
+  charaImageOffset_StatusUI: {x: 0, y: 0}
+  charaImageOffset_AttackResultUI: {x: 0, y: 0}
 --- !u!114 &5721275588216470148
 MonoBehaviour:
   m_ObjectHideFlags: 0

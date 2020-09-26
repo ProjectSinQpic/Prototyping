@@ -19,7 +19,6 @@ public class KnightView : KnightParts {
     public Sprite charaImage;
     public Vector2 charaImageOffset_StatusUI, charaImageOffset_AttackResultUI;
 
-    Color originalColor;
 
     public void Init () {
         sp = GetComponent<SpriteRenderer> ();
@@ -29,7 +28,6 @@ public class KnightView : KnightParts {
         move_back = core.status.data.view.image_move_back;
         attack_front = core.status.data.view.image_attack_front;
         attack_back = core.status.data.view.image_attack_back;
-        originalColor = sp.color;
         charaName = core.status.data.view.characterName;
         charaImage = core.status.data.view.characterImage;
         charaImageOffset_StatusUI = core.status.data.view.imageOffset_StatusUI;
@@ -82,10 +80,10 @@ public class KnightView : KnightParts {
 
     void ChangeRestState(int c) {
         if(c == 0) {
-            sp.color = originalColor;
+            sp.material.color = Color.white;
         }
         else {
-            sp.color = originalColor * 0.4f + new Color(0, 0, 0, 1);
+            sp.material.color = Color.gray;
         }
     }
 
