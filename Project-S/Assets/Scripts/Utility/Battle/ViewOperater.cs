@@ -85,11 +85,13 @@ public class ViewOperater : MonoBehaviour {
     void ZoomCamera() {
         var wheel = Input.GetAxis ("Mouse ScrollWheel");
         if (wheel > 0 && zoom < zoomMax) {
-            cameraPos.localPosition *= 0.8f;
+            //cameraPos.localPosition *= 0.8f;
+            cameraPos.GetComponent<Camera>().orthographicSize -= 10;
             zoom++;
         }
         else if (wheel < 0 && zoom > zoomMin) {
-            cameraPos.localPosition *= 1.25f;
+            //cameraPos.localPosition *= 1.25f;
+            cameraPos.GetComponent<Camera>().orthographicSize += 10;
             zoom--;
         }
     }
@@ -107,7 +109,12 @@ public class ViewOperater : MonoBehaviour {
     public void FocusIn(Transform target) {
         isFocusing = true;
         this.target = target;
-        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + cameraPos.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+        //cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + cameraPos.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+        var camera = cameraPos.GetComponent<Camera>();
+        cameraPos.DOLocalMoveX(cameraPos.localPosition.x + focusOffsetX, focusSpeed);
+        DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize / focusRate, focusSpeed)
+            .OnComplete(() => isFocusing = false).SetEase(focusEasing);
+
         isLocked = true;
     }
 
@@ -116,7 +123,11 @@ public class ViewOperater : MonoBehaviour {
         if(isLocked) {
             isFocusing = true;
             Debug.Log(cameraPos.right);
-            cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+            //cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+            var camera = cameraPos.GetComponent<Camera>();
+            cameraPos.DOLocalMoveX(cameraPos.localPosition.x - focusOffsetX, focusSpeed);
+            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize * focusRate, focusSpeed)
+                .OnComplete(() => isFocusing = false).SetEase(focusEasing);
         }
         isLocked = false;
     }
