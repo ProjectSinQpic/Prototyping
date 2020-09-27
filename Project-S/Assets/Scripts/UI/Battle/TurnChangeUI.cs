@@ -43,6 +43,7 @@ public class TurnChangeUI : MonoBehaviour {
         transform_text.localScale = Vector3.one;
         transform_banner.GetComponent<Image>().sprite = banner;
         transform_text.GetComponent<Image>().sprite = text;
+        transform_banner.position = new Vector3(Screen.width * 1.5f, Screen.height / 2, 0);
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform_banner.DOMoveX(Screen.width / 2, time_appear).SetEase(ease_appear_banner));

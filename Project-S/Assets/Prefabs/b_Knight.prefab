@@ -60,7 +60,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7da0dca1cbf014a429f81fb018ca9a88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +111,6 @@ MonoBehaviour:
   storedCoolDown: 0
   targets: []
   nowSkill: {fileID: 0}
-  skillDamage: 0
   isFinished: 0
   isDead: 0
 --- !u!114 &5190650587746638762
@@ -181,7 +180,7 @@ MonoBehaviour:
   core: {fileID: 5983699599012323669}
   prefab_area: {fileID: 8953533423184074616, guid: faeb762054eeef54f9a93a680fc82b7b,
     type: 3}
-  moveColor: {r: 0, g: 0.38631964, b: 1, a: 0.29411766}
+  moveColor: {r: 0.14117648, g: 0.12156863, b: 0.7921569, a: 0.29411766}
   attackColor: {r: 1, g: 0, b: 0.55080223, a: 0.29411766}
 --- !u!114 &8556991488017298277
 MonoBehaviour:
@@ -197,6 +196,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 5983699599012323669}
   anim: {fileID: 108628249569392666}
+  charaName: 
+  charaImage: {fileID: 0}
+  charaImageOffset_StatusUI: {x: 0, y: 0}
+  charaImageOffset_AttackResultUI: {x: 0, y: 0}
 --- !u!114 &108628249569392666
 MonoBehaviour:
   m_ObjectHideFlags: 0

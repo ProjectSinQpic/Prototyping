@@ -38,7 +38,7 @@ public class KnightMovement : KnightParts {
         StartCoroutine (MoveToPointCoroutine (sa));
         if(sa.root.Length > 0) {
             isKeeped = false;
-            core.storedCoolDown += 3;
+            core.storedCoolDown += GameState.instance.param.moveRest;
         }
         else isKeeped = true;
         GetComponent<BoxCollider> ().enabled = true;
@@ -77,7 +77,7 @@ public class KnightMovement : KnightParts {
         core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
             Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
         core.status.pos = core.prev_pos;
-        if(!isKeeped) core.storedCoolDown -= 3;
+        if(!isKeeped) core.storedCoolDown -= GameState.instance.param.moveRest;
         core.NextAction(KnightAction.look);
     }
 

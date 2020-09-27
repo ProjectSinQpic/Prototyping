@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 using UnityEngine;
+
 
 public class MapFileDecoder : MonoBehaviour {
 
@@ -20,6 +22,12 @@ public class MapFileDecoder : MonoBehaviour {
                 }
                 j++;
             }
+            while ((line = sr.ReadLine ()) != null) {
+                var info = line.Split(',').Select(x => int.Parse(x)).ToList();
+                FieldManaPlacer.instance.PlaceMana(new Vector2(info[0], info[1]), info[2]);
+                j++;
+            }
+
         }
         return map;
     }

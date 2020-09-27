@@ -33,6 +33,8 @@ public class GameState : MonoBehaviour {
 
     public static GameState instance;
 
+    public BattleParameterSet param;
+
     void Awake () {
         if (instance == null) instance = this;
         knight_state = new ReactiveProperty<Knight_State> (Knight_State.move);
@@ -81,8 +83,8 @@ public class GameState : MonoBehaviour {
     IEnumerator WasteTimeCoroutine() {
         MapPointer.instance.SetActive(false, false);
         ViewOperater.instance.SetActive(false);
-        KnightCore_Player01.player_all.ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
-        KnightCore_Player02.player_all.ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
+        KnightCore_Player01.player_all.Where(x => !x.isDead).ToList().ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
+        KnightCore_Player02.player_all.Where(x => !x.isDead).ToList().ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
         yield return new WaitForSeconds(2f);
         turn.Value = Turn_State.blue;
         MapPointer.instance.SetActive(true, true);
@@ -93,4 +95,5 @@ public class GameState : MonoBehaviour {
         selected.Value = null;
         knight_state.Value = Knight_State.move;
     }
+
 }
