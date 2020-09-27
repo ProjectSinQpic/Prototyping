@@ -12,12 +12,16 @@ public class KnightActionWindow : UIWindow {
     }
 
     public void DisplayMenu (KnightCore core) {
-        GenericWindow.instance.Create (new Dictionary<string, UnityEngine.Events.UnityAction> { 
+        var menu = new Dictionary<string, UnityEngine.Events.UnityAction> { 
             { "攻撃", () => OnAttack (core) },
             { "スキル", () => OnSkill (core) },
             { "待機", () => OnWait (core) },
-            { "キャンセル", () => OnCancel (core) },
-        }, new Vector3 (Screen.width / 2 - 250, Screen.height / 2 - 250, 0), "knight_choice", true);
+        };
+        if(FieldManaPlacer.instance.IsGettableMana(core.next_pos)) {
+            menu.Add("マナ獲得", () => OnGetMana(core));
+        }
+        menu.Add("キャンセル", () => OnCancel (core));
+        GenericWindow.instance.Create (menu, new Vector3 (Screen.width / 2 - 250, Screen.height / 2 - 250, 0), "knight_choice", true);
         GameState.instance.knight_state.Value = Knight_State.select;
     }
 
@@ -35,6 +39,13 @@ public class KnightActionWindow : UIWindow {
     void OnWait (KnightCore core) {
         SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
         core.NextAction (KnightAction.finish);
+        GameState.instance.knight_state.Value = Knight_State.move;
+        GenericWindow.instance.Close ();
+    }
+
+    void OnGetMana(KnightCore core) {
+        SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
+        core.NextAction (KnightAction.get_mana);
         GameState.instance.knight_state.Value = Knight_State.move;
         GenericWindow.instance.Close ();
     }

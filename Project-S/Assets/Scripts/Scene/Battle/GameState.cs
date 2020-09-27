@@ -93,4 +93,5 @@ public class GameState : MonoBehaviour {
         selected.Value = null;
         knight_state.Value = Knight_State.move;
     }
+
 }

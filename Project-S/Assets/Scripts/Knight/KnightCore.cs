@@ -23,6 +23,7 @@ public enum KnightAction {
     skill,
     skill_attack,
     skill_cancel,
+    get_mana,
     die,
     finish,
 

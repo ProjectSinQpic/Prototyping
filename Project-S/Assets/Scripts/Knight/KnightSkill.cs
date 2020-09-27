@@ -17,6 +17,12 @@ public class KnightSkill : KnightParts {
         core.Message
             .Where (x => x == KnightAction.skill_cancel)
             .Subscribe (_ => OnCancel());
+
+        core.Message
+            .Where (x => x == KnightAction.get_mana)
+            .Subscribe (_ => OnGetFieldMana());
+
+        GameState.instance.turn.Where(t => t != Turn_State.none).DelayFrame(1).Subscribe(_ => OnGetTurnMana());
     }
 
     void SkillPrepare() {
@@ -28,11 +34,20 @@ public class KnightSkill : KnightParts {
         core.nowSkill.OnSpell();
     }
 
-    public void OnCancel() {
+    void OnCancel() {
         core.nowSkill = null;
         core.NextAction(KnightAction.look_cancel);
         core.NextAction(KnightAction.select);
         core.attackResult = new AttackResult(core);
+    }
+
+    void OnGetFieldMana() {
+        FieldManaPlacer.instance.GetMana(core);
+        core.NextAction(KnightAction.finish);
+    }
+
+    void OnGetTurnMana() {
+        core.status.MP = Mathf.Min(core.status.MP + 5, core.statusData.maxMP);
     }
 
 }
