@@ -61,7 +61,7 @@ public class StatusWindow : UIWindow {
         if(ViewOperater.instance.isLocked) return;
         if(MapPointer.instance.pointedKnight == null ) return;
         target.Value = obj.GetComponent<KnightCore>();
-        UpdateUI(target.Value, KnightCore_Player01.player_all.Contains(target.Value));
+        UpdateUI(target.Value, KnightCore.blue_all.Contains(target.Value));
         statusBox.transform.localScale = Vector3.one;
         MapPointer.instance.SetActive(false, true);
     }

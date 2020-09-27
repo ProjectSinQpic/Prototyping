@@ -60,6 +60,8 @@ public class KnightCore : MonoBehaviour {
     public IObservable<KnightAction> Message { get { return message.AsObservable (); } }
 
     public static List<KnightCore> all = new List<KnightCore> ();
+    public static List<KnightCore> blue_all = new List<KnightCore> ();
+    public static List<KnightCore> red_all = new List<KnightCore> ();
 
 
     void Awake () {
@@ -119,9 +121,8 @@ public class KnightCore : MonoBehaviour {
 
 
     public static List<KnightCore> GetAllies(KnightCore core) { //TODO: 余裕があれば修正したい
-        if(KnightCore_Player01.player_all.Contains(core)) return KnightCore_Player01.player_all;
-        else if(KnightCore_Player02.player_all.Contains(core)) return KnightCore_Player02.player_all;
-        else if(KnightCore_Enemy.enemy_all.Contains(core)) return KnightCore_Enemy.enemy_all;
+        if(blue_all.Contains(core)) return blue_all;
+        else if(red_all.Contains(core)) return red_all;
         else return new List<KnightCore>();
     }
 

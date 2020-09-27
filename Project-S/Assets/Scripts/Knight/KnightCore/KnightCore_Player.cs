@@ -10,6 +10,8 @@ using System.Linq;
 
 public class KnightCore_Player : KnightCore {
 
+    
+
     protected override void Init () {
 
         MoveDirection();
