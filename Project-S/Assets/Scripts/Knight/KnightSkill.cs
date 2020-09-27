@@ -47,7 +47,7 @@ public class KnightSkill : KnightParts {
     }
 
     void OnGetTurnMana() {
-        core.status.MP = Mathf.Min(core.status.MP + 5, core.statusData.maxMP);
+        core.status.MP = Mathf.Min(core.status.MP + GameState.instance.param.turnMana, core.statusData.maxMP);
     }
 
 }

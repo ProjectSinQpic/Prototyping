@@ -33,6 +33,8 @@ public class GameState : MonoBehaviour {
 
     public static GameState instance;
 
+    public BattleParameterSet param;
+
     void Awake () {
         if (instance == null) instance = this;
         knight_state = new ReactiveProperty<Knight_State> (Knight_State.move);

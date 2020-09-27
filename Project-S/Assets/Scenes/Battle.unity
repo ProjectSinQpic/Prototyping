@@ -6520,6 +6520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearUI: {fileID: 811058813}
+  param: {fileID: 11400000, guid: de623468c464148c082f5b2c79763e90, type: 2}
 --- !u!4 &1201776247
 Transform:
   m_ObjectHideFlags: 0
