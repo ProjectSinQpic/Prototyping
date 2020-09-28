@@ -10,10 +10,10 @@ public class KnightUI : KnightParts {
 
     public void Start () {
         
-        this.UpdateAsObservable()
-            .Select(_ => core.status.coolDown)  
-            .DistinctUntilChanged()
-            .Subscribe(x => Debug.Log(x));
+    //    this.UpdateAsObservable()
+    //        .Select(_ => core.status.coolDown)  
+    //        .DistinctUntilChanged()
+    //        .Subscribe(x => Debug.Log(x));
     }
 
 }

@@ -11,6 +11,7 @@ using System.Linq;
 public class KnightCore_Network : KnightCore {
 
     protected override void Init () {
+        base.Init();
 
         MoveDirection();
         AttackDirection();
@@ -144,6 +145,7 @@ public class KnightCore_Network : KnightCore {
                     GenericWindow.instance.Close();
                     AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction(KnightAction.attack);
+                    NetworkCommunicater.instance.SendCommand("attack go");
                 }
             },
             {"キャンセル", () => {
@@ -151,6 +153,7 @@ public class KnightCore_Network : KnightCore {
                     GenericWindow.instance.Close();
                     AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction (KnightAction.attack_cancel);
+                    NetworkCommunicater.instance.SendCommand("attack cancel");
                 }
             }
         }, new Vector3 (0, -Screen.height / 2 + 200, 0), "attack_target", true);
@@ -165,6 +168,7 @@ public class KnightCore_Network : KnightCore {
                     GenericWindow.instance.Close();
                     if(isKnightSelectSkill) AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction(KnightAction.skill);
+                    NetworkCommunicater.instance.SendCommand("skill go");
                 }
             },
             {"キャンセル", () => {
@@ -172,6 +176,7 @@ public class KnightCore_Network : KnightCore {
                     GenericWindow.instance.Close();
                     if(isKnightSelectSkill) AttackPredictionWindow.instance.HidePredictionUI();
                     NextAction(KnightAction.skill_cancel);
+                    NetworkCommunicater.instance.SendCommand("skill cancel");
                 }
             }
         }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);

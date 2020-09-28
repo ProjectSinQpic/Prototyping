@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5248620909612032835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5248620909612032833}
+  - component: {fileID: 5248620909612032832}
+  - component: {fileID: 5248620909612032847}
+  - component: {fileID: 5248620909612032846}
+  m_Layer: 0
+  m_Name: GameMgr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5248620909612032833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248620909612032835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 175, y: 620, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5248620909612032832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248620909612032835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63662b034681381428ef09b47f31fd65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearUI: {fileID: 0}
+  param: {fileID: 11400000, guid: de623468c464148c082f5b2c79763e90, type: 2}
+  firstTurn: 0
+--- !u!114 &5248620909612032847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248620909612032835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b89f729e8020c40a3ad4a882f8b7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players_blue:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  players_red:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  blue_positions:
+  - {x: 2, y: 7}
+  - {x: 2, y: 9}
+  - {x: 2, y: 11}
+  - {x: 2, y: 13}
+  red_positions:
+  - {x: 17, y: 12}
+  - {x: 17, y: 10}
+  - {x: 17, y: 8}
+  - {x: 17, y: 6}
+--- !u!114 &5248620909612032846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248620909612032835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fe0ee474a99472482817041affe36e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab_mana: {fileID: 7472335983055933803, guid: 5b2aa2bcdccda4ee8a1c37aa55eea475,
+    type: 3}
+  manas: []
+  manaPosY: 4
+  minAmount: 5
+  maxAmount: 50
+  minSize: 2
+  maxSize: 10

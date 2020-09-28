@@ -39,6 +39,7 @@ public class SkillSelectWindow : UIWindow {
             SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
             GenericWindow.instance.Close ();
             GenericWindow.instance.Close ();
+            NetworkCommunicater.instance.SendCommand(string.Format("skill {0}", core.status.activeSkills.IndexOf(skill)));
         }
     }
 

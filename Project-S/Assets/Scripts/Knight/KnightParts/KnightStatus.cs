@@ -36,7 +36,10 @@ public class KnightStatus : KnightParts {
 
         activeSkills.ForEach(s => s.Init(core));
 
+        Debug.Log(pos);
         GetComponent<KnightView> ().Init ();    //TODO 改善の余地あり
+        transform.position = MapStatus.ToWorldPos(pos);
+        core.prev_pos = pos;
     }
 
 }

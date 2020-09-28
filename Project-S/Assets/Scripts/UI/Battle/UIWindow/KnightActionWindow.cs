@@ -48,6 +48,7 @@ public class KnightActionWindow : UIWindow {
         if(isFromMenu) {
             SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
             GenericWindow.instance.Close ();
+            NetworkCommunicater.instance.SendCommand("action attack");
         }
     }
 
@@ -64,6 +65,7 @@ public class KnightActionWindow : UIWindow {
         if(isFromMenu) {
             SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
             GenericWindow.instance.Close ();
+            NetworkCommunicater.instance.SendCommand("action wait");
         }
     }
 
@@ -73,6 +75,7 @@ public class KnightActionWindow : UIWindow {
         if(isFromMenu) {
             SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
             GenericWindow.instance.Close ();
+            NetworkCommunicater.instance.SendCommand("action mana");
         }
     }
 
@@ -82,6 +85,7 @@ public class KnightActionWindow : UIWindow {
         if(isFromMenu) {
             SoundPlayer.instance.PlaySoundEffect(SoundEffect.menu_select);
             GenericWindow.instance.Close ();
+            NetworkCommunicater.instance.SendCommand("action cancel");
         }
     }
 }

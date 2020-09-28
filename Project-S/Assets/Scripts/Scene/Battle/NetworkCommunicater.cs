@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UniRx;
 using System.Linq;
+using Photon.Pun;
 
 /**
 
@@ -39,18 +40,43 @@ public class NetworkCommunicater : MonoBehaviour {
 
     public bool canSend;
 
+    PhotonView view;
+
+    public bool isNetworkMode;
+
     void Awake() {
         canSend = true;
         instance = this;
         _message = new Subject<string[]>();
-        terminalObj.SetActive(false);
+        if(isNetworkMode) terminalObj.SetActive(false);
     }
 
     void Start() {
         message.Subscribe(c => Debug.Log(String.Join(" ", c)));
+        if(isNetworkMode) view = GetComponent<PhotonView>();
+        StartGame();
     }
 
-    public void SendMessageByTerminal() {
+    void StartGame() {
+        bool isFirst = !isNetworkMode || PhotonNetwork.IsMasterClient;
+        Turn_State myTurn = isFirst ? Turn_State.blue : Turn_State.red;
+        GameState.instance.StartGame(myTurn);
+        KnightInitializer.instance.SetKnight(isFirst);
+    }
+
+    public void SendCommand(string message) {
+        if(!isNetworkMode) return;
+        view.RPC("ReceiveCommand", RpcTarget.Others, message);
+    }
+
+    [PunRPC]
+    public void ReceiveCommand(string message) {
+        Debug.Log("received : " + message);
+        var words = message.Split(' ');
+        _message.OnNext(words);  
+    }
+
+    public void SendCommandByTerminal() {
         var commands = terminalText.text.Split(new string[]{ Environment.NewLine }, StringSplitOptions.None);
         terminalText.text = "";
         StartCoroutine(SendMultipleMessageCoroutine(commands));

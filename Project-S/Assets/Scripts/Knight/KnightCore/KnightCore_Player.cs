@@ -13,6 +13,7 @@ public class KnightCore_Player : KnightCore {
     
 
     protected override void Init () {
+        base.Init();
 
         MoveDirection();
         AttackDirection();

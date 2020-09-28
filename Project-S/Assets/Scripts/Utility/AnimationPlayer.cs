@@ -21,6 +21,7 @@ public class AnimationPlayer : MonoBehaviour {
     }
 
     public void Play (string key, float duration, bool isLoop) {
+        if(!animationList.ContainsKey(key)) return;
         if (nowAnim != null) StopCoroutine (nowAnim);
         if (isLoop) nowAnim = StartCoroutine (PlayLoopCoroutine (animationList[key], duration));
         else nowAnim = StartCoroutine (PlaySingleCoroutine (animationList[key], duration));

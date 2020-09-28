@@ -33,13 +33,16 @@ public class KnightView : KnightParts {
         charaImageOffset_StatusUI = core.status.data.view.imageOffset_StatusUI;
         charaImageOffset_AttackResultUI = core.status.data.view.imageOffset_AttackResultUI;
         InitAnimation ();
+        ChangeDir(ViewOperater.viewDir.Value);
     }
 
     void Start () {
         ViewOperater.viewDir
+            .Where(_ => core.isReady)
             .Subscribe (d => ChangeDir (d));
         anim.isPlaying
             .Where (x => !x)
+            .Where(_ => core.isReady)
             .Subscribe (_ => ActionView ("idle", core.status.dir));
         this.UpdateAsObservable()
             .Select(_ => core.status.coolDown)

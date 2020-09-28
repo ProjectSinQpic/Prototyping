@@ -40,7 +40,7 @@ public class GameState : MonoBehaviour {
     void Awake () {
         if (instance == null) instance = this;
         knight_state = new ReactiveProperty<Knight_State> (Knight_State.move);
-        turn = new ReactiveProperty<Turn_State> (firstTurn);
+        turn = new ReactiveProperty<Turn_State> (Turn_State.none);
         selected = new ReactiveProperty<KnightCore> (null);
     }
 
@@ -109,6 +109,11 @@ public class GameState : MonoBehaviour {
     public void ResetState() {
         selected.Value = null;
         knight_state.Value = Knight_State.move;
+    }
+
+    public void StartGame(Turn_State yourTurn) {
+        firstTurn = yourTurn;
+        turn.Value = yourTurn;
     }
 
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class KnightCore_Enemy : KnightCore {
 
     protected override void Init () {
+        base.Init();
+
         red_all.Add (this);
         
         GameState.instance.turn

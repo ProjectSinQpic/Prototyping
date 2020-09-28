@@ -63,15 +63,15 @@ public class KnightCore : MonoBehaviour {
     public static List<KnightCore> blue_all = new List<KnightCore> ();
     public static List<KnightCore> red_all = new List<KnightCore> ();
 
+    public bool isReady;
+
 
     void Awake () {
         message = new Subject<KnightAction>();
         isFinished = false;
         isDead = false;
+        isReady = false;
         all.Add (this);
-        transform.position = MapStatus.ToWorldPos (status.pos) /* + Vector3.up * 4f*/ ;
-
-        prev_pos = status.pos;
         storedCoolDown = 0;
     }
 
@@ -94,7 +94,9 @@ public class KnightCore : MonoBehaviour {
         attackResult = new AttackResult(this);
     }
 
-    protected virtual void Init () { }
+    protected virtual void Init () { 
+        isReady = true;
+    }
 
     public void NextAction (KnightAction action) {
         Debug.Log (action);
