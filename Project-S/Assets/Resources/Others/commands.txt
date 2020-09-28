@@ -1,0 +1,5 @@
+knight 6 10
+map 3 11
+action attack
+knight 2 11
+attack go

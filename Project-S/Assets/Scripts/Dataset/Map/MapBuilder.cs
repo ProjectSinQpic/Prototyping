@@ -10,7 +10,7 @@ public class MapBuilder : MonoBehaviour {
     GameObject[] MapChip_set;
 
     void Start () {
-        MapStatus.field_map = MapFileDecoder.DecodeMap ("simple_field.txt");
+        MapStatus.field_map = MapFileDecoder.DecodeMap ("simple_field");
         //BuildMap ();
     }
 

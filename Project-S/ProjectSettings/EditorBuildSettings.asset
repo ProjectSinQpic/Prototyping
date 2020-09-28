@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Scenes/NetWork/Field_Network.unity
+    guid: 387fbcb7d346f4b9fbd9f5d4674068ba
+  - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: 1dee31df9bca2e04398a557ae672d2ee
+  - enabled: 1
+    path: Assets/Scenes/NetWork/Battle_Network.unity
+    guid: c2efef2b3ee23400fa22adab357fa394
   m_configObjects: {}

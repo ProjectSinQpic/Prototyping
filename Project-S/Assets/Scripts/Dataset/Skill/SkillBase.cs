@@ -6,6 +6,7 @@ public class SkillBase : ScriptableObject {
 
     public string skillName;
     [TextArea] public string explainText;
+    public Sprite imageIcon;
     protected KnightCore owner;
     public SkillParamTable param;
 
