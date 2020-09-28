@@ -129,4 +129,8 @@ public class KnightCore : MonoBehaviour {
     protected virtual bool isOperable() {
         return true;
     }
+
+    public static KnightCore GetKnightFromPos(Vector2 pos) {
+        return all.Find(core => core.status.pos == pos);
+    }
 }
