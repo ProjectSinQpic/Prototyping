@@ -26,6 +26,7 @@ public class FieldManaPlacer : MonoBehaviour {
     public float manaPosY;
     public float minAmount, maxAmount;
     public float minSize, maxSize;
+    public Transform container;
 
     void Awake() {
         instance = this;
@@ -38,7 +39,8 @@ public class FieldManaPlacer : MonoBehaviour {
     public void PlaceMana(Vector2 pos, int amount) {
         var worldPos = MapStatus.ToWorldPos(pos);
         Debug.Log(worldPos);
-        var obj = Instantiate(prefab_mana, worldPos + Vector3.up * manaPosY, Quaternion.identity);
+        var obj = Instantiate(prefab_mana, container);
+        obj.transform.localPosition = worldPos + Vector3.up * manaPosY;
         var size = Mathf.Lerp(minSize, maxSize, Mathf.InverseLerp(minAmount, maxAmount, amount));
         obj.transform.localScale = Vector3.one * size;
         manas.Add(new FieldMana(pos, obj, amount));
@@ -59,9 +61,9 @@ public class FieldManaPlacer : MonoBehaviour {
         float t = 0;
         while(true) {
             manas.ForEach(m => {
-                var m_pos = m.obj.transform.position;
+                var m_pos = m.obj.transform.localPosition;
                 m_pos.y = manaPosY + Mathf.Sin(t * 3f);
-                m.obj.transform.position = m_pos;
+                m.obj.transform.localPosition = m_pos;
             });
             yield return null;
             t += Time.deltaTime;

@@ -65,11 +65,11 @@ public class ViewOperater : MonoBehaviour {
 
     void FollowTarget () {
         if (target == null) return;
-        ViewPos.position += (target.position - ViewPos.position) * 0.15f;
+        ViewPos.localPosition += (target.localPosition - ViewPos.localPosition) * 0.15f;
     }
     void MoveCamera() {
         var v = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height) * 2 - Vector2.one;
-        var newPos = ViewPos.position;
+        var newPos = ViewPos.localPosition;
         if(Mathf.Abs(v.x) > 0.75f) {
             target = null;
             newPos += transform.right * v.x * moveSpeed;
@@ -79,19 +79,19 @@ public class ViewOperater : MonoBehaviour {
             newPos += transform.forward * v.y * moveSpeed;
         }
         if(newPos.magnitude <= maxDistance)
-            ViewPos.position = newPos;
+            ViewPos.localPosition = newPos;
     }
 
     void ZoomCamera() {
         var wheel = Input.GetAxis ("Mouse ScrollWheel");
         if (wheel > 0 && zoom < zoomMax) {
-            //cameraPos.localPosition *= 0.8f;
-            cameraPos.GetComponent<Camera>().orthographicSize -= 10;
+            cameraPos.localPosition *= 0.8f;
+            //cameraPos.GetComponent<Camera>().orthographicSize -= 10;
             zoom++;
         }
         else if (wheel < 0 && zoom > zoomMin) {
-            //cameraPos.localPosition *= 1.25f;
-            cameraPos.GetComponent<Camera>().orthographicSize += 10;
+            cameraPos.localPosition *= 1.25f;
+            //cameraPos.GetComponent<Camera>().orthographicSize += 10;
             zoom--;
         }
     }
@@ -109,11 +109,11 @@ public class ViewOperater : MonoBehaviour {
     public void FocusIn(Transform target) {
         isFocusing = true;
         this.target = target;
-        //cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + cameraPos.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
-        var camera = cameraPos.GetComponent<Camera>();
-        cameraPos.DOLocalMoveX(cameraPos.localPosition.x + focusOffsetX, focusSpeed);
-        DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize / focusRate, focusSpeed)
-            .OnComplete(() => isFocusing = false).SetEase(focusEasing);
+        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + cameraPos.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+        //var camera = cameraPos.GetComponent<Camera>();
+        //cameraPos.DOLocalMoveX(cameraPos.localPosition.x + focusOffsetX, focusSpeed);
+        //DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize / focusRate, focusSpeed)
+        //    .OnComplete(() => isFocusing = false).SetEase(focusEasing);
 
         isLocked = true;
     }
@@ -123,11 +123,11 @@ public class ViewOperater : MonoBehaviour {
         if(isLocked) {
             isFocusing = true;
             Debug.Log(cameraPos.right);
-            //cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
-            var camera = cameraPos.GetComponent<Camera>();
-            cameraPos.DOLocalMoveX(cameraPos.localPosition.x - focusOffsetX, focusSpeed);
-            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize * focusRate, focusSpeed)
-                .OnComplete(() => isFocusing = false).SetEase(focusEasing);
+            cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+            //var camera = cameraPos.GetComponent<Camera>();
+            //cameraPos.DOLocalMoveX(cameraPos.localPosition.x - focusOffsetX, focusSpeed);
+            //DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize * focusRate, focusSpeed)
+            //    .OnComplete(() => isFocusing = false).SetEase(focusEasing);
         }
         isLocked = false;
     }

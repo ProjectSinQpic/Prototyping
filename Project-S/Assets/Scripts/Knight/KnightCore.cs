@@ -67,7 +67,7 @@ public class KnightCore : MonoBehaviour {
         isFinished = false;
         isDead = false;
         all.Add (this);
-        transform.position = MapStatus.ToWorldPos (status.pos) /* + Vector3.up * 4f*/ ;
+        transform.localPosition = MapStatus.ToWorldPos (status.pos) /* + Vector3.up * 4f*/ ;
 
         prev_pos = status.pos;
         storedCoolDown = 0;
@@ -128,4 +128,6 @@ public class KnightCore : MonoBehaviour {
     protected virtual bool isOperable() {
         return true;
     }
+
+
 }

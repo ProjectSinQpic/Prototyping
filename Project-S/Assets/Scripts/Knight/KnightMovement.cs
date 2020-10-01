@@ -56,7 +56,7 @@ public class KnightMovement : KnightParts {
                 view.ActionView ("move", nowDir);
             }
             for (int i = 0; i < moveFrame; i++) {
-                transform.position += dir * MapStatus.MAPCHIP_SIZE / moveFrame;
+                transform.localPosition += dir * MapStatus.MAPCHIP_SIZE / moveFrame;
                 yield return null;
             }
         }
@@ -74,7 +74,7 @@ public class KnightMovement : KnightParts {
 
     public void OnCancel() {
         var diff = core.prev_pos - core.status.pos;
-        core.transform.position += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
+        core.transform.localPosition += Vector3.right * MapStatus.MAPCHIP_SIZE * diff.x +
             Vector3.back * MapStatus.MAPCHIP_SIZE * diff.y;
         core.status.pos = core.prev_pos;
         if(!isKeeped) core.storedCoolDown -= GameState.instance.param.moveRest;

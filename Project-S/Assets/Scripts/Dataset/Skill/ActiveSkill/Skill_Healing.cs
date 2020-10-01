@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Skill/Healing")]
+[CreateAssetMenu(menuName = "Skill/Active/Healing")]
 
 public class Skill_Healing : AutoSelectSkill {
 

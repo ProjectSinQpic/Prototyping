@@ -18,6 +18,8 @@ public class KnightStatus : KnightParts {
 
     public List<SkillBase> skills; //TODO: プロパティに変更
     public List<ActiveSkill> activeSkills;
+    public List<PassiveSkill> passiveSkills;
+    public List<StatusBuff> statusBuffs;
 
     public KnightStatusData actual, delta;
 
@@ -33,10 +35,17 @@ public class KnightStatus : KnightParts {
             skills.Add(ScriptableObject.Instantiate(skill));            
         }
         activeSkills = skills.Where(s => s is ActiveSkill).Select(s => (ActiveSkill)s).ToList();
+        passiveSkills = skills.Where(s => s is PassiveSkill).Select(s => (PassiveSkill)s).ToList();
 
-        activeSkills.ForEach(s => s.Init(core));
+        skills.ForEach(s => s.Init(core));
 
         GetComponent<KnightView> ().Init ();    //TODO 改善の余地あり
+    }
+
+    public void ApplyStatus(int hpDiff, int mpDiff, int restDiff) {
+        HP = Mathf.Clamp(HP + hpDiff, 0, core.statusData.maxHP);
+        MP = Mathf.Clamp(MP + mpDiff, 0, core.statusData.maxMP);
+        core.storedCoolDown = Mathf.Max(core.storedCoolDown + restDiff, 0);  
     }
 
 }
@@ -61,4 +70,11 @@ public class KnightStatusData {
         return result;
     }
 
+}
+
+public class StatusDataApplication {
+    
+    public enum StatusType {
+    
+    } 
 }

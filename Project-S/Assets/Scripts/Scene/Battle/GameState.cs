@@ -67,6 +67,9 @@ public class GameState : MonoBehaviour {
 
         turn.Subscribe (_ => knight_state.Value = Knight_State.move);
 
+        turn.Where(t => t != Turn_State.none).Delay(TimeSpan.FromSeconds(1f))
+            .Subscribe(t => SkillActionTrigger.instance.OnBeginTurn(t));
+
         this.UpdateAsObservable ()
             .Where (_ => KnightCore_Player01.player_all.All (x => x.isDead))
             .Subscribe (_ => clearUI.text = "RED WIN");

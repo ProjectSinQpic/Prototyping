@@ -44,9 +44,7 @@ public class KnightAttack : KnightParts {
         var diffs = new List<AttackResult.KnightDiff>(){result.GetAttacker(), result.GetTarget()};
         foreach(var d in diffs) {
             if(d.knight == null) continue;
-            d.knight.status.HP = Mathf.Clamp(d.knight.status.HP + d.hpDiff, 0, d.knight.statusData.maxHP);
-            d.knight.status.MP = Mathf.Clamp(d.knight.status.MP + d.mpDiff, 0, d.knight.statusData.maxMP);
-            d.knight.storedCoolDown = Mathf.Max(d.knight.storedCoolDown + d.restDiff, 0);
+            d.knight.status.ApplyStatus(d.hpDiff, d.mpDiff, d.restDiff);
         }
         StartCoroutine (AttackCoroutine (diffs[0].knight, diffs[1].knight)); //TODO: あとで消す
     }
