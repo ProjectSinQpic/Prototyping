@@ -28,13 +28,11 @@
         public KnightCore knight;
         public int hpDiff, mpDiff, restDiff;
 
-        public KnightStatusData statusData;
         public KnightDiff() {
             this.knight = null;
             this.hpDiff = 0;
             this.mpDiff = 0;
             this.restDiff = 0;
-            this.statusData = null;
         }
 
         public KnightDiff(KnightCore core) {
@@ -42,7 +40,6 @@
             this.hpDiff = 0;
             this.mpDiff = 0;
             this.restDiff = 0;
-            this.statusData = core.statusData;
         }
     }
 

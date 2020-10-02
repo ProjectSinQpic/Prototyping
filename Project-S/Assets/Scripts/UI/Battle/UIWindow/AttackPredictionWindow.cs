@@ -57,8 +57,8 @@ public class AttackPredictionWindow : UIWindow {
         var core_a = diff_a.knight;
         var core_b = diff_b.knight;
         Debug.Log(core_a + "  " + core_b);
-        var statusData_a = KnightStatusData.Add(core_a.status.actual, core_a.status.delta);
-        var statusData_b = KnightStatusData.Add(core_b.status.actual, core_b.status.delta);
+        var statusData_a = core_a.statusData;
+        var statusData_b = core_b.statusData;
 
         text_nowHP_a.text = core_a.status.HP.ToString () + " /";
         text_maxHP_a.text = statusData_a.maxHP.ToString ();
@@ -70,7 +70,7 @@ public class AttackPredictionWindow : UIWindow {
         text_defense_a.text = statusData_a.defense.ToString ();
         text_moveRange_a.text = statusData_a.moveRange.ToString ();
         text_attackRange_a.text = statusData_a.attackRange.ToString ();
-        text_rest_a.text =  core_a.status.coolDown.ToString () + " → " + (core_a.status.coolDown + diff_a.restDiff);
+        text_rest_a.text =  core_a.status.rest.ToString () + " → " + (core_a.status.rest + diff_a.restDiff);
         var view_a = core_a.GetComponent<KnightView>();
         chara_a.sprite = view_a.charaImage;
         chara_a.transform.localPosition = view_a.charaImageOffset_AttackResultUI;
@@ -85,7 +85,7 @@ public class AttackPredictionWindow : UIWindow {
         text_defense_b.text = statusData_b.defense.ToString ();
         text_moveRange_b.text = statusData_b.moveRange.ToString ();
         text_attackRange_b.text = statusData_b.attackRange.ToString ();
-        text_rest_b.text =  core_b.status.coolDown.ToString () + " → " + (core_b.status.coolDown + diff_b.restDiff);
+        text_rest_b.text =  core_b.status.rest.ToString () + " → " + (core_b.status.rest + diff_b.restDiff);
         var view_b = core_b.GetComponent<KnightView>();
         chara_b.sprite = view_b.charaImage;
         chara_b.transform.localPosition = view_b.charaImageOffset_AttackResultUI;

@@ -20,4 +20,6 @@ MonoBehaviour:
   attackRange: 3
   skills:
   - {fileID: 11400000, guid: 20a9795fa34b74f98b5038d5837b9ee3, type: 2}
+  - {fileID: 11400000, guid: d3d9ac91a37284972a7f106460000d00, type: 2}
+  - {fileID: 11400000, guid: f0bacb190af8244fd9ee4032cc74a5fb, type: 2}
   view: {fileID: 11400000, guid: 58e752329553e47c2b988416527948f5, type: 2}

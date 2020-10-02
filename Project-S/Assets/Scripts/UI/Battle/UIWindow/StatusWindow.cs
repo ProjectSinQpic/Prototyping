@@ -80,7 +80,7 @@ public class StatusWindow : UIWindow {
 
     public void UpdateUI (KnightCore core, bool isBlue) {
         var status = core.status;
-        var statusData = KnightStatusData.Add(status.actual, status.delta);
+        var statusData = core.statusData;
         text_nowHP.text = status.HP.ToString () + " /";
         text_maxHP.text = statusData.maxHP.ToString ();
         SetBarWidth(bar_HP, status.HP, statusData.maxHP);
@@ -91,7 +91,7 @@ public class StatusWindow : UIWindow {
         text_defense.text = statusData.defense.ToString ();
         text_moveRange.text = statusData.moveRange.ToString ();
         text_attackRange.text = statusData.attackRange.ToString ();
-        text_rest.text =  status.coolDown.ToString ();
+        text_rest.text =  status.rest.ToString ();
         AddSkillTags(status.skills);
 
         var view = core.GetComponent<KnightView>();

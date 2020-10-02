@@ -42,7 +42,7 @@ public class KnightView : KnightParts {
             .Where (x => !x)
             .Subscribe (_ => ActionView ("idle", core.status.dir));
         this.UpdateAsObservable()
-            .Select(_ => core.status.coolDown)
+            .Select(_ => core.status.rest)
             .DistinctUntilChanged()
             .Subscribe(c => ChangeRestState(c));
 

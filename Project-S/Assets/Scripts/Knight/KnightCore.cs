@@ -40,7 +40,7 @@ public class KnightCore : MonoBehaviour {
 
     public KnightStatusData statusData {
         get{
-            return KnightStatusData.Add(status.actual, status.delta);
+            return status.GetStatusData();
         }
     }
 
@@ -112,7 +112,7 @@ public class KnightCore : MonoBehaviour {
     void OnFinish() {
         Debug.Log("turn end");
         isFinished = true;
-        status.coolDown += storedCoolDown;
+        status.rest += storedCoolDown;
         storedCoolDown = 0;
         attackResult = new AttackResult(this);
     }

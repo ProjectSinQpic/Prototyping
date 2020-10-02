@@ -19,6 +19,10 @@ public class SkillBase : ScriptableObject {
     //ターンが変わった時
     public virtual void OnBeginTurn(Turn_State turn){}
 
+    public virtual List<BuffData> GetBuff() {
+        return new List<BuffData>();
+    }
+
     public int GetParam(string key, int defaultValue = 0) {
         try {
             return param.GetTable()[key];

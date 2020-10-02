@@ -48,13 +48,13 @@ public class GameState : MonoBehaviour {
         this.UpdateAsObservable ()
             .Where(_ => turn.Value == Turn_State.blue)
             .Where (_ => KnightCore_Player01.player_all.Any (x => x.isFinished)
-                || KnightCore_Player01.player_all.All (x => x.status.coolDown > 0))
+                || KnightCore_Player01.player_all.All (x => x.status.rest > 0))
             .Subscribe (_ => turn.Value = Turn_State.red);
 
         this.UpdateAsObservable ()
             .Where(_ => turn.Value == Turn_State.red)
             .Where (_ => KnightCore_Player02.player_all.Any (x => x.isFinished)
-                || KnightCore_Player02.player_all.All (x => x.status.coolDown > 0))
+                || KnightCore_Player02.player_all.All (x => x.status.rest > 0))
             .Subscribe (_ => {
                 turn.Value = Turn_State.none;
                 StartCoroutine(WasteTimeCoroutine());
@@ -86,8 +86,8 @@ public class GameState : MonoBehaviour {
     IEnumerator WasteTimeCoroutine() {
         MapPointer.instance.SetActive(false, false);
         ViewOperater.instance.SetActive(false);
-        KnightCore_Player01.player_all.Where(x => !x.isDead).ToList().ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
-        KnightCore_Player02.player_all.Where(x => !x.isDead).ToList().ForEach(x => x.status.coolDown = Mathf.Max(0, x.status.coolDown - 1));
+        KnightCore_Player01.player_all.Where(x => !x.isDead).ToList().ForEach(x => x.status.rest = Mathf.Max(0, x.status.rest - 1));
+        KnightCore_Player02.player_all.Where(x => !x.isDead).ToList().ForEach(x => x.status.rest = Mathf.Max(0, x.status.rest - 1));
         yield return new WaitForSeconds(2f);
         turn.Value = Turn_State.blue;
         MapPointer.instance.SetActive(true, true);
