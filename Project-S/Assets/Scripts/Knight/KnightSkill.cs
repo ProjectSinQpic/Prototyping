@@ -22,6 +22,11 @@ public class KnightSkill : KnightParts {
             .Where (x => x == KnightAction.get_mana)
             .Subscribe (_ => OnGetFieldMana());
 
+        core.Message
+            .Where (x => x == KnightAction.delete_buff)
+            .Subscribe (_ => OnDeleteBuff());
+
+
         GameState.instance.turn.Where(t => t != Turn_State.none).DelayFrame(1).Subscribe(_ => OnGetTurnMana());
     }
 
@@ -50,5 +55,12 @@ public class KnightSkill : KnightParts {
         core.status.MP = Mathf.Min(core.status.MP + GameState.instance.param.turnMana, core.statusData.maxMP);
     }
 
+    void OnDeleteBuff() {
+        var buffList = core.status.statusBuffs.FindAll(b => b.GetIsDeleted());
+        buffList.ForEach(b => {
+            core.status.statusBuffs.Remove(b);
+            core.status.skills.Remove(b);
+        });
+    }
 }
 

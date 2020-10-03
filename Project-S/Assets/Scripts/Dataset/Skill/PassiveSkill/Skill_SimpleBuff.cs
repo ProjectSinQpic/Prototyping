@@ -9,7 +9,6 @@ public class Skill_SimpleBuff : PassiveSkill {
     public bool isAddive;
 
     public override List<BuffData> GetBuff() {
-        Debug.Log("buff");
         return new List<BuffData>(){ new BuffData(type, GetParam("value"), isAddive) };
     }
 

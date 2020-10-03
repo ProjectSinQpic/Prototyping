@@ -45,6 +45,7 @@ public class KnightAttack : KnightParts {
         foreach(var d in diffs) {
             if(d.knight == null) continue;
             d.knight.status.ApplyStatus(d.hpDiff, d.mpDiff, d.restDiff);
+            d.knight.status.ApplyBuffs(d.buffs);
         }
         StartCoroutine (AttackCoroutine (diffs[0].knight, diffs[1].knight)); //TODO: あとで消す
     }

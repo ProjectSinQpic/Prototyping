@@ -49,6 +49,11 @@ public class KnightStatus : KnightParts {
         core.storedCoolDown = Mathf.Max(core.storedCoolDown + restDiff, 0);  
     }
 
+    public void ApplyBuffs(List<StatusBuff> buffs) {
+        statusBuffs.AddRange(buffs);
+        skills.AddRange(buffs);
+    }
+
     //バフデバフを考慮した能力値を計算する
     public KnightStatusData GetStatusData() {
         var clone = KnightStatusData.Clone(KnightStatusData.Add(actual, delta));

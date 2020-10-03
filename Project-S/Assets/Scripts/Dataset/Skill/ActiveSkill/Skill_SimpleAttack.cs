@@ -11,6 +11,7 @@ using UnityEngine;
 */
 public class Skill_SimpleAttack : KnightSelectSkill {
 
+    public StatusBuff attackerBuff, targetBuff;
 
     public override int GetRequiredMana() {
         return -GetParam("attackerMP");
@@ -28,6 +29,8 @@ public class Skill_SimpleAttack : KnightSelectSkill {
         owner.attackResult.SetTarget(owner.targets[0]);
         owner.attackResult.AddValue(true, targetHP, targetMP, targetRest);
         owner.attackResult.AddValue(false, attackerHP, attackerMP, attackerRest);
+        if(attackerBuff != null) owner.attackResult.AddBuff(false, attackerBuff);
+        if(targetBuff != null) owner.attackResult.AddBuff(true, targetBuff);
     }
 
     public override void OnSpell() {

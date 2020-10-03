@@ -38,7 +38,6 @@ public class FieldManaPlacer : MonoBehaviour {
 
     public void PlaceMana(Vector2 pos, int amount) {
         var worldPos = MapStatus.ToWorldPos(pos);
-        Debug.Log(worldPos);
         var obj = Instantiate(prefab_mana, container);
         obj.transform.localPosition = worldPos + Vector3.up * manaPosY;
         var size = Mathf.Lerp(minSize, maxSize, Mathf.InverseLerp(minAmount, maxAmount, amount));

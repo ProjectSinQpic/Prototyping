@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SkillActionTrigger : MonoBehaviour {
 
@@ -12,8 +13,12 @@ public class SkillActionTrigger : MonoBehaviour {
 
     public void OnBeginTurn(Turn_State turn) {
         KnightCore.all.ForEach(knight => {
-            knight.status.skills.ForEach(skill => skill.OnBeginTurn(turn));
+            knight.status.skills
+                .Where(Skill => !Skill.GetIsDeleted())
+                .ToList()
+                .ForEach(skill => skill.OnBeginTurn(turn));
         });
     }
+
 
 }

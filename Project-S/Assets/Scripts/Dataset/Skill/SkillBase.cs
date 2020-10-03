@@ -10,8 +10,11 @@ public class SkillBase : ScriptableObject {
     protected KnightCore owner;
     public SkillParamTable param;
 
+    protected bool isDeleted;
+
     public virtual void Init(KnightCore core) {
         owner = core;
+        isDeleted = false;
     }   
 
     //バトルが始まった時
@@ -35,6 +38,10 @@ public class SkillBase : ScriptableObject {
 
     protected void AddParam(string key, int value) {
         param.GetTable().Add(key, value);
+    }
+
+    public bool GetIsDeleted() {
+        return isDeleted;
     }
 }
 

@@ -1,4 +1,8 @@
-﻿public class AttackResult {
+﻿using System.Collections.Generic;
+using UnityEngine;
+public class AttackResult {
+
+    KnightDiff attacker, target;
 
     public AttackResult(KnightCore core) {
         attacker = new KnightDiff(core);
@@ -24,15 +28,24 @@
         core.restDiff += rest;
     }
 
+    public void AddBuff(bool isTarget, StatusBuff buff) {
+        var core = isTarget ? target : attacker;
+        var buffInstance = ScriptableObject.Instantiate(buff);
+        buffInstance.Init(core.knight);
+        core.buffs.Add(buffInstance);
+    }
+
     public class KnightDiff {
         public KnightCore knight;
         public int hpDiff, mpDiff, restDiff;
+        public List<StatusBuff> buffs; 
 
         public KnightDiff() {
             this.knight = null;
             this.hpDiff = 0;
             this.mpDiff = 0;
             this.restDiff = 0;
+            this.buffs = new List<StatusBuff>();
         }
 
         public KnightDiff(KnightCore core) {
@@ -40,9 +53,9 @@
             this.hpDiff = 0;
             this.mpDiff = 0;
             this.restDiff = 0;
+            this.buffs = new List<StatusBuff>();
         }
     }
 
-    KnightDiff attacker, target;
 
 }

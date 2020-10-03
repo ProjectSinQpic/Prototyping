@@ -27,3 +27,5 @@ MonoBehaviour:
       Value: 4
   areaShape: 0
   areaRange: 2
+  attackerBuff: {fileID: 0}
+  targetBuff: {fileID: 11400000, guid: 783725bc867fb42f79ffe47d1d70db81, type: 2}

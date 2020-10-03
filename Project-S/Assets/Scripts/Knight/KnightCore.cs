@@ -24,6 +24,7 @@ public enum KnightAction {
     skill_attack,
     skill_cancel,
     get_mana,
+    delete_buff,
     die,
     finish,
 
@@ -110,7 +111,6 @@ public class KnightCore : MonoBehaviour {
     }
 
     void OnFinish() {
-        Debug.Log("turn end");
         isFinished = true;
         status.rest += storedCoolDown;
         storedCoolDown = 0;

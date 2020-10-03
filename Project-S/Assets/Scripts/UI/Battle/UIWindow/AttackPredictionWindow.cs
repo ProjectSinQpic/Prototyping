@@ -56,7 +56,6 @@ public class AttackPredictionWindow : UIWindow {
         var diff_b = result.GetTarget();
         var core_a = diff_a.knight;
         var core_b = diff_b.knight;
-        Debug.Log(core_a + "  " + core_b);
         var statusData_a = core_a.statusData;
         var statusData_b = core_b.statusData;
 

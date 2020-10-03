@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StatusBuff : SkillBase {
 
-    public bool isDeleted; 
-
     public override void Init(KnightCore core) {
         owner = core;
         isDeleted = false;
@@ -19,6 +17,7 @@ public class StatusBuff : SkillBase {
     protected void Delete() {
         OnDeleted();
         isDeleted = true;
+        //owner.NextAction(KnightAction.delete_buff);
     }
 
     //バフ効果が終わる時
