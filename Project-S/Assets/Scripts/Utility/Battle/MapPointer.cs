@@ -42,8 +42,6 @@ public class MapPointer : MonoBehaviour {
             .Where (_ => !UIWindow.isLocked && isActiveRight)
             .Select (_ => (pointedKnight, Input.GetMouseButtonDown (1)));
 
-<<<<<<< HEAD
-=======
         OnClickedMap
             .Subscribe (p => NetworkCommunicater.instance.SendCommand(string.Format("map {0} {1}", p.x, p.y)));
         OnClickedKnight
@@ -53,7 +51,6 @@ public class MapPointer : MonoBehaviour {
             });
 
 
->>>>>>> develop
         this.UpdateAsObservable ()
             .Select (_ => UIWindow.isLocked)
             .DistinctUntilChanged ()

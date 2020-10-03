@@ -73,12 +73,9 @@ public class KnightCore : MonoBehaviour {
         isDead = false;
         isReady = false;
         all.Add (this);
-<<<<<<< HEAD:Project-S/Assets/Scripts/Knight/KnightCore.cs
         transform.localPosition = MapStatus.ToWorldPos (status.pos) /* + Vector3.up * 4f*/ ;
 
         prev_pos = status.pos;
-=======
->>>>>>> develop:Project-S/Assets/Scripts/Knight/KnightCore/KnightCore.cs
         storedCoolDown = 0;
     }
 
@@ -138,11 +135,7 @@ public class KnightCore : MonoBehaviour {
         return true;
     }
 
-<<<<<<< HEAD:Project-S/Assets/Scripts/Knight/KnightCore.cs
-
-=======
     public static KnightCore GetKnightFromPos(Vector2 pos) {
         return all.Find(core => core.status.pos == pos);
     }
->>>>>>> develop:Project-S/Assets/Scripts/Knight/KnightCore/KnightCore.cs
 }

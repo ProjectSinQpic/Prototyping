@@ -184,7 +184,7 @@ public class KnightCore_Network : KnightCore {
 
     protected override bool isOperable () {
         return GameState.instance.selected.Value == this && GameState.instance.turn.Value == Turn_State.red
-            && status.coolDown == 0;
+            && status.rest == 0;
     }
 
 }

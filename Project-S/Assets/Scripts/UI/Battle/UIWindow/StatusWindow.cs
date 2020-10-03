@@ -4,6 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class StatusWindow : UIWindow {
 
@@ -92,7 +93,7 @@ public class StatusWindow : UIWindow {
         text_moveRange.text = statusData.moveRange.ToString ();
         text_attackRange.text = statusData.attackRange.ToString ();
         text_rest.text =  status.rest.ToString ();
-        AddSkillTags(status.skills);
+        AddSkillTags(status.skills.Where(s => !s.GetIsDeleted()).ToList());
 
         var view = core.GetComponent<KnightView>();
         charaNameText.text = view.charaName;
