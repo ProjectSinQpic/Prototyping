@@ -11,18 +11,18 @@ public class MapFileDecoder : MonoBehaviour {
 
     public static Map_type[] DecodeMap (string file_name) {
         Map_type[] map = new Map_type[MapStatus.MAP_WIDTH * MapStatus.MAP_HEIGHT];
-        var fi = new FileInfo (Application.dataPath + MapStatus.MAP_FILE_LOCATION + file_name);
-
-        using (StreamReader sr = new StreamReader (fi.OpenRead (), Encoding.UTF8)) {
-            string line;
-            int j = 0;
-            while ((line = sr.ReadLine ()) != null && j < MapStatus.MAP_HEIGHT) {
+        var tx = Resources.Load("Map/" + file_name) as TextAsset;
+        var lines = tx.text.Split('\n');
+        int j = 0;
+        foreach (var line in lines) {
+            if (j < MapStatus.MAP_HEIGHT) {
+                Debug.Log(j + "  " + line);
                 for (int i = 0; i < MapStatus.MAP_WIDTH; i++) {
                     map[j * MapStatus.MAP_WIDTH + i] = DecodeMapType (line[i]);
                 }
                 j++;
             }
-            while ((line = sr.ReadLine ()) != null) {
+            else {
                 var info = line.Split(',').Select(x => int.Parse(x)).ToList();
                 FieldManaPlacer.instance.PlaceMana(new Vector2(info[0], info[1]), info[2]);
                 j++;
