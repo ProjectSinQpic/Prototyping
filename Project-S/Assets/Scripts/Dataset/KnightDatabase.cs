@@ -9,7 +9,8 @@ public class KnightDatabase : ScriptableObject {
     public int maxMP;
     public int attack;
     public int defense;
-
+    public int skillAttack;
+    public int skillDefense;
     public int moveRange;
     public int attackRange;
 

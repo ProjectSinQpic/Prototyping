@@ -12,6 +12,9 @@ public class TRLinear_StatusCalculator : StatusCalculator {
     const float TR_MP = 0.2f;
     const float TR_attack = 0.2f;
     const float TR_defense = 0.2f;
+    const float TR_skillAttack = 0.2f;
+    const float TR_skillDefense = 0.2f;
+    
 
     public TRLinear_StatusCalculator (KnightStatus _status) : base (_status) { }
 
@@ -20,6 +23,8 @@ public class TRLinear_StatusCalculator : StatusCalculator {
         status.actual.maxMP = CalcStatus (status.data.maxMP, TR_MP, status.SP);
         status.actual.attack = CalcStatus (status.data.attack, TR_attack, status.SP);
         status.actual.defense = CalcStatus (status.data.defense, TR_defense, status.SP);
+        status.actual.skillAttack = CalcStatus (status.data.skillAttack, TR_skillAttack, status.SP);
+        status.actual.skillDefense = CalcStatus (status.data.skillDefense, TR_skillDefense, status.SP);
         status.actual.moveRange = status.data.moveRange;
         status.actual.attackRange = status.data.attackRange;
     }

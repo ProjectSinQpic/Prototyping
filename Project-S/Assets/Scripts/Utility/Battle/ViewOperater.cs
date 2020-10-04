@@ -109,7 +109,7 @@ public class ViewOperater : MonoBehaviour {
     public void FocusIn(Transform target) {
         isFocusing = true;
         this.target = target;
-        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + cameraPos.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+        cameraPos.DOLocalMove(cameraPos.localPosition / focusRate + Vector3.right * focusOffsetX, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
         //var camera = cameraPos.GetComponent<Camera>();
         //cameraPos.DOLocalMoveX(cameraPos.localPosition.x + focusOffsetX, focusSpeed);
         //DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize / focusRate, focusSpeed)
@@ -122,7 +122,7 @@ public class ViewOperater : MonoBehaviour {
         this.target = null;
         if(isLocked) {
             isFocusing = true;
-            cameraPos.DOLocalMove((cameraPos.localPosition - cameraPos.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
+            cameraPos.DOLocalMove((cameraPos.localPosition - Vector3.right * focusOffsetX) * focusRate, focusSpeed).OnComplete(() => isFocusing = false).SetEase(focusEasing);
             //var camera = cameraPos.GetComponent<Camera>();
             //cameraPos.DOLocalMoveX(cameraPos.localPosition.x - focusOffsetX, focusSpeed);
             //DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, camera.orthographicSize * focusRate, focusSpeed)

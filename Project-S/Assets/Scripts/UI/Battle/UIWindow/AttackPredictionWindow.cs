@@ -21,6 +21,8 @@ public class AttackPredictionWindow : UIWindow {
 
     public Text text_attack_a, text_attack_b;
     public Text text_defense_a, text_defense_b;
+    public Text text_skillAttack_a, text_skillAttack_b;
+    public Text text_skillDefense_a, text_skillDefense_b;
     public Text text_moveRange_a, text_moveRange_b;
     public Text text_attackRange_a, text_attackRange_b;
     public Text text_rest_a, text_rest_b;
@@ -67,6 +69,8 @@ public class AttackPredictionWindow : UIWindow {
         SetAppliedBarWidth(bar_MP_a, core_a.status.MP, statusData_a.maxMP, bar_applyMP_a, diff_a.mpDiff);
         text_attack_a.text = statusData_a.attack.ToString ();
         text_defense_a.text = statusData_a.defense.ToString ();
+        text_skillAttack_a.text = statusData_a.skillAttack.ToString ();
+        text_skillDefense_a.text = statusData_a.skillDefense.ToString ();
         text_moveRange_a.text = statusData_a.moveRange.ToString ();
         text_attackRange_a.text = statusData_a.attackRange.ToString ();
         text_rest_a.text =  core_a.status.rest.ToString () + " → " + (core_a.status.rest + diff_a.restDiff);
@@ -82,6 +86,8 @@ public class AttackPredictionWindow : UIWindow {
         SetAppliedBarWidth(bar_MP_b, core_b.status.MP, statusData_b.maxMP, bar_applyMP_b, diff_b.mpDiff);
         text_attack_b.text = statusData_b.attack.ToString ();
         text_defense_b.text = statusData_b.defense.ToString ();
+        text_skillAttack_b.text = statusData_b.skillAttack.ToString ();
+        text_skillDefense_b.text = statusData_b.skillDefense.ToString ();
         text_moveRange_b.text = statusData_b.moveRange.ToString ();
         text_attackRange_b.text = statusData_b.attackRange.ToString ();
         text_rest_b.text =  core_b.status.rest.ToString () + " → " + (core_b.status.rest + diff_b.restDiff);

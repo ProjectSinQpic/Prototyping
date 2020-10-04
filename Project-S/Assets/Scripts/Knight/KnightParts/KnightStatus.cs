@@ -83,6 +83,8 @@ public class KnightStatusData {
     public int maxMP;
     public int attack;
     public int defense;
+    public int skillAttack;
+    public int skillDefense;
     public int moveRange;
     public int attackRange;
 
@@ -92,6 +94,8 @@ public class KnightStatusData {
         result.maxMP = a.maxMP + b.maxMP;
         result.attack = a.attack + b.attack;
         result.defense = a.defense + b.defense;
+        result.skillAttack = a.skillAttack + b.skillAttack;
+        result.skillDefense = a.skillDefense + b.skillDefense;
         result.moveRange = a.moveRange + b.moveRange;
         result.attackRange = a.attackRange + b.attackRange;
         return result;
@@ -103,6 +107,8 @@ public class KnightStatusData {
         clone.maxMP = data.maxMP;
         clone.attack = data.attack;
         clone.defense = data.defense;
+        clone.skillAttack = data.skillAttack;
+        clone.skillDefense = data.skillDefense;
         clone.moveRange = data.moveRange;
         clone.attackRange = data.attackRange;
         return clone;
@@ -117,6 +123,10 @@ public class KnightStatusData {
             attack = (int)Mathf.Round(isAddive ? attack + value : attack * value);
         if(type == StatusDataType.defense) 
             defense = (int)Mathf.Round(isAddive ? defense + value : defense * value);
+        if(type == StatusDataType.skillAttack) 
+            skillAttack = (int)Mathf.Round(isAddive ? skillAttack + value : skillAttack * value);
+        if(type == StatusDataType.skillDefense) 
+            skillDefense = (int)Mathf.Round(isAddive ? skillDefense + value : skillDefense * value);
         if(type == StatusDataType.moveRange) 
             moveRange = (int)Mathf.Round(isAddive ? moveRange + value : moveRange * value);
         if(type == StatusDataType.attackRange) 
@@ -131,6 +141,8 @@ public enum StatusDataType {
     maxMP,
     attack,
     defense,
+    skillAttack,
+    skillDefense,
     moveRange,
     attackRange,   
 

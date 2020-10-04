@@ -16,6 +16,8 @@ public class StatusWindow : UIWindow {
     public GameObject bar_MP;
     public Text text_attack;
     public Text text_defense;
+    public Text text_skillAttack;
+    public Text text_skillDefense;
     public Text text_moveRange;
     public Text text_attackRange;
     public Text text_rest;
@@ -90,6 +92,8 @@ public class StatusWindow : UIWindow {
         SetBarWidth(bar_MP, status.MP, statusData.maxMP);
         text_attack.text = statusData.attack.ToString ();
         text_defense.text = statusData.defense.ToString ();
+        text_skillAttack.text = statusData.skillAttack.ToString ();
+        text_skillDefense.text = statusData.skillDefense.ToString ();
         text_moveRange.text = statusData.moveRange.ToString ();
         text_attackRange.text = statusData.attackRange.ToString ();
         text_rest.text =  status.rest.ToString ();

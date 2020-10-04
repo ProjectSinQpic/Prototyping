@@ -58,9 +58,9 @@ public class TurnChangeUI : MonoBehaviour {
         sequence.AppendCallback(() => {
             MapPointer.instance.SetActive(true, true);
             ViewOperater.instance.SetActive(true);
+            transform_text.localScale = Vector3.zero;
         });
         sequence.Play();
-        transform_text.localScale = Vector3.zero;
     }
 
     
