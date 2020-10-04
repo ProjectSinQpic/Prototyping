@@ -16,8 +16,10 @@ MonoBehaviour:
   maxMP: 70
   attack: 10
   defense: 0
+  skillAttack: 0
+  skillDefense: 0
   moveRange: 3
   attackRange: 4
   skills:
-  - {fileID: 11400000, guid: b6520e89693d5431280b17cf8c54842b, type: 2}
+  - {fileID: 11400000, guid: d2759ee0f6eb5456bb60f551df1b6818, type: 2}
   view: {fileID: 11400000, guid: 66c585c32a5d541eaaef8030080bd09d, type: 2}

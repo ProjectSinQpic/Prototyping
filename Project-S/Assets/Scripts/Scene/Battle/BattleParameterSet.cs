@@ -8,4 +8,7 @@ public class BattleParameterSet : ScriptableObject {
     public int moveRest;
     public int attackRest;
     public int turnMana;
+
+    public DamageCalculator damage;
+
 }

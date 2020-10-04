@@ -16,6 +16,8 @@ MonoBehaviour:
   maxMP: 60
   attack: 10
   defense: 0
+  skillAttack: 0
+  skillDefense: 100
   moveRange: 3
   attackRange: 3
   skills:

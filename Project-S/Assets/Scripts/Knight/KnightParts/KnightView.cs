@@ -41,14 +41,14 @@ public class KnightView : KnightParts {
             .Where(_ => core.isReady)
             .Subscribe (d => ChangeDir (d));
         anim.isPlaying
-            .Where (x => !x)
             .Where(_ => core.isReady)
+            .Where (x => !x)
             .Subscribe (_ => ActionView ("idle", core.status.dir));
         this.UpdateAsObservable()
+            .Where(_ => core.isReady)
             .Select(_ => core.status.rest)
             .DistinctUntilChanged()
             .Subscribe(c => ChangeRestState(c));
-
     }
 
     void InitAnimation () {

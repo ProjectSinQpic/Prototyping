@@ -99,7 +99,6 @@ public class KnightCore : MonoBehaviour {
     }
 
     protected virtual void Init () { 
-        isReady = true;
     }
 
     public void NextAction (KnightAction action) {

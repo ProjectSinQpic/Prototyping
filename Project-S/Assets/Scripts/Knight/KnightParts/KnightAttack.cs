@@ -32,7 +32,8 @@ public class KnightAttack : KnightParts {
     }
 
     void NormalAttackPrepare(KnightCore target) {
-        var damage = Mathf.Max (0, core.statusData.attack - target.statusData.defense);
+        var damage = GameState.instance.param.damage
+            .CalcDamage(core.targets[0].statusData, DamageType.physical, core.statusData.attack);
         core.attackResult.SetTarget(target);
         core.attackResult.AddValue(true, -damage, 0, 0);
         core.attackResult.AddValue(false, 0, 0, GameState.instance.param.attackRest);

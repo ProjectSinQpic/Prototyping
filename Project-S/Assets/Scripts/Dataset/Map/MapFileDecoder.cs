@@ -11,7 +11,7 @@ public class MapFileDecoder : MonoBehaviour {
 
     public static Map_type[] DecodeMap (string file_name) {
         Map_type[] map = new Map_type[MapStatus.MAP_WIDTH * MapStatus.MAP_HEIGHT];
-        var tx = Resources.Load("Map/" + file_name) as TextAsset;
+        var tx = Resources.Load("Battle/Map/" + file_name) as TextAsset;
         var lines = tx.text.Split('\n');
         int j = 0;
         foreach (var line in lines) {

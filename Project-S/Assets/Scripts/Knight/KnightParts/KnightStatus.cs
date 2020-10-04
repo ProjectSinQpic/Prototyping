@@ -31,19 +31,19 @@ public class KnightStatus : KnightParts {
         calculator.Calc ();
         HP = actual.maxHP;
         MP = actual.maxMP;
+
         skills = new List<SkillBase>();
         foreach (var skill in data.skills) {
             skills.Add(ScriptableObject.Instantiate(skill));            
         }
         activeSkills = skills.Where(s => s is ActiveSkill).Select(s => (ActiveSkill)s).ToList();
         passiveSkills = skills.Where(s => s is PassiveSkill).Select(s => (PassiveSkill)s).ToList();
-
         skills.ForEach(s => s.Init(core));
 
-        Debug.Log(pos);
         GetComponent<KnightView> ().Init ();    //TODO 改善の余地あり
         transform.position = MapStatus.ToWorldPos(pos);
         core.prev_pos = pos;
+        core.isReady = true;
     }
 
     public void ApplyStatus(int hpDiff, int mpDiff, int restDiff) {
