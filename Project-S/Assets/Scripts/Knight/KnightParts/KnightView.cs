@@ -17,7 +17,7 @@ public class KnightView : KnightParts {
 
     public string charaName;
     public Sprite charaImage;
-    public Vector2 charaImageOffset_StatusUI, charaImageOffset_AttackResultUI;
+    public Vector2 charaImageOffset_StatusUI, charaImageOffset_AttackResultUI_a, charaImageOffset_AttackResultUI_b;
 
 
     public void Init () {
@@ -31,7 +31,8 @@ public class KnightView : KnightParts {
         charaName = core.status.data.view.characterName;
         charaImage = core.status.data.view.characterImage;
         charaImageOffset_StatusUI = core.status.data.view.imageOffset_StatusUI;
-        charaImageOffset_AttackResultUI = core.status.data.view.imageOffset_AttackResultUI;
+        charaImageOffset_AttackResultUI_a = core.status.data.view.imageOffset_AttackResultUI_a;
+        charaImageOffset_AttackResultUI_b = core.status.data.view.imageOffset_AttackResultUI_b;
         InitAnimation ();
         ChangeDir(ViewOperater.viewDir.Value);
     }

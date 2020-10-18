@@ -9,7 +9,7 @@ public class CharacterView : ScriptableObject {
     public string characterName;    
     public Sprite characterImage;
     public Vector2 imageOffset_StatusUI;
-    public Vector2 imageOffset_AttackResultUI;
+    public Vector2 imageOffset_AttackResultUI_a, imageOffset_AttackResultUI_b;
 
     public List<Sprite> image_idle_front;
     public List<Sprite> image_idle_back;

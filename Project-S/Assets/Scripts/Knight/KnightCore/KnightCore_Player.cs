@@ -136,7 +136,7 @@ public class KnightCore_Player : KnightCore {
                     NextAction (KnightAction.attack_cancel);
                 }
             }
-        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "attack_target", true);
+        }, new Vector3 (0, -Screen.height / 2 + 700, 0), "attack_target", true);
     }
 
     void OpenSkillWindow() {
@@ -157,7 +157,7 @@ public class KnightCore_Player : KnightCore {
                     NextAction(KnightAction.skill_cancel);
                 }
             }
-        }, new Vector3 (0, -Screen.height / 2 + 200, 0), "skill_target", true);
+        }, new Vector3 (0, -Screen.height / 2 + 700, 0), "skill_target", true);
     }
 
 }
