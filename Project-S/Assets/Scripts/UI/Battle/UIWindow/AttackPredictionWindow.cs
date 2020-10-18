@@ -13,7 +13,7 @@ public class AttackPredictionWindow : UIWindow {
     public Text text_nowHP_a, text_nowHP_b;
     public Text text_maxHP_a, text_maxHP_b;
     public GameObject bar_HP_a, bar_HP_b;
-    public GameObject bar_applyHP_a, bar_applyHP_b;
+    public GameObject bar_applyHP_b;
     public Text text_nowMP_a, text_nowMP_b;
     public Text text_maxMP_a, text_maxMP_b;
     public GameObject bar_MP_a, bar_MP_b;
@@ -65,8 +65,8 @@ public class AttackPredictionWindow : UIWindow {
 
         text_nowHP_a.text = core_a.status.HP.ToString () + " /";
         text_maxHP_a.text = statusData_a.maxHP.ToString ();
-        SetAppliedBarWidth(bar_HP_a, core_a.status.HP, statusData_a.maxHP, bar_applyHP_a, diff_a.hpDiff);
-        text_nowMP_a.text = core_a.status.MP.ToString () + " /";
+        SetBarWidth(bar_HP_a, core_a.status.HP, statusData_a.maxHP);
+        text_nowMP_a.text = (core_a.status.MP + diff_a.mpDiff).ToString () + " /";
         text_maxMP_a.text = statusData_a.maxMP.ToString ();
         SetAppliedBarWidth(bar_MP_a, core_a.status.MP, statusData_a.maxMP, bar_applyMP_a, diff_a.mpDiff);
         text_attack_a.text = statusData_a.attack.ToString ();
@@ -80,7 +80,7 @@ public class AttackPredictionWindow : UIWindow {
         chara_a.sprite = view_a.charaImage;
         chara_a.transform.localPosition = view_a.charaImageOffset_AttackResultUI_a;
 
-        text_nowHP_b.text = core_b.status.HP.ToString () + " /";
+        text_nowHP_b.text = (core_b.status.HP + diff_b.hpDiff).ToString () + " /";
         text_maxHP_b.text = statusData_b.maxHP.ToString ();
         SetAppliedBarWidth(bar_HP_b, core_b.status.HP, statusData_b.maxHP, bar_applyHP_b, diff_b.hpDiff);
         text_nowMP_b.text = core_b.status.MP.ToString () + " /";
@@ -121,7 +121,7 @@ public class AttackPredictionWindow : UIWindow {
 
     IEnumerator StatusBarFlashCoroutine() {
         float t = 0;
-        var barList = new List<GameObject>() {bar_applyHP_a, bar_applyHP_b, bar_applyMP_a}.Select(b => b.GetComponent<Image>());
+        var barList = new List<GameObject>() {bar_applyHP_b, bar_applyMP_a}.Select(b => b.GetComponent<Image>());
         while(true) {
             foreach(var bar in barList) {
             bar.color = new Color(1, 1, 1, 0.75f + 0.25f * Mathf.Sin(t * 5)); // 0.5 ~ 1

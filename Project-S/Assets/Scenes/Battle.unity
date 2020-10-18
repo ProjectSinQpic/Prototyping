@@ -8756,7 +8756,6 @@ MonoBehaviour:
   text_maxHP_b: {fileID: 189830228}
   bar_HP_a: {fileID: 713210145}
   bar_HP_b: {fileID: 1840506580}
-  bar_applyHP_a: {fileID: 1537383853}
   bar_applyHP_b: {fileID: 348336143}
   text_nowMP_a: {fileID: 1211581847}
   text_nowMP_b: {fileID: 994294405}
@@ -10555,7 +10554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1537383854
 RectTransform:
   m_ObjectHideFlags: 0
