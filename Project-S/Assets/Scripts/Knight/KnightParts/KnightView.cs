@@ -11,7 +11,7 @@ public class KnightView : KnightParts {
     List<Sprite> idle_front, idle_back;
     List<Sprite> move_front, move_back;
     List<Sprite> attack_front, attack_back;
-    SpriteRenderer sp;
+    //SpriteRenderer sp;
     Dictionary<string, float> animSpeed = new Dictionary<string, float> () { { "idle", 1f }, { "move", 0.25f }, { "attack", 0.25f },
     };
 
@@ -21,7 +21,7 @@ public class KnightView : KnightParts {
 
 
     public void Init () {
-        sp = GetComponent<SpriteRenderer> ();
+        //sp = GetComponent<SpriteRenderer> ();
         idle_front = core.status.data.view.image_idle_front;
         idle_back = core.status.data.view.image_idle_back;
         move_front = core.status.data.view.image_move_front;
@@ -61,13 +61,16 @@ public class KnightView : KnightParts {
     }
 
     void ChangeDir (Direction dir) {
-        var rot = new Vector3 (0, (int) ViewOperater.viewDir.Value * 90 + 45, 0);
-        transform.DORotate (rot, 0.5f).SetEase (Ease.OutCirc);
-
+        //var rot = new Vector3 (0, (int) ViewOperater.viewDir.Value * 90 + 45, 0);
+        //transform.DORotate (rot, 0.5f).SetEase (Ease.OutCirc);
         ActionView ("idle", core.status.dir);
     }
 
     public void ActionView (string action, Direction dir) {
+        if(action == "idle" || action == "move") {
+            transform.localRotation = Quaternion.Euler(0, (int)dir * 90 - 90, 0);
+            return;
+        }
         var spriteDir = (Direction) Mathf.Repeat ((int) dir - (int) ViewOperater.viewDir.Value, 4);
 
         var d = spriteDir == Direction.NORTH || spriteDir == Direction.WEST ? "front" : "back";
@@ -83,10 +86,10 @@ public class KnightView : KnightParts {
 
     void ChangeRestState(int c) {
         if(c == 0) {
-            sp.material.color = Color.white;
+            //sp.material.color = Color.white;
         }
         else {
-            sp.material.color = Color.gray;
+            //sp.material.color = Color.gray;
         }
     }
 
