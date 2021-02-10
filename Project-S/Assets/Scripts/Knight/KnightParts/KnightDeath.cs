@@ -19,11 +19,11 @@ public class KnightDeath : KnightParts {
 
     IEnumerator DieCoroutine () {
         const int frame = 15;
-        var sp = GetComponent<SpriteRenderer> ();
+        //var sp = GetComponent<SpriteRenderer> ();
         for (int i = 0; i < frame; i++) {
-            sp.color -= new Color (0, 0, 0, 1f / frame);
+            //sp.color -= new Color (0, 0, 0, 1f / frame);
             yield return null;
         }
-        sp.color = new Color (1, 1, 1, 0);
+        //sp.color = new Color (1, 1, 1, 0);
     }
 }

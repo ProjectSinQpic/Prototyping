@@ -8,12 +8,12 @@ public class AnimationPlayer : MonoBehaviour {
     public ReactiveProperty<bool> isPlaying;
 
     Dictionary<string, List<Sprite>> animationList = new Dictionary<string, List<Sprite>> ();
-    SpriteRenderer sp;
+    //SpriteRenderer sp;
     Coroutine nowAnim;
 
     void Awake () {
         isPlaying = new ReactiveProperty<bool> (false);
-        sp = GetComponent<SpriteRenderer> ();
+        //sp = GetComponent<SpriteRenderer> ();
     }
 
     public void AddAnimation (string key, List<Sprite> sprites) {
@@ -31,7 +31,7 @@ public class AnimationPlayer : MonoBehaviour {
         var interval = duration / sprites.Count;
         isPlaying.Value = true;
         for (int i = 0; i < sprites.Count; i++) {
-            sp.sprite = sprites[i];
+            //sp.sprite = sprites[i];
             yield return new WaitForSeconds (interval);
         }
         isPlaying.Value = false;
@@ -42,7 +42,7 @@ public class AnimationPlayer : MonoBehaviour {
         isPlaying.Value = true;
         while (true) {
             for (int i = 0; i < sprites.Count; i++) {
-                sp.sprite = sprites[i];
+                //sp.sprite = sprites[i];
                 yield return new WaitForSeconds (interval);
             }
         }
